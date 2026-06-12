@@ -7,6 +7,7 @@ import { SocialMetrics } from './components/SocialMetrics';
 import { TimelineMe } from './components/TimelineMe';
 import { TerminalPrompt } from './components/TerminalPrompt';
 import { ToolSimulator } from './components/ToolSimulator';
+import { ToolSimulatorHorizontal } from './components/ToolSimulatorHorizontal';
 import { ContentWorkflow } from './components/ContentWorkflow';
 import { ContentPipeline } from './components/ContentPipeline';
 import { AudienceList, MonetizationGrid, MilestoneTimeline } from './components/AudienceMonetization';
@@ -18,6 +19,7 @@ const slidesData = [
   { id: 'niche', title: 'My Chosen Niche: AI + ML', tagline: 'Slide 03' },
   { id: 'stack', title: 'Why I chose this niche?', tagline: 'Slide 04' },
   { id: 'proof', title: 'Proof of Execution & Built Tools', tagline: 'Slide 05' },
+  { id: 'proof-horizontal', title: 'Proof of Execution Tools I Already Built', tagline: 'Slide 05B' },
   { id: 'workflow', title: 'Core Channel Content Idea', tagline: 'Slide 06' },
   { id: 'pipeline', title: 'Why Content Will Not Dry Out', tagline: 'Slide 07' },
   { id: 'audience', title: 'Target Audience Profile', tagline: 'Slide 08' },
@@ -274,6 +276,29 @@ export const App: React.FC = () => {
               </p>
             </div>
             <ToolSimulator />
+          </motion.div>
+        </section>
+
+        {/* SLIDE 5B: BUILT PROOFS PORTFOLIO HORIZONTAL REDESIGN */}
+        <section className="slide">
+          <motion.div 
+            initial={{ opacity: 0, x: 50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: false, amount: 0.1 }}
+            transition={{ duration: 0.6 }}
+            className="slide-content-wrapper"
+            style={{ gridTemplateColumns: '1fr' }}
+          >
+            <div style={{ display: 'flex', flexDirection: 'column', height: '100%', width: '100%', gap: '16px' }}>
+              <div style={{ textAlign: 'center' }}>
+                <h2 className="title-large" style={{ fontSize: '2.5rem', marginBottom: '8px' }}>
+                  Proof of Execution <span className="title-accent">Tools I Already Built</span>
+                </h2>
+              </div>
+              <div style={{ flexGrow: 1, minHeight: 0 }}>
+                <ToolSimulatorHorizontal />
+              </div>
+            </div>
           </motion.div>
         </section>
 
