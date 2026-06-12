@@ -5,7 +5,7 @@ export const TimelineMe: React.FC = () => {
   const base = import.meta.env.BASE_URL || '/';
   
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', height: '100%', justifyContent: 'center', width: '100%' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', height: '100%', justifyContent: 'center', width: '100%', minHeight: 0 }}>
       
       {/* Title Header placed directly above the glass-panel block */}
       <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
@@ -18,7 +18,7 @@ export const TimelineMe: React.FC = () => {
       </div>
       
       {/* 2-Column Balanced Layout Grid */}
-      <div style={{ display: 'grid', gridTemplateColumns: '1.25fr 0.75fr', gap: '24px', alignItems: 'stretch' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: '1.25fr 0.75fr', gap: '24px', alignItems: 'stretch', flex: 1, minHeight: 0 }}>
         
         {/* Left Column: Single Unified Experience & Competency Panel */}
         <div 
@@ -31,9 +31,11 @@ export const TimelineMe: React.FC = () => {
             background: 'linear-gradient(135deg, rgba(13,17,28,0.75) 0%, rgba(244,63,94,0.03) 100%)',
             animation: 'fadeIn 0.4s ease',
             padding: '24px',
-            justifyContent: 'space-between',
+            justifyContent: 'flex-start',
             boxShadow: '0 8px 32px rgba(244, 63, 94, 0.05), inset 0 1px 0 rgba(255,255,255,0.05)',
-            transition: 'all 0.3s ease'
+            transition: 'all 0.3s ease',
+            height: '100%',
+            overflow: 'hidden'
           }}
         >
           {/* Role Header and Description */}
@@ -73,7 +75,8 @@ export const TimelineMe: React.FC = () => {
             gridTemplateColumns: '1fr 1fr', 
             gap: '16px', 
             borderTop: '1px solid rgba(255, 255, 255, 0.05)', 
-            paddingTop: '16px' 
+            paddingTop: '16px',
+            marginTop: '8px'
           }}>
             {/* Storytelling details */}
             <div className="competency-item storytelling-item" style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
@@ -98,7 +101,7 @@ export const TimelineMe: React.FC = () => {
 
           {/* Key Advantage Highlight Banner */}
           <div style={{
-            marginTop: '10px',
+            marginTop: 'auto',
             background: 'linear-gradient(90deg, rgba(244,63,94,0.08) 0%, transparent 100%)',
             borderLeft: '3px solid var(--color-magenta)',
             padding: '10px 12px',
@@ -119,7 +122,7 @@ export const TimelineMe: React.FC = () => {
         </div>
 
         {/* Right Column: Media Stack (YouTube Video & Working Photo) */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', justifyContent: 'space-between' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', height: '100%', minHeight: 0 }}>
           
           {/* YouTube Video link */}
           <a 
@@ -138,7 +141,7 @@ export const TimelineMe: React.FC = () => {
               alignItems: 'center',
               justifyContent: 'center',
               cursor: 'pointer',
-              minHeight: '140px',
+              minHeight: 0,
               transition: 'all 0.3s ease'
             }}
           >
@@ -195,7 +198,7 @@ export const TimelineMe: React.FC = () => {
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              minHeight: '140px',
+              minHeight: 0,
               transition: 'all 0.3s ease'
             }}
           >
