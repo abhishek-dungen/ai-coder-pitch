@@ -15,10 +15,10 @@ export const NicheSlider: React.FC = () => {
       <div>
         <h3 style={{ fontSize: '1.25rem', marginBottom: '6px', fontFamily: 'var(--font-display)', display: 'flex', alignItems: 'center', gap: '8px' }}>
           <Zap size={18} style={{ color: 'var(--color-cyan)' }} />
-          Niche: "Building everyday AI tools I wish existed"
+          Zero Code, 100% Leverage
         </h3>
         <p style={{ fontSize: '0.8rem', color: '#9ca3af' }}>
-          Drag the slider left and right to compare traditional development against modern AI-assisted building.
+          Drag the slider left and right to compare traditional manual friction against modern AI-assisted leverage.
         </p>
       </div>
 
@@ -35,7 +35,7 @@ export const NicheSlider: React.FC = () => {
           background: '#090a0f'
         }}
       >
-        {/* Left Side: Traditional Development */}
+        {/* Left Side: Locked Out */}
         <div style={{
           position: 'absolute',
           top: 0,
@@ -54,25 +54,25 @@ export const NicheSlider: React.FC = () => {
         }}>
           <div style={{ color: 'var(--color-magenta)', display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '8px' }}>
             <ShieldAlert size={20} />
-            <h4 style={{ fontSize: '1.1rem', fontFamily: 'var(--font-display)', fontWeight: 700 }}>Traditional Dev (The Old Way)</h4>
+            <h4 style={{ fontSize: '1.1rem', fontFamily: 'var(--font-display)', fontWeight: 700 }}>Locked Out (No Coding Skills)</h4>
           </div>
           <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '8px', color: '#e5e7eb', fontSize: '0.82rem' }}>
             <li style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <span style={{ color: 'var(--color-magenta)' }}>✕</span> Hire expensive agencies or developers
+              <span style={{ color: 'var(--color-magenta)' }}>✕</span> Stuck with manual, repetitive spreadsheet tasks
             </li>
             <li style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <span style={{ color: 'var(--color-magenta)' }}>✕</span> 3-6 months to build simple MVP databases
+              <span style={{ color: 'var(--color-magenta)' }}>✕</span> Cannot build custom ideas due to syntax barrier
             </li>
             <li style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <span style={{ color: 'var(--color-magenta)' }}>✕</span> Adjust yourself to rigid Play Store SaaS apps
+              <span style={{ color: 'var(--color-magenta)' }}>✕</span> Overpaying for rigid, complex SaaS software
             </li>
             <li style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <span style={{ color: 'var(--color-magenta)' }}>✕</span> High barrier to entry: syntax errors, compilers
+              <span style={{ color: 'var(--color-magenta)' }}>✕</span> Slow execution: waiting on tech teams or agencies
             </li>
           </ul>
         </div>
 
-        {/* Right Side: AI Assisted Development (Clipping overlay) */}
+        {/* Right Side: AI Leveraged Builder */}
         <div style={{
           position: 'absolute',
           top: 0,
@@ -93,21 +93,21 @@ export const NicheSlider: React.FC = () => {
           overflow: 'hidden'
         }}>
           <div style={{ color: 'var(--color-cyan)', display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '8px' }}>
-            <h4 style={{ fontSize: '1.1rem', fontFamily: 'var(--font-display)', fontWeight: 700 }}>AI assisted Building (Our Niche)</h4>
+            <h4 style={{ fontSize: '1.1rem', fontFamily: 'var(--font-display)', fontWeight: 700 }}>AI Leveraged Builder</h4>
             <Zap size={20} />
           </div>
           <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '8px', color: '#e5e7eb', fontSize: '0.82rem' }}>
             <li style={{ display: 'flex', alignItems: 'center', gap: '8px', justifyContent: 'flex-end' }}>
-              Zero coding background needed to start <span style={{ color: 'var(--color-cyan)' }}>✔</span>
+              Zero coding background needed to forge apps <span style={{ color: 'var(--color-cyan)' }}>✔</span>
             </li>
             <li style={{ display: 'flex', alignItems: 'center', gap: '8px', justifyContent: 'flex-end' }}>
-              Build customized tools in hours, not months <span style={{ color: 'var(--color-cyan)' }}>✔</span>
+              Build custom spreadsheets & tools in minutes <span style={{ color: 'var(--color-cyan)' }}>✔</span>
             </li>
             <li style={{ display: 'flex', alignItems: 'center', gap: '8px', justifyContent: 'flex-end' }}>
-              Create personalized trackers tailored to your workflow <span style={{ color: 'var(--color-cyan)' }}>✔</span>
+              Complete control over your workflow & automation <span style={{ color: 'var(--color-cyan)' }}>✔</span>
             </li>
             <li style={{ display: 'flex', alignItems: 'center', gap: '8px', justifyContent: 'flex-end' }}>
-              Solves immediate business & daily life problems <span style={{ color: 'var(--color-cyan)' }}>✔</span>
+              Fast execution: launch tools instantly on Day 1 <span style={{ color: 'var(--color-cyan)' }}>✔</span>
             </li>
           </ul>
         </div>
@@ -166,7 +166,7 @@ export const NicheSlider: React.FC = () => {
 
       {/* Quote summary */}
       <div className="glass-panel" style={{ padding: '12px 18px', background: 'rgba(255,255,255,0.02)', fontSize: '0.8rem', color: '#9ca3af', borderLeft: '3px solid var(--color-indigo)' }}>
-        "I am not trying to teach AI in a boring theoretical way. I show how average people can solve real problems by building customized software alongside AI assistants."
+        "I build builders. I show regular people with absolute zero coding knowledge how to forge customized apps that solve real-world problems. Pure execution. Instant impact."
       </div>
     </div>
   );

@@ -214,15 +214,16 @@ export const App: React.FC = () => {
           >
             <div className="slide-title-area">
               <span className="tagline">This AI_CODING_WITH_ABHISHEK</span>
-              <h2 className="title-large">My Chosen <span className="title-accent">Niche</span></h2>
-              <p className="slide-description">
-                Niche: **"Building everyday AI tools I wish existed."**
-              </p>
-              <p style={{ fontSize: '0.9rem', color: '#9ca3af', lineHeight: 1.5 }}>
-                Instead of dry coding theory, the channel shows how generative AI tools create custom systems, spreadsheets, automations, and landing pages to fix daily life friction.
-              </p>
-              <p style={{ fontSize: '0.85rem', color: '#9ca3af', borderLeft: '2px solid var(--color-cyan)', paddingLeft: '12px' }}>
-                Practical, visual, relatable, and offers infinite workflow concepts.
+              <h2 className="title-large" style={{ fontSize: '2.3rem', lineHeight: 1.2 }}>
+                My Chosen Niche: <span className="title-accent">Building everyday AI tools I wish existed</span>
+              </h2>
+              
+              <h3 style={{ fontSize: '1.25rem', color: 'var(--color-cyan)', fontFamily: 'var(--font-display)', marginTop: '14px', fontWeight: 700 }}>
+                Zero code. 100% leverage.
+              </h3>
+              
+              <p className="slide-description" style={{ fontSize: '0.92rem', lineHeight: 1.6, marginTop: '8px' }}>
+                I build builders. I show regular people with absolute zero coding knowledge how to forge customized apps that solve real-world problems. Pure execution. Instant impact.
               </p>
             </div>
             <NicheSlider />
