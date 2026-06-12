@@ -213,7 +213,6 @@ export const App: React.FC = () => {
             className="slide-content-wrapper"
           >
             <div className="slide-title-area">
-              <span className="tagline">This AI_CODING_WITH_ABHISHEK</span>
               <h2 className="title-large" style={{ fontSize: '2.3rem', lineHeight: 1.2 }}>
                 My Chosen Niche: <span className="title-accent">Building everyday AI tools I wish existed</span>
               </h2>

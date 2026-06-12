@@ -163,11 +163,6 @@ export const NicheSlider: React.FC = () => {
           }}
         />
       </div>
-
-      {/* Quote summary */}
-      <div className="glass-panel" style={{ padding: '12px 18px', background: 'rgba(255,255,255,0.02)', fontSize: '0.8rem', color: '#9ca3af', borderLeft: '3px solid var(--color-indigo)' }}>
-        "I build builders. I show regular people with absolute zero coding knowledge how to forge customized apps that solve real-world problems. Pure execution. Instant impact."
-      </div>
     </div>
   );
 };
