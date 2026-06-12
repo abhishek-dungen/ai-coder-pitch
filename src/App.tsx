@@ -199,7 +199,6 @@ export const App: React.FC = () => {
             className="slide-content-wrapper"
           >
             <div className="slide-title-area">
-              <span className="tagline">This AI_CODING_WITH_ABHISHEK</span>
               <h2 className="title-large">Why <span className="title-accent">Me?</span></h2>
               <p className="slide-description">
                 A creative background focused on learning design, scriptwriting, and high-retention video packaging.
