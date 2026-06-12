@@ -5,7 +5,6 @@ interface CollageTool {
   image: string;
   color: string;
   glow: string;
-  logoMode?: boolean;
 }
 
 export const TerminalPrompt: React.FC = () => {
@@ -14,41 +13,40 @@ export const TerminalPrompt: React.FC = () => {
 
   const tools: CollageTool[] = [
     { 
-      name: 'Cursor Pro', 
-      image: 'cursor_composer.webp', 
+      name: 'Codex', 
+      image: 'codex.webp', 
       color: 'var(--color-cyan)', 
       glow: 'var(--color-cyan-glow)' 
     },
     { 
       name: 'Claude Code', 
-      image: 'claude_cowork.webp', 
+      image: 'claude_code.jpeg', 
       color: 'var(--color-magenta)', 
       glow: 'var(--color-magenta-glow)' 
     },
     { 
-      name: 'VS Code Stack', 
-      image: 'images_1.jpeg', 
-      color: '#007acc', 
-      glow: 'rgba(0,122,204,0.3)' 
+      name: 'Replit', 
+      image: 'replit_collage.jpg', 
+      color: '#ff007f', 
+      glow: 'rgba(255,0,127,0.3)' 
     },
     { 
       name: 'Google Antigravity', 
-      image: 'images_0.jpeg', 
+      image: 'antigravity.webp', 
       color: 'var(--color-emerald)', 
       glow: 'var(--color-emerald-glow)' 
     },
     { 
-      name: 'OpenClaw Agent', 
+      name: 'Claude cowork', 
+      image: 'claude_cowork.webp', 
+      color: '#ff7a00', 
+      glow: 'rgba(255,122,0,0.3)' 
+    },
+    { 
+      name: 'openclaw', 
       image: 'openclaw.webp', 
       color: 'var(--color-indigo)', 
       glow: 'var(--color-indigo-glow)' 
-    },
-    { 
-      name: 'Replit Agent', 
-      image: 'replit_logo.png', 
-      color: '#ff007f', 
-      glow: 'rgba(255,0,127,0.3)', 
-      logoMode: true 
     }
   ];
 
@@ -93,20 +91,19 @@ export const TerminalPrompt: React.FC = () => {
                 flex: 1, 
                 overflow: 'hidden', 
                 position: 'relative', 
-                background: t.logoMode ? 'rgba(0,0,0,0.3)' : 'transparent',
+                background: 'transparent',
                 display: 'flex', 
                 alignItems: 'center', 
-                justifyContent: 'center',
-                padding: t.logoMode ? '16px' : '0'
+                justifyContent: 'center'
               }}>
                 <img 
                   src={`${base}${t.image}`} 
                   alt={t.name} 
                   style={{ 
-                    width: t.logoMode ? 'auto' : '100%', 
-                    height: t.logoMode ? '75%' : '100%', 
-                    objectFit: t.logoMode ? 'contain' : 'cover', 
-                    transform: isHovered && !t.logoMode ? 'scale(1.06)' : 'scale(1)',
+                    width: '100%', 
+                    height: '100%', 
+                    objectFit: 'cover', 
+                    transform: isHovered ? 'scale(1.06)' : 'scale(1)',
                     transition: 'transform 0.4s ease',
                     maxWidth: '100%',
                     maxHeight: '100%'

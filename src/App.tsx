@@ -240,15 +240,14 @@ export const App: React.FC = () => {
             style={{ gridTemplateColumns: '0.8fr 1.2fr' }}
           >
             <div className="slide-title-area">
-              <span className="tagline">This AI_CODING_WITH_ABHISHEK</span>
               <h2 className="title-large" style={{ fontSize: '2.3rem', lineHeight: 1.25 }}>
                 Why I chose <span className="title-accent">this niche?</span>
               </h2>
               <p className="slide-description" style={{ fontSize: '1.05rem', color: 'var(--color-cyan)', fontWeight: 600, marginTop: '14px', lineHeight: 1.4, fontStyle: 'italic', borderLeft: '3px solid var(--color-cyan)', paddingLeft: '12px' }}>
-                "I don’t just test AI tools—I push them to their absolute limits."
+                "I don’t just test AI tools. I push them to their absolute limits."
               </p>
               <p style={{ fontSize: '0.86rem', color: '#d1d5db', lineHeight: 1.6, marginTop: '14px' }}>
-                I am a power user of the entire developer ecosystem—from Cursor, Replit, and VS Code to Claude Code, Claude Engineer, and specialized AI platforms. I’ve stress-tested them all to build working apps, custom automations, and bulletproof workflows. The sandbox phase is over; it's time to show the world how it’s actually done.
+                I am a power user of the entire developer ecosystem—from Cursor, Replit, and VS Code to Claude Code, Claude cowork, openclaw and Codex. I’ve stress-tested them all to build working apps, rogue automations, and bulletproof workflows. The sandbox phase is over—it's time to show the world how it’s actually done
               </p>
             </div>
             <TerminalPrompt />
