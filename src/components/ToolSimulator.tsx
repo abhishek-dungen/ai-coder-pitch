@@ -65,7 +65,14 @@ export const ToolSimulator: React.FC = () => {
         {tools.map((t) => (
           <button
             key={t.id}
-            onClick={() => setActiveToolId(t.id)}
+            onClick={() => {
+              setActiveToolId(t.id);
+              if (t.id === 'portfolio') {
+                window.open('https://glittery-madeleine-73be6e.netlify.app/', '_blank');
+              } else if (t.id === 'dashboard') {
+                window.open('https://chimerical-palmier-b581bc.netlify.app/', '_blank');
+              }
+            }}
             className="interactive"
             style={{
               display: 'flex',
