@@ -76,7 +76,7 @@ export const ToolSimulatorHorizontal: React.FC = () => {
     <div style={{ display: 'flex', flexDirection: 'column', height: '100%', gap: '16px' }}>
       
       {/* Video / Simulator View Pane (Full vertical space) */}
-      <div style={{ flexGrow: 1, minHeight: 0, display: 'flex', justifyContent: 'center', alignItems: 'center', position: 'relative', height: '100%' }}>
+      <div style={{ flexGrow: 1, minHeight: 0, display: 'flex', justifyContent: 'center', alignItems: 'center', position: 'relative', width: '100%' }}>
         
         {/* Videos - Preloaded and toggled instantly */}
         {Object.entries(videoMapping).map(([id, file]) => (
@@ -90,8 +90,10 @@ export const ToolSimulatorHorizontal: React.FC = () => {
             controls
             style={{
               display: activeToolId === id ? 'block' : 'none',
-              width: '100%',
-              height: '100%',
+              maxWidth: '100%',
+              maxHeight: '100%',
+              width: 'auto',
+              height: 'auto',
               borderRadius: '16px',
               border: '1px solid var(--color-border)',
               boxShadow: '0 12px 45px rgba(6, 182, 212, 0.35)',

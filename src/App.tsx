@@ -280,7 +280,7 @@ export const App: React.FC = () => {
         </section>
 
         {/* SLIDE 5B: BUILT PROOFS PORTFOLIO HORIZONTAL REDESIGN */}
-        <section className="slide">
+        <section className="slide" style={{ padding: '80px 60px 30px 60px' }}>
           <motion.div 
             initial={{ opacity: 0, x: 50 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -295,7 +295,7 @@ export const App: React.FC = () => {
                   Proof of Execution <span className="title-accent">Tools I Already Built</span>
                 </h2>
               </div>
-              <div style={{ flexGrow: 1, minHeight: 0 }}>
+              <div style={{ flexGrow: 1, minHeight: 0, display: 'flex', flexDirection: 'column' }}>
                 <ToolSimulatorHorizontal />
               </div>
             </div>
