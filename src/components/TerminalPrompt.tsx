@@ -70,7 +70,8 @@ export const TerminalPrompt: React.FC = () => {
     
     const interval = setInterval(() => {
       if (step < tool.outputs.length) {
-        setTerminalText((prev) => [...prev, tool.outputs[step]]);
+        const nextLine = tool.outputs[step];
+        setTerminalText((prev) => [...prev, nextLine]);
         step++;
       } else {
         clearInterval(interval);
