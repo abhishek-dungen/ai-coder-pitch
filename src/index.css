@@ -445,3 +445,21 @@ h1, h2, h3, h4 {
   background: var(--color-indigo);
   box-shadow: 0 0 12px var(--color-indigo);
 }
+
+/* Responsive Grid for Tool Simulator split view */
+.tool-simulator-split {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 20px;
+  flex-grow: 1;
+  min-height: 0;
+}
+
+@media (max-width: 900px) {
+  .tool-simulator-split {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto;
+    overflow-y: auto;
+  }
+}
+

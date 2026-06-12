@@ -14,6 +14,16 @@ interface Tool {
 }
 
 export const ToolSimulator: React.FC = () => {
+  const base = import.meta.env.BASE_URL || '/';
+  const videoMapping: Record<string, string> = {
+    expense: 'MOney.mp4',
+    excel: 'Automations.mp4',
+    log: 'Habit.mp4',
+    payments: 'instamojo.mp4',
+    notes: 'note.mp4',
+    zoom: 'zoom.mp4',
+  };
+
   const tools: Tool[] = [
     { id: 'expense', name: 'Expense Manager', icon: <DollarSign size={16} />, tagline: 'Personalized financial tracking.' },
     { id: 'log', name: 'Daily Log System', icon: <Clock size={16} />, tagline: 'Activity and routine tracker.' },
@@ -26,6 +36,7 @@ export const ToolSimulator: React.FC = () => {
   ];
 
   const [activeToolId, setActiveToolId] = useState<string>('expense');
+  const videoFile = videoMapping[activeToolId];
 
   // 1. Expense tracker state
   const [expenses, setExpenses] = useState([
@@ -195,10 +206,18 @@ export const ToolSimulator: React.FC = () => {
         </div>
 
         {/* Dynamic simulator frames */}
-        <div style={{ flexGrow: 1, minHeight: 0, display: 'flex' }}>
-          
-          {/* 1. Expense Manager Simulator */}
-          {activeToolId === 'expense' && (
+        <div 
+          className={videoFile ? "tool-simulator-split" : ""} 
+          style={{ 
+            flexGrow: 1, 
+            minHeight: 0, 
+            display: videoFile ? 'grid' : 'flex'
+          }}
+        >
+          {/* Interactive Simulator Column */}
+          <div style={{ display: 'flex', flexDirection: 'column', minHeight: 0, flexGrow: 1, width: '100%', height: '100%' }}>
+            {/* 1. Expense Manager Simulator */}
+            {activeToolId === 'expense' && (
             <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', width: '100%' }}>
               <form onSubmit={addExpense} style={{ display: 'flex', gap: '8px' }}>
                 <input 
@@ -659,6 +678,31 @@ export const ToolSimulator: React.FC = () => {
                   </div>
                 )}
               </div>
+            </div>
+          )}
+          </div>
+
+          {/* Video Demo Column */}
+          {videoFile && (
+            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', minHeight: 0, height: '100%' }}>
+              <video 
+                key={activeToolId}
+                src={`${base}Images/${videoFile}`}
+                autoPlay
+                loop
+                muted
+                playsInline
+                controls
+                style={{ 
+                  width: '100%', 
+                  maxHeight: '100%', 
+                  borderRadius: '12px', 
+                  border: '1px solid var(--color-border)', 
+                  boxShadow: '0 8px 24px rgba(6, 182, 212, 0.15)',
+                  background: '#000000',
+                  objectFit: 'contain'
+                }}
+              />
             </div>
           )}
 
