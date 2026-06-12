@@ -7,6 +7,16 @@ export const TimelineMe: React.FC = () => {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', height: '100%', justifyContent: 'center', width: '100%' }}>
       
+      {/* Title Header placed directly above the glass-panel block */}
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginBottom: '4px' }}>
+        <h2 className="title-large" style={{ fontSize: '2.4rem' }}>
+          Why <span className="title-accent">Me?</span>
+        </h2>
+        <p className="slide-description" style={{ fontSize: '1.05rem', color: '#9ca3af' }}>
+          A creative background focused on learning design, scriptwriting, and high-retention video packaging.
+        </p>
+      </div>
+      
       {/* Dedicated BYJU'S Experience & Case Study Highlight Panel */}
       <div className="glass-panel" style={{ 
         width: '100%', 
@@ -16,7 +26,6 @@ export const TimelineMe: React.FC = () => {
         borderColor: 'var(--color-magenta)',
         background: 'linear-gradient(135deg, rgba(13,17,28,0.7) 0%, rgba(244,63,94,0.05) 100%)',
         animation: 'fadeIn 0.4s ease',
-        minHeight: '380px',
         justifyContent: 'space-between',
         padding: '24px'
       }}>
@@ -36,40 +45,40 @@ export const TimelineMe: React.FC = () => {
         </div>
 
         {/* Reorganized split grid: Left columns of text / Right columns of media */}
-        <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 0.8fr', gap: '20px', flexGrow: 1, minHeight: 0, marginTop: '8px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '1.15fr 0.85fr', gap: '24px', flexGrow: 1, minHeight: 0, marginTop: '8px', alignItems: 'center' }}>
           
           {/* Left Text details */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', justifyContent: 'space-between' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '14px', justifyContent: 'space-between' }}>
             <p style={{ fontSize: '0.88rem', color: '#e5e7eb', lineHeight: '1.5' }}>
               Handled a complete creative vertical in the content department, working deeply on curriculum translation into interactive animations, scripts, and video assets.
             </p>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-              <div style={{ background: 'rgba(255,255,255,0.02)', padding: '10px 14px', borderRadius: '10px', border: '1px solid var(--color-border)' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: 'var(--color-magenta)', fontSize: '0.8rem', fontWeight: 600, marginBottom: '4px' }}>
+              <div className="card-hover-effect" style={{ background: 'rgba(255,255,255,0.02)', padding: '12px 16px', borderRadius: '10px', border: '1px solid var(--color-border)', transition: 'all 0.3s ease' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: 'var(--color-magenta)', fontSize: '0.85rem', fontWeight: 600, marginBottom: '4px' }}>
                   <Play size={14} fill="currentColor" style={{ color: 'var(--color-magenta)' }} /> Storytelling
                 </div>
-                <div style={{ fontSize: '0.75rem', color: '#9ca3af', lineHeight: 1.35 }}>
+                <div style={{ fontSize: '0.78rem', color: '#9ca3af', lineHeight: 1.35 }}>
                   Script writing, hook design, storylines, and maintaining audience retention.
                 </div>
               </div>
-              <div style={{ background: 'rgba(255,255,255,0.02)', padding: '10px 14px', borderRadius: '10px', border: '1px solid var(--color-border)' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: 'var(--color-magenta)', fontSize: '0.8rem', fontWeight: 600, marginBottom: '4px' }}>
+              <div className="card-hover-effect" style={{ background: 'rgba(255,255,255,0.02)', padding: '12px 16px', borderRadius: '10px', border: '1px solid var(--color-border)', transition: 'all 0.3s ease' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: 'var(--color-magenta)', fontSize: '0.85rem', fontWeight: 600, marginBottom: '4px' }}>
                   <BrainCircuit size={14} /> Learning Design
                 </div>
-                <div style={{ fontSize: '0.75rem', color: '#9ca3af', lineHeight: 1.35 }}>
+                <div style={{ fontSize: '0.78rem', color: '#9ca3af', lineHeight: 1.35 }}>
                   Breaking down highly complex, scary concepts into simple pieces.
                 </div>
               </div>
             </div>
 
-            <div style={{ borderLeft: '2px dashed var(--color-magenta)', paddingLeft: '12px', marginTop: '6px', fontSize: '0.78rem', color: '#9ca3af', lineHeight: 1.35 }}>
+            <div style={{ borderLeft: '2px dashed var(--color-magenta)', paddingLeft: '12px', marginTop: '4px', fontSize: '0.82rem', color: '#9ca3af', lineHeight: 1.4 }}>
               💡 <strong>Key Advantage:</strong> I know how to script videos, build retention hooks, and explain concepts to students.
             </div>
           </div>
 
-          {/* Right Media panels */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+          {/* Right Media panels - Displayed side-by-side using grid */}
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', alignItems: 'stretch' }}>
             
             {/* Byju's video screenshot with YouTube link */}
             <a 
@@ -87,7 +96,8 @@ export const TimelineMe: React.FC = () => {
                 alignItems: 'center',
                 justifyContent: 'center',
                 boxShadow: '0 4px 15px rgba(0,0,0,0.5)',
-                cursor: 'pointer'
+                cursor: 'pointer',
+                width: '100%'
               }}
             >
               <div style={{
@@ -118,8 +128,8 @@ export const TimelineMe: React.FC = () => {
                 left: 0, 
                 right: 0, 
                 background: 'rgba(0,0,0,0.7)', 
-                padding: '3px 6px', 
-                fontSize: '0.58rem', 
+                padding: '4px 6px', 
+                fontSize: '0.62rem', 
                 color: '#fff', 
                 textAlign: 'center',
                 fontWeight: 600,
@@ -135,13 +145,13 @@ export const TimelineMe: React.FC = () => {
                 borderRadius: '8px', 
                 overflow: 'hidden', 
                 position: 'relative', 
-                flexGrow: 1,
-                minHeight: '95px',
+                aspectRatio: '16/10',
                 border: '1px solid rgba(255, 255, 255, 0.1)',
                 boxShadow: '0 4px 15px rgba(0,0,0,0.5)',
                 display: 'flex',
                 alignItems: 'center',
-                justifyContent: 'center'
+                justifyContent: 'center',
+                width: '100%'
               }}
             >
               <img 
@@ -155,8 +165,8 @@ export const TimelineMe: React.FC = () => {
                 left: 0, 
                 right: 0, 
                 background: 'rgba(0,0,0,0.7)', 
-                padding: '3px 6px', 
-                fontSize: '0.58rem', 
+                padding: '4px 6px', 
+                fontSize: '0.62rem', 
                 color: '#fff', 
                 textAlign: 'center',
                 fontWeight: 600
@@ -183,6 +193,11 @@ export const TimelineMe: React.FC = () => {
         }
         .video-thumbnail-link .youtube-play-btn {
           transition: all 0.2s ease;
+        }
+        .card-hover-effect:hover {
+          border-color: rgba(244, 63, 94, 0.4) !important;
+          background: rgba(255, 255, 255, 0.05) !important;
+          transform: translateY(-2px);
         }
       `}</style>
     </div>

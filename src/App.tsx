@@ -197,13 +197,8 @@ export const App: React.FC = () => {
             viewport={{ once: false, amount: 0.1 }}
             transition={{ duration: 0.6 }}
             className="slide-content-wrapper"
+            style={{ gridTemplateColumns: '1fr' }}
           >
-            <div className="slide-title-area">
-              <h2 className="title-large">Why <span className="title-accent">Me?</span></h2>
-              <p className="slide-description">
-                A creative background focused on learning design, scriptwriting, and high-retention video packaging.
-              </p>
-            </div>
             <TimelineMe />
           </motion.div>
         </section>
