@@ -10,36 +10,26 @@ export const CustomCursor: React.FC = () => {
     const handleMouseMove = (e: MouseEvent) => {
       setPosition({ x: e.clientX, y: e.clientY });
       setHidden(false);
+
+      const target = e.target as HTMLElement;
+      if (target) {
+        const isInteractive = target.closest(
+          'a, button, [role="button"], .interactive, input, select, textarea, [data-interactive="true"]'
+        );
+        setHovered(!!isInteractive);
+      }
     };
 
     const handleMouseLeave = () => {
       setHidden(true);
     };
 
-    const addHoverListeners = () => {
-      const interactives = document.querySelectorAll(
-        'a, button, [role="button"], .interactive, input, select, textarea, [data-interactive="true"]'
-      );
-      interactives.forEach((el) => {
-        el.addEventListener('mouseenter', () => setHovered(true));
-        el.addEventListener('mouseleave', () => setHovered(false));
-      });
-    };
-
     window.addEventListener('mousemove', handleMouseMove);
     document.addEventListener('mouseleave', handleMouseLeave);
-    
-    // Set up hover states
-    addHoverListeners();
-
-    // Re-bind hover states when DOM updates
-    const observer = new MutationObserver(addHoverListeners);
-    observer.observe(document.body, { childList: true, subtree: true });
 
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
       document.removeEventListener('mouseleave', handleMouseLeave);
-      observer.disconnect();
     };
   }, []);
 
