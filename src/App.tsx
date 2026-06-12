@@ -4,7 +4,6 @@ import { ArrowRight, ArrowLeft, Sparkles, BrainCircuit, ExternalLink } from 'luc
 import { ParticleBackground } from './components/ParticleBackground';
 import { CustomCursor } from './components/CustomCursor';
 import { SocialMetrics } from './components/SocialMetrics';
-import { TimelineMe } from './components/TimelineMe';
 import { NicheSlider } from './components/NicheSlider';
 import { TerminalPrompt } from './components/TerminalPrompt';
 import { ToolSimulator } from './components/ToolSimulator';
@@ -15,15 +14,14 @@ import { AudienceList, MonetizationGrid, MilestoneTimeline } from './components/
 const slidesData = [
   { id: 'welcome', title: 'Building Everyday AI Tools I Wish Existed', tagline: 'Pitch Deck Introduction' },
   { id: 'context', title: 'Instagram? Been there, created that, got the engagement.', tagline: 'Slide 01' },
-  { id: 'why-me', title: 'Why Me? The Synergy Background', tagline: 'Slide 02' },
-  { id: 'niche', title: 'My Chosen Niche: AI + ML', tagline: 'Slide 03' },
-  { id: 'stack', title: 'Why Niche Makes Sense (Stack)', tagline: 'Slide 04' },
-  { id: 'proof', title: 'Proof of Execution & Built Tools', tagline: 'Slide 05' },
-  { id: 'workflow', title: 'Core Channel Content Idea', tagline: 'Slide 06' },
-  { id: 'pipeline', title: 'Why Content Will Not Dry Out', tagline: 'Slide 07' },
-  { id: 'audience', title: 'Target Audience Profile', tagline: 'Slide 08' },
-  { id: 'monetize', title: 'Monetization Potential Routes', tagline: 'Slide 09' },
-  { id: 'focus', title: 'Primary Six-Month Focus', tagline: 'Slide 10' }
+  { id: 'niche', title: 'My Chosen Niche: AI + ML', tagline: 'Slide 02' },
+  { id: 'stack', title: 'Why Niche Makes Sense (Stack)', tagline: 'Slide 03' },
+  { id: 'proof', title: 'Proof of Execution & Built Tools', tagline: 'Slide 04' },
+  { id: 'workflow', title: 'Core Channel Content Idea', tagline: 'Slide 05' },
+  { id: 'pipeline', title: 'Why Content Will Not Dry Out', tagline: 'Slide 06' },
+  { id: 'audience', title: 'Target Audience Profile', tagline: 'Slide 07' },
+  { id: 'monetize', title: 'Monetization Potential Routes', tagline: 'Slide 08' },
+  { id: 'focus', title: 'Primary Six-Month Focus', tagline: 'Slide 09' }
 ];
 
 export const App: React.FC = () => {
@@ -189,31 +187,6 @@ export const App: React.FC = () => {
           </motion.div>
         </section>
 
-        {/* SLIDE 2: WHY ME? */}
-        <section className="slide">
-          <motion.div 
-            initial={{ opacity: 0, x: 50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: false, amount: 0.1 }}
-            transition={{ duration: 0.6 }}
-            className="slide-content-wrapper"
-          >
-            <div className="slide-title-area">
-              <span className="tagline">This AI_CODING_WITH_ABHISHEK</span>
-              <h2 className="title-large">Why <span className="title-accent">Me?</span></h2>
-              <p className="slide-description">
-                My background merges operational execution with advanced creative education. 
-              </p>
-              <p style={{ fontSize: '0.9rem', color: '#9ca3af', lineHeight: 1.5 }}>
-                Currently a **Senior Manager at Blinkit** (handling operations, planning, execution) and previously **Vertical Content Head at Byju's** for 6 years (storyboards, animations, scripts).
-              </p>
-              <p style={{ fontSize: '0.85rem', color: '#9ca3af', borderLeft: '2px solid var(--color-indigo)', paddingLeft: '12px', fontStyle: 'italic' }}>
-                I understand both operational bottleneck points (the tools needed) and how to package tech concepts for average viewers.
-              </p>
-            </div>
-            <TimelineMe />
-          </motion.div>
-        </section>
 
         {/* SLIDE 3: CHOSEN NICHE */}
         <section className="slide">
@@ -275,7 +248,7 @@ export const App: React.FC = () => {
             style={{ gridTemplateColumns: '0.8fr 1.2fr' }}
           >
             <div className="slide-title-area">
-              <span className="tagline">Slide 05 • Proof of Execution</span>
+              <span className="tagline">Slide 04 • Proof of Execution</span>
               <h2 className="title-large">Tools Already <span className="title-accent">Built</span></h2>
               <p className="slide-description">
                 I have developed multiple functional systems using AI-assisted coding. These serve as live case-study proofs in the pitch.
@@ -298,7 +271,7 @@ export const App: React.FC = () => {
             className="slide-content-wrapper"
           >
             <div className="slide-title-area">
-              <span className="tagline">Slide 06 • Video Strategy</span>
+              <span className="tagline">Slide 05 • Video Strategy</span>
               <h2 className="title-large">Core Content <span className="title-accent">Idea</span></h2>
               <p className="slide-description">
                 Each video takes the viewer on a complete journey from pain point to practical solution.
