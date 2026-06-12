@@ -143,7 +143,6 @@ export const App: React.FC = () => {
             className="slide-content-wrapper"
           >
             <div className="slide-title-area">
-              <span className="tagline">This AI_CODING_WITH_ABHISHEK</span>
               <h2 className="title-large" style={{ fontSize: '2rem', lineHeight: 1.25 }}>
                 Instagram? Been there, created that, got the <span className="title-accent">engagement.</span>
               </h2>
