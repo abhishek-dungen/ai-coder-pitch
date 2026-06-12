@@ -10,7 +10,7 @@ export const TimelineMe: React.FC = () => {
       {/* Title Header placed directly above the glass-panel block */}
       <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
         <h2 className="title-large" style={{ fontSize: '2.5rem' }}>
-          Why <span className="title-accent">Me?</span>
+          My Experience in <span className="title-accent">Content creation</span>
         </h2>
         <p className="slide-description" style={{ fontSize: '1.1rem', color: '#9ca3af' }}>
           A creative background focused on learning design, scriptwriting, and high-retention video packaging.

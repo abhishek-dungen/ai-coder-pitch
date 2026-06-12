@@ -15,9 +15,9 @@ import { AudienceList, MonetizationGrid, MilestoneTimeline } from './components/
 const slidesData = [
   { id: 'welcome', title: 'Building Everyday AI Tools I Wish Existed', tagline: 'Pitch Deck Introduction' },
   { id: 'context', title: 'Instagram? Been there, created that, got the engagement.', tagline: 'Slide 01' },
-  { id: 'why-me', title: 'Why Me? The Synergy Background', tagline: 'Slide 02' },
+  { id: 'why-me', title: 'My Experience in Content creation', tagline: 'Slide 02' },
   { id: 'niche', title: 'My Chosen Niche: AI + ML', tagline: 'Slide 03' },
-  { id: 'stack', title: 'Why Niche Makes Sense (Stack)', tagline: 'Slide 04' },
+  { id: 'stack', title: 'Why I chose this niche?', tagline: 'Slide 04' },
   { id: 'proof', title: 'Proof of Execution & Built Tools', tagline: 'Slide 05' },
   { id: 'workflow', title: 'Core Channel Content Idea', tagline: 'Slide 06' },
   { id: 'pipeline', title: 'Why Content Will Not Dry Out', tagline: 'Slide 07' },
@@ -242,25 +242,14 @@ export const App: React.FC = () => {
             <div className="slide-title-area">
               <span className="tagline">This AI_CODING_WITH_ABHISHEK</span>
               <h2 className="title-large" style={{ fontSize: '2.3rem', lineHeight: 1.25 }}>
-                Why Niche <span className="title-accent">Makes Sense</span>
+                Why I chose <span className="title-accent">this niche?</span>
               </h2>
-              <p className="slide-description" style={{ fontSize: '0.95rem', color: '#ffffff', fontWeight: 600, marginTop: '8px' }}>
-                AI Power User Stack
+              <p className="slide-description" style={{ fontSize: '1.05rem', color: 'var(--color-cyan)', fontWeight: 600, marginTop: '14px', lineHeight: 1.4, fontStyle: 'italic', borderLeft: '3px solid var(--color-cyan)', paddingLeft: '12px' }}>
+                "I don’t just test AI tools—I push them to their absolute limits."
               </p>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', color: '#9ca3af', fontSize: '0.82rem', marginTop: '16px' }}>
-                <div style={{ display: 'flex', alignItems: 'flex-start', gap: '8px' }}>
-                  <span style={{ color: 'var(--color-cyan)', marginTop: '2px' }}>✔</span>
-                  <span><strong>Active Paid Subscriptions:</strong> Subscribed to all leading AI coding platforms (Cursor Pro, Claude Code, Replit Core, etc.) to leverage max capabilities.</span>
-                </div>
-                <div style={{ display: 'flex', alignItems: 'flex-start', gap: '8px' }}>
-                  <span style={{ color: 'var(--color-cyan)', marginTop: '2px' }}>✔</span>
-                  <span><strong>Daily Execution:</strong> Actively builds custom applications, dashboards, and automated flows to solve real business bottlenecks.</span>
-                </div>
-                <div style={{ display: 'flex', alignItems: 'flex-start', gap: '8px' }}>
-                  <span style={{ color: 'var(--color-cyan)', marginTop: '2px' }}>✔</span>
-                  <span><strong>Full Capability Awareness:</strong> Complete command over prompt contexts, terminal agent loops, GUI agents, and multi-file code workspace indexing.</span>
-                </div>
-              </div>
+              <p style={{ fontSize: '0.86rem', color: '#d1d5db', lineHeight: 1.6, marginTop: '14px' }}>
+                I am a power user of the entire developer ecosystem—from Cursor, Replit, and VS Code to Claude Code, Claude Engineer, and specialized AI platforms. I’ve stress-tested them all to build working apps, custom automations, and bulletproof workflows. The sandbox phase is over; it's time to show the world how it’s actually done.
+              </p>
             </div>
             <TerminalPrompt />
           </motion.div>
