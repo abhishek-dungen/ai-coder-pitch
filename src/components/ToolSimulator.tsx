@@ -36,28 +36,23 @@ export const ToolSimulator: React.FC = () => {
   const [activeToolId, setActiveToolId] = useState<string>('expense');
   const videoFile = videoMapping[activeToolId];
 
-  // Video refs for instant preloading and lag-free playback
-  const videoRefs = useRef<Record<string, HTMLVideoElement | null>>({});
+  // Single video ref for dynamic unmuted autoplay handling
+  const videoRef = useRef<HTMLVideoElement | null>(null);
 
   useEffect(() => {
-    Object.keys(videoMapping).forEach((id) => {
-      const vid = videoRefs.current[id];
-      if (vid) {
-        if (id === activeToolId) {
-          vid.currentTime = 0;
-          vid.muted = false; // Default to unmuted
-          vid.play().catch(err => {
-            console.log("Unmuted autoplay blocked, falling back to muted play: ", err);
-            vid.muted = true; // Mute video
-            vid.play().catch(err2 => {
-              console.log("Muted autoplay failed as well: ", err2);
-            });
+    if (videoRef.current) {
+      videoRef.current.currentTime = 0;
+      videoRef.current.muted = false; // Default to unmuted
+      videoRef.current.play().catch(err => {
+        console.log("Unmuted autoplay blocked, falling back to muted play: ", err);
+        if (videoRef.current) {
+          videoRef.current.muted = true;
+          videoRef.current.play().catch(err2 => {
+            console.log("Muted autoplay also failed: ", err2);
           });
-        } else {
-          vid.pause();
         }
-      }
-    });
+      });
+    }
   }, [activeToolId]);
 
   // States for the last two tools (simulators)
@@ -110,20 +105,20 @@ export const ToolSimulator: React.FC = () => {
       {/* Simulator / Video View Pane */}
       <div style={{ display: 'flex', flexDirection: 'column', minHeight: 0, flexGrow: 1, height: '100%', justifyContent: 'center' }}>
         
-        {/* Videos - Always in the DOM for instant, lag-free preloading and playback */}
-        {Object.entries(videoMapping).map(([id, file]) => (
+        {/* Single Video Tag - Loaded dynamically and adjusted to fit screen height */}
+        {videoFile && (
           <video
-            key={id}
-            ref={(el) => { videoRefs.current[id] = el; }}
-            src={`${base}Images/${file}`}
+            key={activeToolId}
+            ref={videoRef}
+            src={`${base}Images/${videoFile}`}
             preload="auto"
             loop
             playsInline
             controls
             style={{
-              display: activeToolId === id ? 'block' : 'none',
               width: '100%',
-              height: '100%',
+              height: 'auto',
+              maxHeight: 'calc(100vh - 200px)',
               borderRadius: '16px',
               border: '1px solid var(--color-border)',
               boxShadow: '0 12px 45px rgba(6, 182, 212, 0.35)',
@@ -131,7 +126,7 @@ export const ToolSimulator: React.FC = () => {
               objectFit: 'contain',
             }}
           />
-        ))}
+        )}
 
         {/* Interactive Simulators - Only shown for non-video tools */}
         {!videoFile && (
