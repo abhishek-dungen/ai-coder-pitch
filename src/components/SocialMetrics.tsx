@@ -31,8 +31,8 @@ const reelsDataset: ReelData[] = [
     viewsCount: 122000,
     isPinned: true,
     hookText: "⚡ Excel combine data secret no one shows you!",
-    bodyText: "📊 Instead of copying and pasting manually, write =XLOOKUP with vertical range arrays to stitch tables in 2 seconds.",
-    ctaText: "👉 Save this reel and follow @excelbhaiya.abhishek for daily hacks!",
+    bodyText: "📊 Write =XLOOKUP with range arrays to stitch tables in 2 seconds.",
+    ctaText: "👉 Tap live reel link below to follow @excelbhaiya.abhishek!",
     likes: "12.4K",
     comments: "428",
     saves: "5.2K",
@@ -47,7 +47,7 @@ const reelsDataset: ReelData[] = [
     viewsCount: 120000,
     isPinned: true,
     hookText: "⚡ New here? Let me show you how to dominate spreadsheet workflows.",
-    bodyText: "📊 Over the next 90 days, we are building custom AI tools, automations, and dashboards to double your speed.",
+    bodyText: "📊 Over the next 90 days, we are building custom AI tools to double your speed.",
     ctaText: "👉 Tap the link in my bio to register for our upcoming 3-hour LIVE Masterclass!",
     likes: "10.8K",
     comments: "392",
@@ -62,58 +62,13 @@ const reelsDataset: ReelData[] = [
     viewsCount: 1933,
     isPinned: true,
     hookText: "⚡ Shortlist your resume for high-paying Excel jobs in seconds.",
-    bodyText: "📊 Feed the job description to the AI assistant, align keyword metrics, and export a perfectly matched layout.",
+    bodyText: "📊 Align keyword metrics with AI, and export a perfectly matched layout.",
     ctaText: "👉 Share this with a friend who is actively looking for job roles!",
     likes: "185",
     comments: "24",
     saves: "98",
     shares: "45",
     bgPos: "100% 56.6%"
-  },
-  {
-    id: 4,
-    title: "Internet Table को Excel में Paste करने का सही तरीका जानते हैं?",
-    viewsText: "85K",
-    viewsCount: 85000,
-    isPinned: false,
-    hookText: "⚡ Don't copy-paste websites directly into Excel! It ruins cell formats.",
-    bodyText: "📊 Use 'Data from Web', input the URL, choose the specific data table, and Excel formats it instantly.",
-    ctaText: "👉 Follow for daily hacks that keep your worksheets clean!",
-    likes: "6.2K",
-    comments: "148",
-    saves: "2.1K",
-    shares: "710",
-    bgPos: "0% 81.3%"
-  },
-  {
-    id: 5,
-    title: "Excel में Automatic Sales Tracker कैसे बनता है?",
-    viewsText: "64K",
-    viewsCount: 64000,
-    isPinned: false,
-    hookText: "⚡ Build an interactive sales tracker dashboard in 5 minutes.",
-    bodyText: "📊 Use Pivot Charts combined with Slicers for an dynamic, interactive, and premium business reporting tool.",
-    ctaText: "👉 Drop a comment if you want the sample tracker sheet sent directly!",
-    likes: "4.9K",
-    comments: "215",
-    saves: "1.8K",
-    shares: "520",
-    bgPos: "50% 81.3%"
-  },
-  {
-    id: 6,
-    title: "Excel में ये Secret Hack Dynamic Dropdown को Smart कैसे बनाता है?",
-    viewsText: "92K",
-    viewsCount: 92000,
-    isPinned: false,
-    hookText: "⚡ Dynamic dependent dropdown lists without complex coding.",
-    bodyText: "📊 Combine the INDIRECT function with named ranges for dropdowns that adjust automatically based on selection.",
-    ctaText: "👉 Save this reel and build it yourself today!",
-    likes: "8.1K",
-    comments: "310",
-    saves: "3.4K",
-    shares: "920",
-    bgPos: "100% 81.3%"
   }
 ];
 
@@ -135,7 +90,7 @@ export const SocialMetrics: React.FC = () => {
     if (isPlaying && selectedReelIndex !== null) {
       timer = window.setInterval(() => {
         setProgress((prev) => {
-          const next = prev + 1.2;
+          const next = prev + 1.5;
           if (next >= 100) {
             setIsPlaying(false);
             setActiveSegment(null);
@@ -196,55 +151,37 @@ export const SocialMetrics: React.FC = () => {
       display: 'flex', 
       flexDirection: 'row', 
       gap: '16px', 
-      height: '425px', 
+      height: '355px', 
       width: '100%',
       justifyContent: 'center',
-      alignItems: 'center'
+      alignItems: 'stretch',
+      overflow: 'hidden'
     }}>
       
       {/* =========================================================
           BLOCK 1: INSTAGRAM PROFILE MOCKUP (WITH INTEGRATED PLAYER)
           ========================================================= */}
       <div className="glass-panel" style={{
-        flex: 1,
-        padding: '0',
+        flex: 1.1,
+        padding: '10px',
         display: 'flex',
         flexDirection: 'column',
         background: '#090a0f',
         borderColor: 'var(--color-border)',
-        borderRadius: '16px',
+        borderRadius: '12px',
         overflow: 'hidden',
         position: 'relative',
-        height: '100%',
         boxShadow: '0 8px 32px rgba(0, 0, 0, 0.5)'
       }}>
-        {/* Phone top status bar */}
-        <div style={{ 
-          display: 'flex', 
-          justifyContent: 'space-between', 
-          padding: '6px 14px', 
-          fontSize: '0.65rem', 
-          color: '#9ca3af', 
-          background: '#05060a',
-          borderBottom: '1px solid rgba(255, 255, 255, 0.05)',
-          fontFamily: 'var(--font-mono)'
-        }}>
-          <span>2:44 PM</span>
-          <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
-            <span>📶 VoWiFi</span>
-            <span>🔋 61%</span>
-          </div>
-        </div>
-
         {/* Instagram Header (shows profile title or Player Back Button) */}
         <div style={{ 
           display: 'flex', 
           justifyContent: 'space-between', 
           alignItems: 'center', 
-          padding: '8px 12px',
+          paddingBottom: '8px',
           borderBottom: '1px solid rgba(255, 255, 255, 0.05)',
           background: '#090a0f',
-          minHeight: '36px'
+          minHeight: '28px'
         }}>
           {activeReel ? (
             <button 
@@ -254,26 +191,26 @@ export const SocialMetrics: React.FC = () => {
                 border: 'none',
                 borderRadius: '4px',
                 color: 'white',
-                padding: '3px 8px',
-                fontSize: '0.68rem',
+                padding: '2px 6px',
+                fontSize: '0.62rem',
                 display: 'flex',
                 alignItems: 'center',
-                gap: '4px',
+                gap: '3px',
                 cursor: 'pointer'
               }}
             >
-              <ArrowLeft size={12} /> Back to Grid
+              <ArrowLeft size={10} /> Back to Profile Grid
             </button>
           ) : (
-            <span style={{ fontWeight: 700, fontSize: '0.85rem', color: 'white' }}>
+            <span style={{ fontWeight: 700, fontSize: '0.78rem', color: 'white' }}>
               excelbhaiya.abhishek
             </span>
           )}
-          <Settings size={14} style={{ color: 'white' }} />
+          <Settings size={12} style={{ color: 'white' }} />
         </div>
 
-        {/* Profile Scrollable Content Window */}
-        <div style={{ flex: 1, overflowY: 'auto', padding: '10px', background: '#090a0f', position: 'relative' }}>
+        {/* Profile Inner Content Window (No Vertical Scrolling) */}
+        <div style={{ flex: 1, padding: '8px 0 0 0', background: '#090a0f', position: 'relative', overflow: 'hidden' }}>
           
           <AnimatePresence mode="wait">
             {!activeReel ? (
@@ -283,15 +220,15 @@ export const SocialMetrics: React.FC = () => {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                transition={{ duration: 0.2 }}
-                style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}
+                transition={{ duration: 0.15 }}
+                style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}
               >
                 {/* Stats row */}
-                <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                   <div style={{ position: 'relative' }}>
                     <div style={{
-                      width: '50px',
-                      height: '50px',
+                      width: '42px',
+                      height: '42px',
                       borderRadius: '50%',
                       background: 'linear-gradient(45deg, #f9ce34 10%, #ee2a7b 50%, #6228d7 90%)',
                       display: 'flex',
@@ -309,7 +246,7 @@ export const SocialMetrics: React.FC = () => {
                         justifyContent: 'center',
                         color: 'white',
                         fontWeight: 700,
-                        fontSize: '0.85rem',
+                        fontSize: '0.72rem',
                         border: '2px solid #090a0f'
                       }}>
                         AK
@@ -321,56 +258,56 @@ export const SocialMetrics: React.FC = () => {
                       right: '0',
                       background: 'var(--color-cyan)',
                       borderRadius: '50%',
-                      width: '14px',
-                      height: '14px',
+                      width: '12px',
+                      height: '12px',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
                       color: 'black',
                       fontWeight: 'bold',
-                      fontSize: '8px'
+                      fontSize: '7px'
                     }}>
-                      <Plus size={8} />
+                      <Plus size={6} />
                     </div>
                   </div>
 
                   <div style={{ display: 'flex', flexGrow: 1, justifyContent: 'space-around', textAlign: 'center' }}>
                     <div>
-                      <div style={{ fontSize: '0.8rem', fontWeight: 700, color: 'white' }}>137</div>
-                      <div style={{ fontSize: '0.6rem', color: '#9ca3af' }}>posts</div>
+                      <div style={{ fontSize: '0.75rem', fontWeight: 700, color: 'white' }}>137</div>
+                      <div style={{ fontSize: '0.55rem', color: '#9ca3af' }}>posts</div>
                     </div>
                     <div>
-                      <div style={{ fontSize: '0.8rem', fontWeight: 700, color: 'white' }}>13.6K</div>
-                      <div style={{ fontSize: '0.6rem', color: '#9ca3af' }}>followers</div>
+                      <div style={{ fontSize: '0.75rem', fontWeight: 700, color: 'white' }}>13.6K</div>
+                      <div style={{ fontSize: '0.55rem', color: '#9ca3af' }}>followers</div>
                     </div>
                     <div>
-                      <div style={{ fontSize: '0.8rem', fontWeight: 700, color: 'white' }}>1</div>
-                      <div style={{ fontSize: '0.6rem', color: '#9ca3af' }}>following</div>
+                      <div style={{ fontSize: '0.75rem', fontWeight: 700, color: 'white' }}>1</div>
+                      <div style={{ fontSize: '0.55rem', color: '#9ca3af' }}>following</div>
                     </div>
                   </div>
                 </div>
 
                 {/* Profile Bio info */}
                 <div>
-                  <div style={{ fontSize: '0.75rem', fontWeight: 700, color: 'white' }}>Abhishek Kumar</div>
-                  <div style={{ fontSize: '0.68rem', color: '#e5e7eb', marginTop: '2px', display: 'flex', flexDirection: 'column', gap: '1px', lineHeight: 1.25 }}>
+                  <div style={{ fontSize: '0.72rem', fontWeight: 700, color: 'white' }}>Abhishek Kumar</div>
+                  <div style={{ fontSize: '0.65rem', color: '#e5e7eb', marginTop: '1px', display: 'flex', flexDirection: 'column', gap: '1px', lineHeight: 1.2 }}>
                     <div>👨‍💻 8+ Years of Corporate Experience</div>
                     <div>💯 New Excel Hack Every Alternate Day</div>
                     <div>👇 Excel +AI Career LIVE Masterclass</div>
-                    <a href="http://www.excelbhaiyaabhishek.com/excel-career-3hr" target="_blank" rel="noreferrer" style={{ color: 'var(--color-cyan)', display: 'flex', alignItems: 'center', gap: '2px', textDecoration: 'none', fontSize: '0.65rem' }}>
+                    <a href="http://www.excelbhaiyaabhishek.com/excel-career-3hr" target="_blank" rel="noreferrer" style={{ color: 'var(--color-cyan)', display: 'flex', alignItems: 'center', gap: '2px', textDecoration: 'none', fontSize: '0.62rem' }}>
                       <span style={{ textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap', maxWidth: '170px' }}>www.excelbhaiyaabhishek.com</span>
                       <ExternalLink size={8} />
                     </a>
                   </div>
                 </div>
 
-                {/* Reels Pinned tab icon */}
-                <div style={{ borderBottom: '1px solid rgba(255,255,255,0.05)', paddingBottom: '4px', display: 'flex', justifyContent: 'center' }}>
-                  <Grid size={14} style={{ color: 'white' }} />
+                {/* Reels tab separator */}
+                <div style={{ borderBottom: '1px solid rgba(255,255,255,0.05)', paddingBottom: '3px', display: 'flex', justifyContent: 'center' }}>
+                  <Grid size={12} style={{ color: 'white' }} />
                 </div>
 
-                {/* Grid layout */}
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '3px', marginTop: '2px' }}>
+                {/* Single Row of 3 Pinned Reels */}
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '4px', marginTop: '2px' }}>
                   {reelsDataset.map((reel, index) => (
                     <div 
                       key={reel.id} 
@@ -410,24 +347,24 @@ export const SocialMetrics: React.FC = () => {
                       }}
                       className="hover-overlay"
                       >
-                        <Play size={16} fill="white" style={{ color: 'white' }} />
+                        <Play size={14} fill="white" style={{ color: 'white' }} />
                       </div>
                     </div>
                   ))}
                 </div>
               </motion.div>
             ) : (
-              // SIMULATED REEL PLAYER OVERLAY (Renders inside the phone frame)
+              // SIMULATED REEL PLAYER OVERLAY
               <motion.div
                 key="reel-player"
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.95 }}
-                transition={{ duration: 0.2 }}
-                style={{ display: 'flex', flexDirection: 'column', gap: '8px', height: '100%' }}
+                transition={{ duration: 0.15 }}
+                style={{ display: 'flex', flexDirection: 'column', gap: '6px', height: '100%', overflow: 'hidden' }}
               >
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                  <h4 style={{ fontSize: '0.75rem', fontWeight: 700, color: 'white', lineHeight: 1.25 }}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '3px' }}>
+                  <h4 style={{ fontSize: '0.68rem', fontWeight: 700, color: 'white', lineHeight: 1.2, display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
                     {activeReel.title}
                   </h4>
                   
@@ -444,27 +381,28 @@ export const SocialMetrics: React.FC = () => {
                         background: 'linear-gradient(45deg, #f9ce34 10%, #ee2a7b 50%, #6228d7 90%)',
                         color: 'white',
                         border: 'none',
-                        borderRadius: '4px',
-                        padding: '6px 10px',
-                        fontSize: '0.65rem',
+                        borderRadius: '3px',
+                        padding: '4px 8px',
+                        fontSize: '0.6rem',
                         fontWeight: 700,
                         textDecoration: 'none',
                         cursor: 'pointer',
-                        boxShadow: '0 4px 10px rgba(238, 42, 123, 0.2)'
+                        boxShadow: '0 4px 10px rgba(238, 42, 123, 0.2)',
+                        textAlign: 'center'
                       }}
                       className="interactive"
                     >
                       <span>View Live Reel on Instagram</span>
-                      <ExternalLink size={10} />
+                      <ExternalLink size={8} />
                     </a>
                   )}
                 </div>
 
                 {/* Simulated Screen */}
                 <div style={{ 
-                  height: '110px', 
+                  height: '80px', 
                   background: '#040508', 
-                  borderRadius: '6px', 
+                  borderRadius: '4px', 
                   border: '1px solid rgba(255,255,255,0.08)',
                   display: 'flex', 
                   flexDirection: 'column',
@@ -472,21 +410,18 @@ export const SocialMetrics: React.FC = () => {
                   alignItems: 'center', 
                   position: 'relative',
                   overflow: 'hidden',
-                  padding: '8px'
+                  padding: '6px'
                 }}>
-                  <div style={{ position: 'absolute', inset: 0, opacity: 0.08, backgroundImage: 'radial-gradient(circle, var(--color-cyan) 1px, transparent 1px)', backgroundSize: '10px 10px' }} />
+                  <div style={{ position: 'absolute', inset: 0, opacity: 0.08, backgroundImage: 'radial-gradient(circle, var(--color-cyan) 1px, transparent 1px)', backgroundSize: '8px 8px' }} />
 
                   {isPlaying ? (
                     <div style={{ zIndex: 1, textAlign: 'center' }}>
-                      <div className="animate-float" style={{ fontSize: '1.8rem', marginBottom: '2px' }}>
+                      <div className="animate-float" style={{ fontSize: '1.4rem', marginBottom: '1px' }}>
                         {activeSegment === 'hook' && '⚡'}
                         {activeSegment === 'body' && '📊'}
                         {activeSegment === 'cta' && '👉'}
                       </div>
-                      <div style={{ fontSize: '0.55rem', fontFamily: 'var(--font-mono)', color: 'var(--color-cyan)', textTransform: 'uppercase', letterSpacing: '1px' }}>
-                        Playback
-                      </div>
-                      <div style={{ fontSize: '0.62rem', color: 'white', marginTop: '4px', fontWeight: 600, padding: '0 6px', lineHeight: 1.25 }}>
+                      <div style={{ fontSize: '0.62rem', color: 'white', fontWeight: 600, padding: '0 4px', lineHeight: 1.2 }}>
                         {activeSegment === 'hook' && activeReel.hookText}
                         {activeSegment === 'body' && activeReel.bodyText}
                         {activeSegment === 'cta' && activeReel.ctaText}
@@ -496,9 +431,9 @@ export const SocialMetrics: React.FC = () => {
                     <button 
                       onClick={() => setIsPlaying(true)}
                       className="btn btn-primary"
-                      style={{ borderRadius: '50%', width: '36px', height: '36px', padding: 0, justifyContent: 'center', zIndex: 2 }}
+                      style={{ borderRadius: '50%', width: '30px', height: '30px', padding: 0, justifyContent: 'center', zIndex: 2 }}
                     >
-                      <Play size={14} fill="currentColor" style={{ marginLeft: '2px' }} />
+                      <Play size={10} fill="currentColor" style={{ marginLeft: '1px' }} />
                     </button>
                   )}
 
@@ -508,9 +443,9 @@ export const SocialMetrics: React.FC = () => {
                       key={emoji.id}
                       style={{
                         position: 'absolute',
-                        bottom: '8px',
+                        bottom: '4px',
                         left: `${emoji.x}%`,
-                        fontSize: '1.2rem',
+                        fontSize: '1rem',
                         opacity: 0,
                         transform: 'translateY(0)',
                         animation: 'floatUp 2s cubic-bezier(0.18, 0.89, 0.32, 1.28) forwards',
@@ -527,35 +462,35 @@ export const SocialMetrics: React.FC = () => {
                     position: 'absolute', 
                     bottom: 0, 
                     left: 0, 
-                    height: '3px', 
+                    height: '2px', 
                     background: 'linear-gradient(90deg, var(--color-cyan), var(--color-indigo))', 
                     width: `${progress}%`, 
                     transition: 'width 0.1s linear' 
                   }} />
                 </div>
 
-                {/* Progress markers */}
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', fontSize: '0.65rem', lineHeight: 1.2 }}>
+                {/* Progress script labels */}
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '3px', fontSize: '0.6rem', lineHeight: 1.15 }}>
                   <div style={{ 
-                    padding: '4px 8px', 
-                    borderRadius: '4px',
-                    borderLeft: activeSegment === 'hook' ? '3px solid var(--color-magenta)' : '3px solid transparent',
+                    padding: '3px 6px', 
+                    borderRadius: '3px',
+                    borderLeft: activeSegment === 'hook' ? '2px solid var(--color-magenta)' : '2px solid transparent',
                     background: activeSegment === 'hook' ? 'rgba(244, 63, 94, 0.05)' : 'rgba(255,255,255,0.01)'
                   }}>
                     <strong style={{ color: 'var(--color-magenta)' }}>1. Hook (0-3s)</strong>: Intriguing start.
                   </div>
                   <div style={{ 
-                    padding: '4px 8px', 
-                    borderRadius: '4px',
-                    borderLeft: activeSegment === 'body' ? '3px solid var(--color-cyan)' : '3px solid transparent',
+                    padding: '3px 6px', 
+                    borderRadius: '3px',
+                    borderLeft: activeSegment === 'body' ? '2px solid var(--color-cyan)' : '2px solid transparent',
                     background: activeSegment === 'body' ? 'rgba(6, 182, 212, 0.05)' : 'rgba(255,255,255,0.01)'
                   }}>
-                    <strong style={{ color: 'var(--color-cyan)' }}>2. Body (3-12s)</strong>: Fast prompt/code build.
+                    <strong style={{ color: 'var(--color-cyan)' }}>2. Body (3-12s)</strong>: Fast prompt build.
                   </div>
                   <div style={{ 
-                    padding: '4px 8px', 
-                    borderRadius: '4px',
-                    borderLeft: activeSegment === 'cta' ? '3px solid var(--color-indigo)' : '3px solid transparent',
+                    padding: '3px 6px', 
+                    borderRadius: '3px',
+                    borderLeft: activeSegment === 'cta' ? '2px solid var(--color-indigo)' : '2px solid transparent',
                     background: activeSegment === 'cta' ? 'rgba(99, 102, 241, 0.05)' : 'rgba(255,255,255,0.01)'
                   }}>
                     <strong style={{ color: 'var(--color-indigo)' }}>3. CTA (12-15s)</strong>: CTA conversions.
@@ -567,21 +502,21 @@ export const SocialMetrics: React.FC = () => {
                   display: 'flex', 
                   justifyContent: 'space-between', 
                   borderTop: '1px solid rgba(255,255,255,0.05)', 
-                  paddingTop: '6px',
-                  fontSize: '0.65rem'
+                  paddingTop: '4px',
+                  fontSize: '0.6rem'
                 }}>
-                  <button onClick={() => handleActionClick('like')} className="interactive" style={{ background: 'none', border: 'none', color: '#f3f4f6', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '3px' }}>
-                    <Heart size={12} fill={likesCounter > 0 ? 'var(--color-magenta)' : 'none'} style={{ color: 'var(--color-magenta)' }} />
+                  <button onClick={() => handleActionClick('like')} className="interactive" style={{ background: 'none', border: 'none', color: '#f3f4f6', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '2px' }}>
+                    <Heart size={10} fill={likesCounter > 0 ? 'var(--color-magenta)' : 'none'} style={{ color: 'var(--color-magenta)' }} />
                     <span>{likesCounter > 0 ? (parseFloat(activeReel.likes) + likesCounter/1000).toFixed(2) + 'K' : activeReel.likes}</span>
                   </button>
-                  <button className="interactive" style={{ background: 'none', border: 'none', color: '#f3f4f6', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '3px' }}>
-                    <MessageCircle size={12} style={{ color: 'var(--color-cyan)' }} /> <span>{activeReel.comments}</span>
+                  <button className="interactive" style={{ background: 'none', border: 'none', color: '#f3f4f6', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '2px' }}>
+                    <MessageCircle size={10} style={{ color: 'var(--color-cyan)' }} /> <span>{activeReel.comments}</span>
                   </button>
-                  <button onClick={() => handleActionClick('save')} className="interactive" style={{ background: 'none', border: 'none', color: '#f3f4f6', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '3px' }}>
-                    <Bookmark size={12} style={{ color: '#eab308' }} /> <span>{activeReel.saves}</span>
+                  <button onClick={() => handleActionClick('save')} className="interactive" style={{ background: 'none', border: 'none', color: '#f3f4f6', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '2px' }}>
+                    <Bookmark size={10} style={{ color: '#eab308' }} /> <span>{activeReel.saves}</span>
                   </button>
-                  <button onClick={() => handleActionClick('share')} className="interactive" style={{ background: 'none', border: 'none', color: '#f3f4f6', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '3px' }}>
-                    <Share2 size={12} style={{ color: 'var(--color-indigo)' }} /> <span>{activeReel.shares}</span>
+                  <button onClick={() => handleActionClick('share')} className="interactive" style={{ background: 'none', border: 'none', color: '#f3f4f6', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '2px' }}>
+                    <Share2 size={10} style={{ color: 'var(--color-indigo)' }} /> <span>{activeReel.shares}</span>
                   </button>
                 </div>
               </motion.div>
@@ -596,101 +531,73 @@ export const SocialMetrics: React.FC = () => {
           ========================================================= */}
       <div className="glass-panel" style={{
         flex: 1,
-        padding: '0',
+        padding: '10px',
         display: 'flex',
         flexDirection: 'column',
         background: '#090a0f',
         borderColor: 'var(--color-border)',
-        borderRadius: '16px',
+        borderRadius: '12px',
         overflow: 'hidden',
         height: '100%',
         boxShadow: '0 8px 32px rgba(0, 0, 0, 0.5)'
       }}>
-        {/* Phone top status bar */}
-        <div style={{ 
-          display: 'flex', 
-          justifyContent: 'space-between', 
-          padding: '6px 14px', 
-          fontSize: '0.65rem', 
-          color: '#9ca3af', 
-          background: '#05060a',
-          borderBottom: '1px solid rgba(255, 255, 255, 0.05)',
-          fontFamily: 'var(--font-mono)'
-        }}>
-          <span>2:44 PM</span>
-          <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
-            <span>📶 VoWiFi</span>
-            <span>🔋 61%</span>
-          </div>
-        </div>
-
         {/* Header bar */}
         <div style={{ 
           display: 'flex', 
           alignItems: 'center', 
-          padding: '8px 12px',
+          paddingBottom: '8px',
           borderBottom: '1px solid rgba(255, 255, 255, 0.05)',
           background: '#090a0f',
-          minHeight: '36px'
+          minHeight: '28px'
         }}>
-          <span style={{ fontWeight: 700, fontSize: '0.85rem', color: 'white' }}>
+          <span style={{ fontWeight: 700, fontSize: '0.78rem', color: 'white' }}>
             Professional dashboard
           </span>
         </div>
 
-        {/* Dashboard contents */}
-        <div style={{ flex: 1, overflowY: 'auto', padding: '10px', background: '#090a0f', display: 'flex', flexDirection: 'column', gap: '10px' }}>
-          {/* Insights block */}
+        {/* Dashboard Content (No vertical scrolling) */}
+        <div style={{ flex: 1, padding: '8px 0 0 0', background: '#090a0f', display: 'flex', flexDirection: 'column', gap: '8px', overflow: 'hidden' }}>
+          
+          {/* Insights horizontal row section */}
           <div>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <span style={{ fontSize: '0.75rem', color: '#9ca3af', fontWeight: 600, textTransform: 'uppercase', fontFamily: 'var(--font-mono)' }}>Insights</span>
-              <span style={{ fontSize: '0.6rem', color: '#6b7280' }}>Last 30 days</span>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingBottom: '3px' }}>
+              <span style={{ fontSize: '0.62rem', color: '#9ca3af', fontWeight: 600, textTransform: 'uppercase', fontFamily: 'var(--font-mono)' }}>Insights</span>
+              <span style={{ fontSize: '0.55rem', color: '#6b7280' }}>Last 30 days</span>
             </div>
             
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '5px', marginTop: '5px' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '6px 10px', background: 'rgba(255,255,255,0.02)', borderRadius: '6px', border: '1px solid rgba(255,255,255,0.04)' }}>
-                <div>
-                  <div style={{ fontSize: '0.62rem', color: '#9ca3af' }}>Views</div>
-                  <div style={{ fontSize: '0.85rem', fontWeight: 700, color: 'white', marginTop: '1px' }}>12.3L <span style={{ color: '#22c55e', fontSize: '0.7rem' }}>↗</span></div>
-                </div>
-                <ChevronRight size={12} style={{ color: '#6b7280' }} />
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '4px' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', padding: '4px 6px', background: 'rgba(255,255,255,0.02)', borderRadius: '4px', border: '1px solid rgba(255,255,255,0.04)' }}>
+                <span style={{ fontSize: '0.55rem', color: '#9ca3af' }}>Views</span>
+                <span style={{ fontSize: '0.78rem', fontWeight: 700, color: 'white', marginTop: '1px' }}>12.3L <span style={{ color: '#22c55e', fontSize: '0.6rem' }}>↗</span></span>
               </div>
-
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '6px 10px', background: 'rgba(255,255,255,0.02)', borderRadius: '6px', border: '1px solid rgba(255,255,255,0.04)' }}>
-                <div>
-                  <div style={{ fontSize: '0.62rem', color: '#9ca3af' }}>Accounts reached</div>
-                  <div style={{ fontSize: '0.85rem', fontWeight: 700, color: 'white', marginTop: '1px' }}>4.6L <span style={{ color: '#22c55e', fontSize: '0.7rem' }}>↗</span></div>
-                </div>
-                <ChevronRight size={12} style={{ color: '#6b7280' }} />
+              <div style={{ display: 'flex', flexDirection: 'column', padding: '4px 6px', background: 'rgba(255,255,255,0.02)', borderRadius: '4px', border: '1px solid rgba(255,255,255,0.04)' }}>
+                <span style={{ fontSize: '0.55rem', color: '#9ca3af', whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden' }}>Reached</span>
+                <span style={{ fontSize: '0.78rem', fontWeight: 700, color: 'white', marginTop: '1px' }}>4.6L <span style={{ color: '#22c55e', fontSize: '0.6rem' }}>↗</span></span>
               </div>
-
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '6px 10px', background: 'rgba(255,255,255,0.02)', borderRadius: '6px', border: '1px solid rgba(255,255,255,0.04)' }}>
-                <div>
-                  <div style={{ fontSize: '0.62rem', color: '#9ca3af' }}>Net followers</div>
-                  <div style={{ fontSize: '0.85rem', fontWeight: 700, color: 'white', marginTop: '1px' }}>+8.3T <span style={{ color: '#22c55e', fontSize: '0.7rem' }}>↗</span></div>
-                </div>
-                <ChevronRight size={12} style={{ color: '#6b7280' }} />
+              <div style={{ display: 'flex', flexDirection: 'column', padding: '4px 6px', background: 'rgba(255,255,255,0.02)', borderRadius: '4px', border: '1px solid rgba(255,255,255,0.04)' }}>
+                <span style={{ fontSize: '0.55rem', color: '#9ca3af', whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden' }}>Net Foll.</span>
+                <span style={{ fontSize: '0.78rem', fontWeight: 700, color: 'white', marginTop: '1px' }}>+8.3T <span style={{ color: '#22c55e', fontSize: '0.6rem' }}>↗</span></span>
               </div>
             </div>
           </div>
 
           {/* Next Steps block */}
           <div>
-            <h3 style={{ fontSize: '0.75rem', color: '#9ca3af', fontWeight: 600, textTransform: 'uppercase', fontFamily: 'var(--font-mono)' }}>Next steps</h3>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '5px', marginTop: '5px' }}>
-              <div style={{ display: 'flex', gap: '8px', padding: '6px', background: 'rgba(255,255,255,0.02)', borderRadius: '6px', border: '1px solid rgba(255,255,255,0.03)' }}>
-                <div style={{ minWidth: '24px', height: '24px', background: 'rgba(6, 182, 212, 0.1)', color: 'var(--color-cyan)', borderRadius: '4px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.65rem' }}>🎙️</div>
+            <h3 style={{ fontSize: '0.62rem', color: '#9ca3af', fontWeight: 600, textTransform: 'uppercase', fontFamily: 'var(--font-mono)' }}>Next steps</h3>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', marginTop: '3px' }}>
+              <div style={{ display: 'flex', gap: '6px', padding: '4px', background: 'rgba(255,255,255,0.02)', borderRadius: '4px', border: '1px solid rgba(255,255,255,0.03)' }}>
+                <div style={{ minWidth: '18px', height: '18px', background: 'rgba(6, 182, 212, 0.1)', color: 'var(--color-cyan)', borderRadius: '3px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.55rem' }}>🎙️</div>
                 <div>
-                  <h4 style={{ fontSize: '0.68rem', fontWeight: 700, color: 'white' }}>Edit audio like a pro</h4>
-                  <p style={{ fontSize: '0.58rem', color: '#9ca3af', marginTop: '1px', lineHeight: 1.2 }}>Get studio-quality sound with enhance tools.</p>
+                  <h4 style={{ fontSize: '0.62rem', fontWeight: 700, color: 'white', lineHeight: 1.1 }}>Edit audio like a pro</h4>
+                  <p style={{ fontSize: '0.52rem', color: '#9ca3af', marginTop: '1px', lineHeight: 1.1 }}>Get studio-quality sound with enhance tools.</p>
                 </div>
               </div>
 
-              <div style={{ display: 'flex', gap: '8px', padding: '6px', background: 'rgba(255,255,255,0.02)', borderRadius: '6px', border: '1px solid rgba(255,255,255,0.03)' }}>
-                <div style={{ minWidth: '24px', height: '24px', background: 'rgba(168, 85, 247, 0.1)', color: '#a855f7', borderRadius: '4px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.65rem' }}>🔥</div>
+              <div style={{ display: 'flex', gap: '6px', padding: '4px', background: 'rgba(255,255,255,0.02)', borderRadius: '4px', border: '1px solid rgba(255,255,255,0.03)' }}>
+                <div style={{ minWidth: '18px', height: '18px', background: 'rgba(168, 85, 247, 0.1)', color: '#a855f7', borderRadius: '3px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.55rem' }}>🔥</div>
                 <div>
-                  <h4 style={{ fontSize: '0.68rem', fontWeight: 700, color: 'white' }}>Find your next hit with trial reels</h4>
-                  <p style={{ fontSize: '0.58rem', color: '#9ca3af', marginTop: '1px', lineHeight: 1.2 }}>See performance with non-followers first.</p>
+                  <h4 style={{ fontSize: '0.62rem', fontWeight: 700, color: 'white', lineHeight: 1.1 }}>Find hit with trial reels</h4>
+                  <p style={{ fontSize: '0.52rem', color: '#9ca3af', marginTop: '1px', lineHeight: 1.1 }}>Check performance with non-followers first.</p>
                 </div>
               </div>
             </div>
@@ -698,23 +605,23 @@ export const SocialMetrics: React.FC = () => {
 
           {/* Your Tools list */}
           <div>
-            <h3 style={{ fontSize: '0.75rem', color: '#9ca3af', fontWeight: 600, textTransform: 'uppercase', fontFamily: 'var(--font-mono)' }}>Your tools</h3>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '1px', background: 'rgba(255, 255, 255, 0.05)', borderRadius: '6px', overflow: 'hidden', marginTop: '5px' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '6px 10px', background: '#0d0f17', fontSize: '0.65rem' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: 'white' }}>
+            <h3 style={{ fontSize: '0.62rem', color: '#9ca3af', fontWeight: 600, textTransform: 'uppercase', fontFamily: 'var(--font-mono)' }}>Your tools</h3>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '1px', background: 'rgba(255, 255, 255, 0.05)', borderRadius: '4px', overflow: 'hidden', marginTop: '3px' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '4px 8px', background: '#0d0f17', fontSize: '0.6rem' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '5px', color: 'white' }}>
                   <span>📊</span>
                   <span>Monthly recap</span>
-                  <span style={{ background: '#2563eb', color: 'white', padding: '1px 4px', borderRadius: '8px', fontSize: '0.5rem', fontWeight: 'bold' }}>New</span>
+                  <span style={{ background: '#2563eb', color: 'white', padding: '1px 3px', borderRadius: '6px', fontSize: '0.45rem', fontWeight: 'bold' }}>New</span>
                 </div>
-                <ChevronRight size={10} style={{ color: '#6b7280' }} />
+                <ChevronRight size={8} style={{ color: '#6b7280' }} />
               </div>
 
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '6px 10px', background: '#0d0f17', fontSize: '0.65rem' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: 'white' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '4px 8px', background: '#0d0f17', fontSize: '0.6rem' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '5px', color: 'white' }}>
                   <span>💡</span>
                   <span>Best practices</span>
                 </div>
-                <ChevronRight size={10} style={{ color: '#6b7280' }} />
+                <ChevronRight size={8} style={{ color: '#6b7280' }} />
               </div>
             </div>
           </div>
