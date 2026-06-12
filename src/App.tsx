@@ -303,25 +303,28 @@ export const App: React.FC = () => {
         </section>
 
         {/* SLIDE 6: CORE CONTENT IDEA WORKFLOW */}
-        <section className="slide">
+        <section className="slide" style={{ padding: '80px 60px 90px 60px' }}>
           <motion.div 
             initial={{ opacity: 0, x: 50 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: false, amount: 0.1 }}
             transition={{ duration: 0.6 }}
             className="slide-content-wrapper"
+            style={{ gridTemplateColumns: '1fr' }}
           >
-            <div className="slide-title-area">
-              <span className="tagline">Slide 06 • Video Strategy</span>
-              <h2 className="title-large">Core Content <span className="title-accent">Idea</span></h2>
-              <p className="slide-description">
-                Each video takes the viewer on a complete journey from pain point to practical solution.
-              </p>
-              <p style={{ fontSize: '0.9rem', color: '#9ca3af', lineHeight: 1.5 }}>
-                The audience sees the full flow: **Problem ➔ Idea ➔ Prompt ➔ AI Workflow ➔ Build Process ➔ Product ➔ Use Case ➔ Benefit**.
-              </p>
+            <div style={{ display: 'flex', flexDirection: 'column', height: '100%', width: '100%', gap: '16px' }}>
+              <div style={{ textAlign: 'center' }}>
+                <h2 className="title-large" style={{ fontSize: '2.5rem', marginBottom: '8px' }}>
+                  Core Journey of <span className="title-accent">Each Video</span>
+                </h2>
+                <p className="slide-description" style={{ maxWidth: '800px', margin: '0 auto', fontSize: '1rem', color: '#9ca3af' }}>
+                  Each video takes the viewer on a complete journey from pain point to practical solution.
+                </p>
+              </div>
+              <div style={{ flexGrow: 1, minHeight: 0, display: 'flex', flexDirection: 'column', marginTop: '10px' }}>
+                <ContentWorkflow />
+              </div>
             </div>
-            <ContentWorkflow />
           </motion.div>
         </section>
 
