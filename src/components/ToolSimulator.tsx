@@ -45,8 +45,13 @@ export const ToolSimulator: React.FC = () => {
       if (vid) {
         if (id === activeToolId) {
           vid.currentTime = 0;
+          vid.muted = false; // Default to unmuted
           vid.play().catch(err => {
-            console.log("Autoplay prevented or interrupted: ", err);
+            console.log("Unmuted autoplay blocked, falling back to muted play: ", err);
+            vid.muted = true; // Mute video
+            vid.play().catch(err2 => {
+              console.log("Muted autoplay failed as well: ", err2);
+            });
           });
         } else {
           vid.pause();
@@ -113,7 +118,6 @@ export const ToolSimulator: React.FC = () => {
             src={`${base}Images/${file}`}
             preload="auto"
             loop
-            muted
             playsInline
             controls
             style={{
