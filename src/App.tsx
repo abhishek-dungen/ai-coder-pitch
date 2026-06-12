@@ -237,16 +237,30 @@ export const App: React.FC = () => {
             viewport={{ once: false, amount: 0.1 }}
             transition={{ duration: 0.6 }}
             className="slide-content-wrapper"
+            style={{ gridTemplateColumns: '0.8fr 1.2fr' }}
           >
             <div className="slide-title-area">
               <span className="tagline">This AI_CODING_WITH_ABHISHEK</span>
-              <h2 className="title-large">Why Niche <span className="title-accent">Makes Sense</span></h2>
-              <p className="slide-description">
-                I actively use advanced AI coding platforms to solve my own business and tracking problems.
+              <h2 className="title-large" style={{ fontSize: '2.3rem', lineHeight: 1.25 }}>
+                Why Niche <span className="title-accent">Makes Sense</span>
+              </h2>
+              <p className="slide-description" style={{ fontSize: '0.95rem', color: '#ffffff', fontWeight: 600, marginTop: '8px' }}>
+                AI Power User Stack
               </p>
-              <p style={{ fontSize: '0.9rem', color: '#9ca3af', lineHeight: 1.5 }}>
-                I subscribe to and code alongside tools like **Cursor, Google Antigravity, Claude Code, Openclaw, and VS Code**. I do not just explain AI theoretically—I build custom systems.
-              </p>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', color: '#9ca3af', fontSize: '0.82rem', marginTop: '16px' }}>
+                <div style={{ display: 'flex', alignItems: 'flex-start', gap: '8px' }}>
+                  <span style={{ color: 'var(--color-cyan)', marginTop: '2px' }}>✔</span>
+                  <span><strong>Active Paid Subscriptions:</strong> Subscribed to all leading AI coding platforms (Cursor Pro, Claude Code, Replit Core, etc.) to leverage max capabilities.</span>
+                </div>
+                <div style={{ display: 'flex', alignItems: 'flex-start', gap: '8px' }}>
+                  <span style={{ color: 'var(--color-cyan)', marginTop: '2px' }}>✔</span>
+                  <span><strong>Daily Execution:</strong> Actively builds custom applications, dashboards, and automated flows to solve real business bottlenecks.</span>
+                </div>
+                <div style={{ display: 'flex', alignItems: 'flex-start', gap: '8px' }}>
+                  <span style={{ color: 'var(--color-cyan)', marginTop: '2px' }}>✔</span>
+                  <span><strong>Full Capability Awareness:</strong> Complete command over prompt contexts, terminal agent loops, GUI agents, and multi-file code workspace indexing.</span>
+                </div>
+              </div>
             </div>
             <TerminalPrompt />
           </motion.div>

@@ -1,179 +1,280 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Terminal, AlertCircle } from 'lucide-react';
+import React, { useState } from 'react';
 
-interface ToolOption {
+interface ToolDetail {
   name: string;
-  command: string;
-  prompt: string;
-  outputs: string[];
+  shortName: string;
+  badge: string;
+  badgeColor: string;
+  description: string;
+  features: string[];
+  image: string;
+  borderColor: string;
+  bgGradient: string;
+  glowColor: string;
 }
 
 export const TerminalPrompt: React.FC = () => {
-  const tools: ToolOption[] = [
+  const base = import.meta.env.BASE_URL || '/';
+  
+  const tools: ToolDetail[] = [
     {
-      name: 'Google Antigravity',
-      command: 'antigravity --create-app --niche="expense-manager"',
-      prompt: 'Build a personalized expense tracker that imports custom CSV files from cashfree API',
-      outputs: [
-        '✨ Initializing AI coder agent (Antigravity)...',
-        '🔍 Scanning codebase for architecture setup...',
-        '⚙️ Generating component tree (Dashboard, InputForm, ChartView)',
-        '📦 Resolving dependencies: npm install lucide-react canvas-confetti',
-        '📝 Writing file src/components/ExpenseTracker.tsx',
-        '🚀 Server started on http://localhost:5173/ (completed in 1.4s)',
-        '🎉 SUCCESS: App built successfully! Ready for staging.'
-      ]
+      name: 'Cursor Composer Pro',
+      shortName: 'Cursor Pro',
+      badge: 'Active Paid Pro Subscriber',
+      badgeColor: 'var(--color-cyan)',
+      description: 'Used daily as my primary IDE. I have an active paid subscription and use its multi-file composer capabilities for complex features and automated refactoring workflows.',
+      features: [
+        'Workspace codebase semantic index parsing',
+        'Composer orchestration to refactor multi-file routes',
+        'Instant terminal debugger loops and code generation'
+      ],
+      image: 'cursor_composer.webp',
+      borderColor: 'var(--color-cyan)',
+      bgGradient: 'linear-gradient(135deg, rgba(13,17,28,0.75) 0%, rgba(6,182,212,0.03) 100%)',
+      glowColor: 'var(--color-cyan-glow)'
     },
     {
-      name: 'Claude Code',
-      command: 'claude "Refactor Payment collection dashboard to handle multiple webhooks"',
-      prompt: 'Refactor payment collector. Integration gateways: Cashfree, PayU.',
-      outputs: [
-        '🤖 Claude-code agent connecting to workspace...',
-        '📂 Reading file src/lib/cashfree.mjs',
-        '📂 Reading file src/lib/payu.mjs',
-        '🔄 Refactoring webhook handler: index.js',
-        '✅ Webhook signature validation compiled',
-        '📊 Added fallback route for failed status reports',
-        '🎉 SUCCESS: Webhook logic refactored & function index.js updated.'
-      ]
+      name: 'Claude Code Agent',
+      shortName: 'Claude Code',
+      badge: 'Active Developer Agent',
+      badgeColor: 'var(--color-magenta)',
+      description: 'Connected directly to terminal workflows. Executing complex edits, automated script checking, and CLI-driven agentic workspace refactoring loops.',
+      features: [
+        'Agentic file reading, modification, and checks',
+        'Direct terminal code execution and lint error fixes',
+        'Refactoring payment handler webhooks in place'
+      ],
+      image: 'claude_cowork.webp',
+      borderColor: 'var(--color-magenta)',
+      bgGradient: 'linear-gradient(135deg, rgba(13,17,28,0.75) 0%, rgba(244,63,94,0.03) 100%)',
+      glowColor: 'var(--color-magenta-glow)'
     },
     {
-      name: 'Cursor',
-      command: 'cursor --composer --prompt="Create habit tracker timeline components"',
-      prompt: 'Build a grid dashboard displaying habits and track streaks.',
-      outputs: [
-        '⚙️ Composer mapping files: HabitGrid.tsx, StreakAlert.tsx',
-        '🔨 Formatting Tailwind styles and grid parameters',
-        '🛠️ Adding hooks.json settings overrides',
-        '✅ 3 files modified, 0 syntax warnings',
-        '🎉 SUCCESS: Habit tracking components generated.'
-      ]
+      name: 'OpenClaw Agent',
+      shortName: 'OpenClaw',
+      badge: 'Early Tester & Deployer',
+      badgeColor: 'var(--color-indigo)',
+      description: 'Using open-source GUI coding agents locally. Managing local agent loops to inspect HTML elements and execute autonomous component updates.',
+      features: [
+        'Local agent loops connecting to browser interfaces',
+        'Visual layout checkups and autonomous bug fixing',
+        'Open-source prompt templates for custom app builds'
+      ],
+      image: 'openclaw.webp',
+      borderColor: 'var(--color-indigo)',
+      bgGradient: 'linear-gradient(135deg, rgba(13,17,28,0.75) 0%, rgba(99,102,241,0.03) 100%)',
+      glowColor: 'var(--color-indigo-glow)'
+    },
+    {
+      name: 'Google Antigravity Early-Access',
+      shortName: 'Antigravity',
+      badge: 'Partner Early Testing',
+      badgeColor: 'var(--color-emerald)',
+      description: 'Early-access developer testing advanced AI coding capabilities. Utilizing large context window loops for extensive system codebase updates.',
+      features: [
+        'Early testing developer loop integrations',
+        'Multi-modal prompt scans and architecture mappings',
+        'Large context window codebase transformation pipelines'
+      ],
+      image: 'images_0.jpeg',
+      borderColor: 'var(--color-emerald)',
+      bgGradient: 'linear-gradient(135deg, rgba(13,17,28,0.75) 0%, rgba(16,185,129,0.03) 100%)',
+      glowColor: 'var(--color-emerald-glow)'
+    },
+    {
+      name: 'Replit Agent Core',
+      shortName: 'Replit Agent',
+      badge: 'Paid Core Subscriber',
+      badgeColor: '#ff007f',
+      description: 'Active paid subscriber of Replit Core. Used for cloud sandbox deployments, database provisioning, and instant interactive dashboard prototyping.',
+      features: [
+        'Instant cloud workspace spin-ups and sharing links',
+        'Rapid database initialization with Postgres',
+        'Autonomous API routing setup and testing dashboards'
+      ],
+      image: 'replit_logo.png',
+      borderColor: '#ff007f',
+      bgGradient: 'linear-gradient(135deg, rgba(13,17,28,0.75) 0%, rgba(255,0,127,0.03) 100%)',
+      glowColor: 'rgba(255,0,127,0.2)'
+    },
+    {
+      name: 'VS Code Extension Stack',
+      shortName: 'VS Code Stack',
+      badge: 'Integrated Developer',
+      badgeColor: 'var(--color-cyan)',
+      description: 'Fully customized local developer environment. Pairing IDE profiles with inline autocompletions, lint checks, and database explorers for full control.',
+      features: [
+        'Workspace index sync configurations',
+        'Inline AI copilot prompts and autocompletion stack',
+        'Integrated terminal tooling and themes synchronization'
+      ],
+      image: 'images_1.jpeg',
+      borderColor: 'var(--color-cyan)',
+      bgGradient: 'linear-gradient(135deg, rgba(13,17,28,0.75) 0%, rgba(6,182,212,0.03) 100%)',
+      glowColor: 'var(--color-cyan-glow)'
     }
   ];
 
-  const [selectedTool, setSelectedTool] = useState<number>(0);
-  const [terminalText, setTerminalText] = useState<string[]>([]);
-  const [isTyping, setIsTyping] = useState<boolean>(false);
-  const terminalBodyRef = useRef<HTMLDivElement | null>(null);
-
-  const startSimulation = (toolIndex: number) => {
-    setSelectedTool(toolIndex);
-    setIsTyping(true);
-    setTerminalText([]);
-
-    const tool = tools[toolIndex];
-    let step = 0;
-    
-    // First, show typing command
-    setTerminalText([`$ ${tool.command}`]);
-    
-    const interval = setInterval(() => {
-      if (step < tool.outputs.length) {
-        const nextLine = tool.outputs[step];
-        setTerminalText((prev) => [...prev, nextLine]);
-        step++;
-      } else {
-        clearInterval(interval);
-        setIsTyping(false);
-      }
-    }, 600);
-
-    return () => clearInterval(interval);
-  };
-
-  useEffect(() => {
-    startSimulation(0);
-  }, []);
-
-  useEffect(() => {
-    if (terminalBodyRef.current) {
-      terminalBodyRef.current.scrollTop = terminalBodyRef.current.scrollHeight;
-    }
-  }, [terminalText]);
+  const [activeTab, setActiveTab] = useState<number>(0);
+  const tool = tools[activeTab];
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', height: '100%' }}>
-      {/* Selector pills */}
-      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', height: '100%', justifyContent: 'center', width: '100%', minHeight: 0 }}>
+      
+      {/* 2-Column Grid Selector for the 6 Advanced Builders */}
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '10px' }}>
         {tools.map((t, idx) => (
           <button
-            key={t.name}
-            onClick={() => !isTyping && startSimulation(idx)}
-            className={`btn interactive ${selectedTool === idx ? 'btn-primary' : 'btn-secondary'}`}
-            disabled={isTyping}
-            style={{ 
-              fontSize: '0.8rem', 
-              padding: '8px 16px',
-              opacity: isTyping && selectedTool !== idx ? 0.5 : 1
+            key={idx}
+            onClick={() => setActiveTab(idx)}
+            className={`btn interactive ${activeTab === idx ? '' : 'btn-secondary'}`}
+            style={{
+              padding: '10px 12px',
+              fontSize: '0.8rem',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              fontWeight: 700,
+              gap: '6px',
+              borderRadius: '12px',
+              border: activeTab === idx ? `1px solid ${t.borderColor}` : '1px solid var(--color-border)',
+              background: activeTab === idx ? t.bgGradient : 'rgba(255,255,255,0.02)',
+              color: activeTab === idx ? '#ffffff' : '#9ca3af',
+              boxShadow: activeTab === idx ? `0 4px 15px ${t.glowColor}` : 'none',
+              transition: 'all 0.3s ease'
             }}
           >
-            {t.name}
+            {t.shortName}
           </button>
         ))}
       </div>
 
-      {/* Info panel */}
-      <div style={{ fontSize: '0.82rem', color: '#9ca3af', display: 'flex', alignItems: 'center', gap: '8px' }}>
-        <AlertCircle size={14} style={{ color: 'var(--color-cyan)' }} />
-        <span>Prompt: "{tools[selectedTool].prompt}"</span>
-      </div>
-
-      {/* Terminal emulator */}
-      <div className="terminal-window" style={{ flexGrow: 1, minHeight: '220px', display: 'flex', flexDirection: 'column' }}>
-        <div className="terminal-header">
-          <div className="terminal-dots">
-            <span className="terminal-dot dot-red"></span>
-            <span className="terminal-dot dot-yellow"></span>
-            <span className="terminal-dot dot-green"></span>
+      {/* Proof Dashboard Glass Panel */}
+      <div 
+        className="glass-panel active-tool-dashboard"
+        style={{ 
+          borderColor: tool.borderColor,
+          background: tool.bgGradient,
+          padding: '24px',
+          borderRadius: '20px',
+          boxShadow: `0 8px 32px ${tool.glowColor}, inset 0 1px 0 rgba(255,255,255,0.05)`,
+          flex: 1,
+          minHeight: 0,
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '16px',
+          animation: 'fadeIn 0.3s ease'
+        }}
+      >
+        {/* Header Title & Status Row */}
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid rgba(255, 255, 255, 0.05)', paddingBottom: '10px' }}>
+          <div>
+            <h4 style={{ fontSize: '1.2rem', color: '#ffffff', fontFamily: 'var(--font-display)', fontWeight: 700 }}>
+              {tool.name}
+            </h4>
           </div>
-          <span className="terminal-title">zsh - node v22.20</span>
-          <Terminal size={14} style={{ color: '#4b5563' }} />
+          <div style={{ 
+            border: `1px solid ${tool.borderColor}`, 
+            background: 'rgba(255,255,255,0.03)', 
+            color: tool.borderColor, 
+            padding: '4px 10px', 
+            borderRadius: '20px', 
+            fontSize: '0.7rem', 
+            fontWeight: 700, 
+            textTransform: 'uppercase', 
+            letterSpacing: '0.5px',
+            fontFamily: 'var(--font-mono)',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '6px'
+          }}>
+            <span style={{ display: 'inline-block', width: '6px', height: '6px', borderRadius: '50%', background: tool.borderColor, animation: 'ping-status 1.5s infinite' }}></span>
+            {tool.badge}
+          </div>
         </div>
-        <div className="terminal-body" ref={terminalBodyRef} style={{ flexGrow: 1 }}>
-          {terminalText.map((line, index) => {
-            const isCommand = line.startsWith('$');
-            const isSuccess = line.startsWith('🎉 SUCCESS') || line.startsWith('✅');
-            const isWarning = line.startsWith('⚙️') || line.startsWith('📝') || line.startsWith('📦');
-            
-            let color = '#a7f3d0'; // standard output green
-            if (isCommand) color = 'var(--color-cyan)';
-            else if (isSuccess) color = 'var(--color-emerald)';
-            else if (isWarning) color = '#f3f4f6';
 
-            return (
-              <div 
-                key={index} 
-                style={{ 
-                  color, 
-                  fontFamily: 'var(--font-mono)', 
-                  marginBottom: '6px',
-                  fontWeight: isCommand || isSuccess ? 600 : 400
-                }}
-              >
-                {line}
-              </div>
-            );
-          })}
-          {isTyping && (
-            <span style={{ 
-              display: 'inline-block', 
-              width: '8px', 
-              height: '15px', 
-              background: 'var(--color-cyan)',
-              animation: 'blink 0.8s infinite',
-              marginLeft: '2px'
-            }} />
-          )}
+        {/* Content details and Screenshot Stack split */}
+        <div style={{ display: 'grid', gridTemplateColumns: '1.1fr 0.9fr', gap: '20px', flex: 1, minHeight: 0, alignItems: 'center' }}>
+          
+          {/* Left: Description and key capabilities */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+            <p style={{ fontSize: '0.85rem', color: '#d1d5db', lineHeight: 1.5 }}>
+              {tool.description}
+            </p>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              <div style={{ fontSize: '0.75rem', color: '#9ca3af', fontWeight: 700, letterSpacing: '0.5px' }}>CORE USAGE METRICS:</div>
+              {tool.features.map((feature, fIdx) => (
+                <div key={fIdx} style={{ display: 'flex', alignItems: 'flex-start', gap: '8px', fontSize: '0.78rem', color: '#e5e7eb' }}>
+                  <span style={{ color: tool.borderColor }}>✔</span>
+                  <span>{feature}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Right: Interactive Proof Screenshot */}
+          <div 
+            className="tool-proof-img-container"
+            style={{ 
+              borderRadius: '12px', 
+              overflow: 'hidden', 
+              border: '1px solid rgba(255, 255, 255, 0.08)',
+              boxShadow: '0 8px 24px rgba(0,0,0,0.6)',
+              aspectRatio: '16/10',
+              position: 'relative',
+              width: '100%',
+              height: '100%',
+              maxHeight: '170px'
+            }}
+          >
+            <img 
+              src={`${base}${tool.image}`} 
+              alt={tool.name} 
+              style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.4s ease' }} 
+            />
+            <div style={{ 
+              position: 'absolute', 
+              bottom: 0, 
+              left: 0, 
+              right: 0, 
+              background: 'linear-gradient(to top, rgba(0,0,0,0.9) 0%, transparent 100%)', 
+              padding: '6px 10px', 
+              fontSize: '0.58rem', 
+              color: '#9ca3af', 
+              textAlign: 'center',
+              fontWeight: 500
+            }}>
+              Hover to magnify active session proof
+            </div>
+          </div>
+
         </div>
+
       </div>
 
       <style>{`
-        @keyframes blink {
-          0%, 100% { opacity: 0; }
-          50% { opacity: 1; }
+        @keyframes fadeIn {
+          from { opacity: 0; transform: translateY(6px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes ping-status {
+          0% { transform: scale(1); opacity: 1; }
+          50% { transform: scale(1.4); opacity: 0.4; }
+          100% { transform: scale(1); opacity: 1; }
+        }
+        .tool-proof-img-container:hover img {
+          transform: scale(1.08);
+        }
+        .tool-proof-img-container {
+          transition: all 0.3s ease;
+        }
+        .tool-proof-img-container:hover {
+          border-color: rgba(255,255,255,0.2) !important;
+          box-shadow: 0 12px 30px rgba(0,0,0,0.8) !important;
         }
       `}</style>
     </div>
   );
 };
+
+export default TerminalPrompt;
