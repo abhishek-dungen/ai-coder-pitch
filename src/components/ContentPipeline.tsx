@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Search, Sparkles } from 'lucide-react';
+import { Sparkles } from 'lucide-react';
 
 interface ToolIdea {
   title: string;
@@ -10,7 +10,6 @@ interface ToolIdea {
 
 export const ContentPipeline: React.FC = () => {
   const [activeFilter, setActiveFilter] = useState<'all' | 'personal' | 'business' | 'ai'>('all');
-  const [searchQuery, setSearchQuery] = useState('');
   const [selectedIdea, setSelectedIdea] = useState<ToolIdea | null>(null);
 
   const ideas: ToolIdea[] = [
@@ -37,38 +36,14 @@ export const ContentPipeline: React.FC = () => {
   ];
 
   const filteredIdeas = ideas.filter(idea => {
-    const matchesFilter = activeFilter === 'all' || idea.category === activeFilter;
-    const matchesSearch = idea.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
-                          idea.desc.toLowerCase().includes(searchQuery.toLowerCase());
-    return matchesFilter && matchesSearch;
+    return activeFilter === 'all' || idea.category === activeFilter;
   });
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', height: '100%' }}>
-      {/* Search and filter bars */}
-      <div style={{ display: 'flex', gap: '10px', alignItems: 'center', flexWrap: 'wrap' }}>
-        {/* Search Input */}
-        <div style={{ position: 'relative', flexGrow: 1, minWidth: '200px' }}>
-          <Search size={14} style={{ position: 'absolute', left: '10px', top: '12px', color: '#9ca3af' }} />
-          <input
-            type="text"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Search 20+ pipeline ideas..."
-            style={{ 
-              width: '100%', 
-              padding: '10px 10px 10px 32px', 
-              borderRadius: '10px', 
-              border: '1px solid var(--color-border)', 
-              background: 'rgba(0,0,0,0.2)', 
-              color: 'white', 
-              fontSize: '0.8rem' 
-            }}
-          />
-        </div>
-
-        {/* Category Pills */}
-        <div style={{ display: 'flex', gap: '6px' }}>
+      {/* Category Pills (Centered, no search bar) */}
+      <div style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
+        <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
           <button 
             onClick={() => setActiveFilter('all')} 
             className={`btn interactive ${activeFilter === 'all' ? 'btn-primary' : 'btn-secondary'}`}

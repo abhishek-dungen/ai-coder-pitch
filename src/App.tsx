@@ -329,25 +329,25 @@ export const App: React.FC = () => {
         </section>
 
         {/* SLIDE 7: PIPELINE OF IDEAS */}
-        <section className="slide">
+        <section className="slide" style={{ padding: '80px 60px 90px 60px' }}>
           <motion.div 
             initial={{ opacity: 0, x: 50 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: false, amount: 0.1 }}
             transition={{ duration: 0.6 }}
             className="slide-content-wrapper"
+            style={{ gridTemplateColumns: '1fr' }}
           >
-            <div className="slide-title-area">
-              <span className="tagline">This AI_CODING_WITH_ABHISHEK</span>
-              <h2 className="title-large">Content Won't <span className="title-accent">Dry Out</span></h2>
-              <p className="slide-description">
-                Every person has workflows, spreadsheets, and routines. Everyday life itself becomes the content pipeline.
-              </p>
-              <p style={{ fontSize: '0.85rem', color: '#9ca3af' }}>
-                Filter through some of the 20+ tool categories on the right to view standard prompt templates.
-              </p>
+            <div style={{ display: 'flex', flexDirection: 'column', height: '100%', width: '100%', gap: '16px' }}>
+              <div style={{ textAlign: 'center' }}>
+                <h2 className="title-large" style={{ fontSize: '2.5rem', marginBottom: '8px' }}>
+                  Content Won't <span className="title-accent">Dry Out</span>
+                </h2>
+              </div>
+              <div style={{ flexGrow: 1, minHeight: 0, display: 'flex', flexDirection: 'column', marginTop: '10px' }}>
+                <ContentPipeline />
+              </div>
             </div>
-            <ContentPipeline />
           </motion.div>
         </section>
 
