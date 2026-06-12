@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrainCircuit, Play, Lightbulb } from 'lucide-react';
+import { BrainCircuit, Play, Lightbulb, Sparkles, BookOpen } from 'lucide-react';
 
 export const TimelineMe: React.FC = () => {
   const base = import.meta.env.BASE_URL || '/';
@@ -69,10 +69,11 @@ export const TimelineMe: React.FC = () => {
             </p>
           </div>
 
-          {/* Competency Row: Storytelling & Learning Design Side-by-Side */}
+          {/* Competency Row: 2x2 Grid Layout */}
           <div style={{ 
             display: 'grid', 
             gridTemplateColumns: '1fr 1fr', 
+            gridTemplateRows: 'auto auto',
             gap: '16px', 
             borderTop: '1px solid rgba(255, 255, 255, 0.05)', 
             paddingTop: '16px',
@@ -83,7 +84,7 @@ export const TimelineMe: React.FC = () => {
               <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: 'var(--color-indigo)', fontSize: '0.85rem', fontWeight: 700 }}>
                 <Play size={12} fill="currentColor" style={{ color: 'var(--color-indigo)' }} /> Storytelling
               </div>
-              <div style={{ fontSize: '0.76rem', color: '#9ca3af', lineHeight: 1.4 }}>
+              <div style={{ fontSize: '0.76rem', color: '#9ca3af', lineHeight: 1.45 }}>
                 Script writing, hook design, storylines, and maintaining audience retention.
               </div>
             </div>
@@ -93,8 +94,28 @@ export const TimelineMe: React.FC = () => {
               <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: 'var(--color-cyan)', fontSize: '0.85rem', fontWeight: 700 }}>
                 <BrainCircuit size={12} style={{ color: 'var(--color-cyan)' }} /> Learning Design
               </div>
-              <div style={{ fontSize: '0.76rem', color: '#9ca3af', lineHeight: 1.4 }}>
+              <div style={{ fontSize: '0.76rem', color: '#9ca3af', lineHeight: 1.45 }}>
                 Breaking down highly complex, scary concepts into simple pieces.
+              </div>
+            </div>
+
+            {/* Visual Packaging details */}
+            <div className="competency-item visual-packaging-item" style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: '#f59e0b', fontSize: '0.85rem', fontWeight: 700 }}>
+                <Sparkles size={12} style={{ color: '#f59e0b' }} /> Visual Packaging
+              </div>
+              <div style={{ fontSize: '0.76rem', color: '#9ca3af', lineHeight: 1.45 }}>
+                Curating high-retention animations and premium styling to hook students.
+              </div>
+            </div>
+
+            {/* Curriculum Mapping details */}
+            <div className="competency-item curriculum-mapping-item" style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: 'var(--color-emerald)', fontSize: '0.85rem', fontWeight: 700 }}>
+                <BookOpen size={12} style={{ color: 'var(--color-emerald)' }} /> Curriculum Mapping
+              </div>
+              <div style={{ fontSize: '0.76rem', color: '#9ca3af', lineHeight: 1.45 }}>
+                Aligning creative storytelling with academic rigor to ensure high educational outcomes.
               </div>
             </div>
           </div>
