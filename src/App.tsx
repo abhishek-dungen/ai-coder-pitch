@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, ArrowLeft, Sparkles, BrainCircuit } from 'lucide-react';
+import { ArrowRight, ArrowLeft, Sparkles, BrainCircuit, ExternalLink } from 'lucide-react';
 import { ParticleBackground } from './components/ParticleBackground';
 import { CustomCursor } from './components/CustomCursor';
 import { SocialMetrics } from './components/SocialMetrics';
@@ -163,6 +163,27 @@ export const App: React.FC = () => {
                   <span style={{ color: 'var(--color-cyan)', marginTop: '2px' }}>✔</span>
                   <span><strong>Project 9 Lives: AI_CODING_WITH_ABHISHEK:</strong> The channel will be brand new, but there will be no learning curve—just a veteran creator pulling the trigger from Day 1.</span>
                 </div>
+              </div>
+              <div style={{ marginTop: '20px' }}>
+                <a 
+                  href="https://www.instagram.com/excelbhaiya.abhishek/" 
+                  target="_blank" 
+                  rel="noreferrer"
+                  className="btn btn-secondary interactive"
+                  style={{ 
+                    padding: '8px 16px', 
+                    fontSize: '0.8rem', 
+                    display: 'inline-flex', 
+                    alignItems: 'center', 
+                    gap: '6px',
+                    borderColor: 'rgba(238, 42, 123, 0.3)',
+                    background: 'linear-gradient(45deg, rgba(249, 206, 52, 0.1) 0%, rgba(238, 42, 123, 0.1) 50%, rgba(98, 40, 215, 0.1) 100%)',
+                    color: '#ffffff'
+                  }}
+                >
+                  <span>Explore Live Channel (@excelbhaiya.abhishek)</span>
+                  <ExternalLink size={12} style={{ color: '#ee2a7b' }} />
+                </a>
               </div>
             </div>
             <SocialMetrics />

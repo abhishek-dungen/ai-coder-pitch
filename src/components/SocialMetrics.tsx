@@ -351,9 +351,24 @@ export const SocialMetrics: React.FC = () => {
                 <ArrowLeft size={12} /> Back to Grid
               </button>
             ) : (
-              <span style={{ fontWeight: 700, fontSize: '0.9rem', color: 'white' }}>
-                excelbhaiya.abhishek
-              </span>
+              <a 
+                href="https://www.instagram.com/excelbhaiya.abhishek/" 
+                target="_blank" 
+                rel="noreferrer" 
+                style={{ 
+                  fontWeight: 700, 
+                  fontSize: '0.9rem', 
+                  color: 'white', 
+                  textDecoration: 'none', 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  gap: '4px' 
+                }}
+                className="interactive-username-link"
+              >
+                <span>excelbhaiya.abhishek</span>
+                <ExternalLink size={10} style={{ opacity: 0.6 }} />
+              </a>
             )}
             <Settings size={14} style={{ color: 'white' }} />
           </div>
@@ -828,6 +843,10 @@ export const SocialMetrics: React.FC = () => {
         }
         .reel-grid-cell:hover .hover-overlay {
           opacity: 1 !important;
+        }
+        .interactive-username-link:hover {
+          color: var(--color-cyan) !important;
+          text-decoration: underline !important;
         }
       `}</style>
     </div>
