@@ -55,7 +55,7 @@ export const TerminalPrompt: React.FC = () => {
   const [selectedTool, setSelectedTool] = useState<number>(0);
   const [terminalText, setTerminalText] = useState<string[]>([]);
   const [isTyping, setIsTyping] = useState<boolean>(false);
-  const terminalEndRef = useRef<HTMLDivElement | null>(null);
+  const terminalBodyRef = useRef<HTMLDivElement | null>(null);
 
   const startSimulation = (toolIndex: number) => {
     setSelectedTool(toolIndex);
@@ -86,8 +86,8 @@ export const TerminalPrompt: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    if (terminalEndRef.current) {
-      terminalEndRef.current.scrollIntoView({ behavior: 'smooth' });
+    if (terminalBodyRef.current) {
+      terminalBodyRef.current.scrollTop = terminalBodyRef.current.scrollHeight;
     }
   }, [terminalText]);
 
@@ -129,7 +129,7 @@ export const TerminalPrompt: React.FC = () => {
           <span className="terminal-title">zsh - node v22.20</span>
           <Terminal size={14} style={{ color: '#4b5563' }} />
         </div>
-        <div className="terminal-body" style={{ flexGrow: 1 }}>
+        <div className="terminal-body" ref={terminalBodyRef} style={{ flexGrow: 1 }}>
           {terminalText.map((line, index) => {
             const isCommand = line.startsWith('$');
             const isSuccess = line.startsWith('🎉 SUCCESS') || line.startsWith('✅');
@@ -164,7 +164,6 @@ export const TerminalPrompt: React.FC = () => {
               marginLeft: '2px'
             }} />
           )}
-          <div ref={terminalEndRef} />
         </div>
       </div>
 

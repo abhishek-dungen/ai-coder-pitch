@@ -57,7 +57,6 @@ export const App: React.FC = () => {
       if (e.key === 'ArrowRight' && currentSlide < slidesData.length - 1) {
         jumpToSlide(currentSlide + 1);
       } else if (e.key === 'ArrowLeft' && currentSlide > 0) {
-        jumpToSlide(currentSlide - 0.5); // safe step
         jumpToSlide(currentSlide - 1);
       }
     };
