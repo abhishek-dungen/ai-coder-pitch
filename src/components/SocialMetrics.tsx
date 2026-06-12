@@ -169,6 +169,15 @@ export const SocialMetrics: React.FC = () => {
     return () => clearInterval(timer);
   }, []);
 
+  const spawnEmoji = (type: string) => {
+    const id = Date.now() + Math.random();
+    const x = Math.random() * 80 + 10;
+    setFloatingEmojis((prev) => [...prev, { id, x, type }]);
+    setTimeout(() => {
+      setFloatingEmojis((prev) => prev.filter((item) => item.id !== id));
+    }, 2000);
+  };
+
   // Sync Reels Simulator
   useEffect(() => {
     let timer: number;
@@ -196,19 +205,12 @@ export const SocialMetrics: React.FC = () => {
         }
       }, 100);
     } else {
-      setActiveSegment(null);
+      setTimeout(() => {
+        setActiveSegment(null);
+      }, 0);
     }
     return () => clearInterval(timer);
   }, [isPlaying, selectedReelIndex]);
-
-  const spawnEmoji = (type: string) => {
-    const id = Date.now() + Math.random();
-    const x = Math.random() * 80 + 10;
-    setFloatingEmojis((prev) => [...prev, { id, x, type }]);
-    setTimeout(() => {
-      setFloatingEmojis((prev) => prev.filter((item) => item.id !== id));
-    }, 2000);
-  };
 
   const handleActionClick = (action: 'like' | 'save' | 'share') => {
     if (selectedReelIndex === null) return;
