@@ -5,7 +5,6 @@ import { ParticleBackground } from './components/ParticleBackground';
 import { CustomCursor } from './components/CustomCursor';
 import { SocialMetrics } from './components/SocialMetrics';
 import { TimelineMe } from './components/TimelineMe';
-import { NicheSlider } from './components/NicheSlider';
 import { TerminalPrompt } from './components/TerminalPrompt';
 import { ToolSimulator } from './components/ToolSimulator';
 import { ContentWorkflow } from './components/ContentWorkflow';
@@ -211,21 +210,21 @@ export const App: React.FC = () => {
             viewport={{ once: false, amount: 0.1 }}
             transition={{ duration: 0.6 }}
             className="slide-content-wrapper"
+            style={{ gridTemplateColumns: '1fr', maxWidth: '800px', textAlign: 'center' }}
           >
-            <div className="slide-title-area">
-              <h2 className="title-large" style={{ fontSize: '2.3rem', lineHeight: 1.2 }}>
+            <div className="slide-title-area" style={{ alignItems: 'center' }}>
+              <h2 className="title-large" style={{ fontSize: '2.5rem', lineHeight: 1.2 }}>
                 My Chosen Niche: <span className="title-accent">Building everyday AI tools I wish existed</span>
               </h2>
               
-              <h3 style={{ fontSize: '1.25rem', color: 'var(--color-cyan)', fontFamily: 'var(--font-display)', marginTop: '14px', fontWeight: 700 }}>
+              <h3 style={{ fontSize: '1.4rem', color: 'var(--color-cyan)', fontFamily: 'var(--font-display)', marginTop: '14px', fontWeight: 700 }}>
                 Zero code. 100% leverage.
               </h3>
               
-              <p className="slide-description" style={{ fontSize: '0.92rem', lineHeight: 1.6, marginTop: '8px' }}>
+              <p className="slide-description" style={{ fontSize: '1rem', lineHeight: 1.6, marginTop: '8px', maxWidth: '600px' }}>
                 I build builders. I show regular people with absolute zero coding knowledge how to forge customized apps that solve real-world problems. Pure execution. Instant impact.
               </p>
             </div>
-            <NicheSlider />
           </motion.div>
         </section>
 
