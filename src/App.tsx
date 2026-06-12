@@ -14,7 +14,7 @@ import { AudienceList, MonetizationGrid, MilestoneTimeline } from './components/
 
 const slidesData = [
   { id: 'welcome', title: 'Building Everyday AI Tools I Wish Existed', tagline: 'Pitch Deck Introduction' },
-  { id: 'context', title: 'Current Content Context', tagline: 'Slide 01' },
+  { id: 'context', title: 'Instagram? Been there, created that, got the engagement.', tagline: 'Slide 01' },
   { id: 'why-me', title: 'Why Me? The Synergy Background', tagline: 'Slide 02' },
   { id: 'niche', title: 'My Chosen Niche: AI + ML', tagline: 'Slide 03' },
   { id: 'stack', title: 'Why Niche Makes Sense (Stack)', tagline: 'Slide 04' },
@@ -74,8 +74,7 @@ export const App: React.FC = () => {
       <header>
         <div className="logo interactive" onClick={() => jumpToSlide(0)}>
           <BrainCircuit size={22} style={{ color: 'var(--color-cyan)' }} />
-          <span>ADVANCED AI CODER</span>
-          <span className="logo-sub">PITCH DECK</span>
+          <span>This AI_CODING_WITH_ABHISHEK</span>
         </div>
         <div style={{ display: 'flex', gap: '16px', fontSize: '0.8rem', color: '#9ca3af', fontFamily: 'var(--font-mono)' }}>
           <span>SCROLL RIGHT ➔</span>
@@ -99,14 +98,11 @@ export const App: React.FC = () => {
           >
             <div className="slide-title-area">
               <span className="tagline">
-                <Sparkles size={14} /> The Vision Concept
+                <Sparkles size={14} /> This AI_CODING_WITH_ABHISHEK
               </span>
               <h1 className="title-large">
                 Building Everyday <span className="title-accent">AI Tools</span> I Wish Existed
               </h1>
-              <p className="slide-description" style={{ marginTop: '10px' }}>
-                A strategic channel concept pitching how AI-assisted coding lowers software barriers, letting average users build custom tools, trackers, and business dashboards.
-              </p>
               <div style={{ marginTop: '20px', display: 'flex', gap: '12px' }}>
                 <button onClick={() => jumpToSlide(1)} className="btn btn-primary interactive">
                   Explore Pitch <ArrowRight size={16} />
@@ -147,17 +143,25 @@ export const App: React.FC = () => {
             className="slide-content-wrapper"
           >
             <div className="slide-title-area">
-              <span className="tagline">Slide 01 • Proof of understanding</span>
-              <h2 className="title-large">Current Content <span className="title-accent">Context</span></h2>
+              <span className="tagline">This AI_CODING_WITH_ABHISHEK</span>
+              <h2 className="title-large" style={{ fontSize: '2rem', lineHeight: 1.25 }}>
+                Instagram? Been there, created that, got the <span className="title-accent">engagement.</span>
+              </h2>
               <p className="slide-description">
-                I teach Excel tricks, productivity concepts, and practical skill-based workflows. I already understand content creation, hook structures, learning design, and visual engagement.
+                I’m a seasoned creator who speaks fluent 'Algorithm.' I don't test the waters; I dive right in.
               </p>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', color: '#9ca3af', fontSize: '0.88rem', marginTop: '10px' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                  <span style={{ color: 'var(--color-cyan)' }}>✔</span> Not starting from zero: established audience baseline.
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', color: '#9ca3af', fontSize: '0.88rem', marginTop: '16px' }}>
+                <div style={{ display: 'flex', alignItems: 'flex-start', gap: '8px' }}>
+                  <span style={{ color: 'var(--color-cyan)', marginTop: '2px' }}>✔</span>
+                  <span><strong>Proven Scale:</strong> Built Excel Bhaiya Abhishek from scratch, dominating Hindi-language tech.</span>
                 </div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                  <span style={{ color: 'var(--color-cyan)' }}>✔</span> Understand how to structure educational videos to maintain retention.
+                <div style={{ display: 'flex', alignItems: 'flex-start', gap: '8px' }}>
+                  <span style={{ color: 'var(--color-cyan)', marginTop: '2px' }}>✔</span>
+                  <span><strong>Mass Appeal:</strong> Captured the massive Hindi heartland using pure organic distribution.</span>
+                </div>
+                <div style={{ display: 'flex', alignItems: 'flex-start', gap: '8px' }}>
+                  <span style={{ color: 'var(--color-cyan)', marginTop: '2px' }}>✔</span>
+                  <span><strong>Project 9 Lives: AI_CODING_WITH_ABHISHEK:</strong> The channel will be brand new, but there will be no learning curve—just a veteran creator pulling the trigger from Day 1.</span>
                 </div>
               </div>
             </div>
@@ -175,7 +179,7 @@ export const App: React.FC = () => {
             className="slide-content-wrapper"
           >
             <div className="slide-title-area">
-              <span className="tagline">Slide 02 • Professional Synergy</span>
+              <span className="tagline">This AI_CODING_WITH_ABHISHEK</span>
               <h2 className="title-large">Why <span className="title-accent">Me?</span></h2>
               <p className="slide-description">
                 My background merges operational execution with advanced creative education. 
@@ -201,7 +205,7 @@ export const App: React.FC = () => {
             className="slide-content-wrapper"
           >
             <div className="slide-title-area">
-              <span className="tagline">Slide 03 • Core Concept</span>
+              <span className="tagline">This AI_CODING_WITH_ABHISHEK</span>
               <h2 className="title-large">My Chosen <span className="title-accent">Niche</span></h2>
               <p className="slide-description">
                 Niche: **"Building everyday AI tools I wish existed."**
@@ -227,7 +231,7 @@ export const App: React.FC = () => {
             className="slide-content-wrapper"
           >
             <div className="slide-title-area">
-              <span className="tagline">Slide 04 • Practical Stack</span>
+              <span className="tagline">This AI_CODING_WITH_ABHISHEK</span>
               <h2 className="title-large">Why Niche <span className="title-accent">Makes Sense</span></h2>
               <p className="slide-description">
                 I actively use advanced AI coding platforms to solve my own business and tracking problems.
@@ -297,7 +301,7 @@ export const App: React.FC = () => {
             className="slide-content-wrapper"
           >
             <div className="slide-title-area">
-              <span className="tagline">Slide 07 • Infinite Content</span>
+              <span className="tagline">This AI_CODING_WITH_ABHISHEK</span>
               <h2 className="title-large">Content Won't <span className="title-accent">Dry Out</span></h2>
               <p className="slide-description">
                 Every person has workflows, spreadsheets, and routines. Everyday life itself becomes the content pipeline.
@@ -320,7 +324,7 @@ export const App: React.FC = () => {
             className="slide-content-wrapper"
           >
             <div className="slide-title-area">
-              <span className="tagline">Slide 08 • Demographics</span>
+              <span className="tagline">This AI_CODING_WITH_ABHISHEK</span>
               <h2 className="title-large">Target <span className="title-accent">Audience</span></h2>
               <p className="slide-description">
                 AI enthusiasts, tech-curious professionals, freelancers, creators, and students.
@@ -343,7 +347,7 @@ export const App: React.FC = () => {
             className="slide-content-wrapper"
           >
             <div className="slide-title-area">
-              <span className="tagline">Slide 09 • Channels</span>
+              <span className="tagline">This AI_CODING_WITH_ABHISHEK</span>
               <h2 className="title-large">Future <span className="title-accent">Monetization</span></h2>
               <p className="slide-description">
                 Multiple avenues open up once trust and community recall are established.
@@ -366,7 +370,7 @@ export const App: React.FC = () => {
             className="slide-content-wrapper"
           >
             <div className="slide-title-area">
-              <span className="tagline">Slide 10 • Milestones</span>
+              <span className="tagline">This AI_CODING_WITH_ABHISHEK</span>
               <h2 className="title-large">Six-Month <span className="title-accent">Focus</span></h2>
               <p className="slide-description">
                 For the first six months, focus is on consistency, proof of skill, and community trust.
