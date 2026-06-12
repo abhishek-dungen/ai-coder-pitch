@@ -23,17 +23,17 @@ export const ToolSimulatorHorizontal: React.FC = () => {
   };
 
   const tools: Tool[] = [
-    { id: 'expense', name: 'Expense Manager', icon: <DollarSign size={16} /> },
-    { id: 'log', name: 'Daily Log System', icon: <Clock size={16} /> },
-    { id: 'notes', name: 'Note-Taking App', icon: <FileText size={16} /> },
-    { id: 'payments', name: 'Payment Dashboard', icon: <BarChart3 size={16} /> },
-    { id: 'zoom', name: 'Webinar Analytics', icon: <Users size={16} /> },
     { id: 'excel', name: 'Excel Automator', icon: <RefreshCw size={16} /> },
-    { id: 'portfolio', name: 'AI Portfolio Website', icon: <Laptop size={16} /> },
-    { id: 'dashboard', name: 'AI-Built Dashboards', icon: <Grid size={16} /> }
+    { id: 'expense', name: 'Expense Manager', icon: <DollarSign size={16} /> },
+    { id: 'log', name: 'Daily Log', icon: <Clock size={16} /> },
+    { id: 'notes', name: 'Notes App', icon: <FileText size={16} /> },
+    { id: 'payments', name: 'Payments', icon: <BarChart3 size={16} /> },
+    { id: 'zoom', name: 'Webinar Analytics', icon: <Users size={16} /> },
+    { id: 'portfolio', name: 'AI Portfolio', icon: <Laptop size={16} /> },
+    { id: 'dashboard', name: 'AI Dashboards', icon: <Grid size={16} /> }
   ].map(t => ({ ...t, tagline: '' }));
 
-  const [activeToolId, setActiveToolId] = useState<string>('expense');
+  const [activeToolId, setActiveToolId] = useState<string>('excel');
   const videoFile = videoMapping[activeToolId];
 
   // Single video ref for dynamic unmuted autoplay handling
@@ -86,7 +86,7 @@ export const ToolSimulatorHorizontal: React.FC = () => {
             style={{
               width: '100%',
               height: 'auto',
-              maxHeight: 'calc(100vh - 280px)',
+              maxHeight: 'calc(100vh - 220px)', // Increased space for video by reducing layout gaps/offsets
               borderRadius: '16px',
               border: '1px solid var(--color-border)',
               boxShadow: '0 12px 45px rgba(6, 182, 212, 0.35)',
@@ -100,21 +100,10 @@ export const ToolSimulatorHorizontal: React.FC = () => {
         {!videoFile && (
           <div style={{ display: 'flex', flexDirection: 'column', minHeight: 0, flexGrow: 1, width: '100%', height: '100%', padding: '0 20px' }}>
             
-            {/* Header tag */}
-            <div style={{ paddingBottom: '12px', borderBottom: '1px solid var(--color-border)', marginBottom: '16px' }}>
-              <span style={{ fontSize: '0.7rem', color: 'var(--color-cyan)', fontFamily: 'var(--font-mono)', textTransform: 'uppercase', letterSpacing: '1px' }}>
-                Interactive Demo
-              </span>
-              <h4 style={{ fontSize: '1.2rem', color: '#ffffff', fontFamily: 'var(--font-display)', fontWeight: 700 }}>
-                {tools.find(t => t.id === activeToolId)?.name}
-              </h4>
-            </div>
-
             {/* 7. AI Portfolio simulator */}
             {activeToolId === 'portfolio' && (
               <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', width: '100%', height: '100%', flexGrow: 1 }}>
-                <div style={{ display: 'flex', gap: '6px', marginBottom: '4px' }}>
-                  <span style={{ fontSize: '0.75rem', color: '#9ca3af' }}>Toggle Portfolio Accent Color:</span>
+                <div style={{ display: 'flex', gap: '6px', marginBottom: '8px', alignItems: 'center' }}>
                   {['cyan', 'indigo', 'magenta'].map(c => (
                     <button 
                       key={c}
@@ -251,11 +240,13 @@ export const ToolSimulatorHorizontal: React.FC = () => {
       {/* Navigation tabs at the bottom, placed horizontally */}
       <div style={{ 
         display: 'flex', 
-        gap: '8px', 
+        gap: '6px', 
         justifyContent: 'center', 
         padding: '12px 0', 
         borderTop: '1px solid var(--color-border)', 
-        flexWrap: 'wrap' 
+        flexWrap: 'nowrap',
+        width: '100%',
+        overflowX: 'auto'
       }}>
         {tools.map((t) => (
           <button
@@ -265,8 +256,8 @@ export const ToolSimulatorHorizontal: React.FC = () => {
             style={{
               display: 'flex',
               alignItems: 'center',
-              gap: '8px',
-              padding: '8px 14px',
+              gap: '6px',
+              padding: '6px 12px',
               borderRadius: '8px',
               border: activeToolId === t.id ? '1px solid var(--color-indigo)' : '1px solid transparent',
               background: activeToolId === t.id ? 'rgba(99, 102, 241, 0.15)' : 'rgba(255, 255, 255, 0.02)',
@@ -274,8 +265,9 @@ export const ToolSimulatorHorizontal: React.FC = () => {
               cursor: 'pointer',
               fontFamily: 'var(--font-display)',
               fontWeight: 500,
-              fontSize: '0.8rem',
-              transition: 'var(--transition-fast)'
+              fontSize: '0.75rem',
+              transition: 'var(--transition-fast)',
+              whiteSpace: 'nowrap'
             }}
           >
             <span style={{ color: activeToolId === t.id ? 'var(--color-cyan)' : '#4b5563', display: 'flex', alignItems: 'center' }}>
