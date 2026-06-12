@@ -1,11 +1,11 @@
 import React from 'react';
-import { BrainCircuit, Play } from 'lucide-react';
+import { BrainCircuit, Play, Lightbulb } from 'lucide-react';
 
 export const TimelineMe: React.FC = () => {
   const base = import.meta.env.BASE_URL || '/';
   
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '24px', height: '100%', justifyContent: 'center', width: '100%' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', height: '100%', justifyContent: 'center', width: '100%' }}>
       
       {/* Title Header placed directly above the glass-panel block */}
       <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
@@ -17,24 +17,30 @@ export const TimelineMe: React.FC = () => {
         </p>
       </div>
       
-      {/* 3-Column Premium Dashboard Grid */}
-      <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 0.9fr 0.9fr', gap: '20px', alignItems: 'stretch' }}>
+      {/* 2-Column Balanced Layout Grid */}
+      <div style={{ display: 'grid', gridTemplateColumns: '1.25fr 0.75fr', gap: '24px', alignItems: 'stretch' }}>
         
-        {/* Column 1: Byju's Role Card */}
-        <div className="glass-panel" style={{ 
-          display: 'flex', 
-          flexDirection: 'column', 
-          gap: '16px', 
-          borderColor: 'var(--color-magenta)',
-          background: 'linear-gradient(135deg, rgba(13,17,28,0.75) 0%, rgba(244,63,94,0.03) 100%)',
-          animation: 'fadeIn 0.4s ease',
-          padding: '24px',
-          justifyContent: 'space-between'
-        }}>
+        {/* Left Column: Single Unified Experience & Competency Panel */}
+        <div 
+          className="glass-panel main-role-card" 
+          style={{ 
+            display: 'flex', 
+            flexDirection: 'column', 
+            gap: '16px', 
+            borderColor: 'rgba(244, 63, 94, 0.4)',
+            background: 'linear-gradient(135deg, rgba(13,17,28,0.75) 0%, rgba(244,63,94,0.03) 100%)',
+            animation: 'fadeIn 0.4s ease',
+            padding: '24px',
+            justifyContent: 'space-between',
+            boxShadow: '0 8px 32px rgba(244, 63, 94, 0.05), inset 0 1px 0 rgba(255,255,255,0.05)',
+            transition: 'all 0.3s ease'
+          }}
+        >
+          {/* Role Header and Description */}
           <div>
             <div style={{ 
               border: '1px solid rgba(244,63,94,0.3)', 
-              background: 'rgba(244,63,94,0.05)', 
+              background: 'rgba(244,63,94,0.06)', 
               color: 'var(--color-magenta)', 
               padding: '4px 10px', 
               borderRadius: '20px', 
@@ -48,93 +54,71 @@ export const TimelineMe: React.FC = () => {
               Role & Responsibilities
             </div>
             
-            <h3 style={{ fontSize: '1.45rem', color: '#ffffff', fontFamily: 'var(--font-display)', marginTop: '14px', fontWeight: 700 }}>
+            <h3 style={{ fontSize: '1.45rem', color: '#ffffff', fontFamily: 'var(--font-display)', marginTop: '12px', fontWeight: 700 }}>
               Vertical Content Head
             </h3>
             
-            <div style={{ fontSize: '0.88rem', color: 'var(--color-magenta)', fontFamily: 'var(--font-mono)', marginTop: '4px', fontWeight: 500 }}>
+            <div style={{ fontSize: '0.88rem', color: 'var(--color-magenta)', fontFamily: 'var(--font-mono)', marginTop: '3px', fontWeight: 500 }}>
               Byju's (~6 Years)
             </div>
             
-            <p style={{ fontSize: '0.84rem', color: '#d1d5db', lineHeight: '1.5', marginTop: '12px' }}>
+            <p style={{ fontSize: '0.84rem', color: '#d1d5db', lineHeight: '1.5', marginTop: '10px' }}>
               Handled a complete creative vertical in the content department, working deeply on curriculum translation into interactive animations, scripts, and video assets.
             </p>
           </div>
 
+          {/* Competency Row: Storytelling & Learning Design Side-by-Side */}
+          <div style={{ 
+            display: 'grid', 
+            gridTemplateColumns: '1fr 1fr', 
+            gap: '16px', 
+            borderTop: '1px solid rgba(255, 255, 255, 0.05)', 
+            paddingTop: '16px' 
+          }}>
+            {/* Storytelling details */}
+            <div className="competency-item storytelling-item" style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: 'var(--color-indigo)', fontSize: '0.85rem', fontWeight: 700 }}>
+                <Play size={12} fill="currentColor" style={{ color: 'var(--color-indigo)' }} /> Storytelling
+              </div>
+              <div style={{ fontSize: '0.76rem', color: '#9ca3af', lineHeight: 1.4 }}>
+                Script writing, hook design, storylines, and maintaining audience retention.
+              </div>
+            </div>
+
+            {/* Learning Design details */}
+            <div className="competency-item learning-design-item" style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: 'var(--color-cyan)', fontSize: '0.85rem', fontWeight: 700 }}>
+                <BrainCircuit size={12} style={{ color: 'var(--color-cyan)' }} /> Learning Design
+              </div>
+              <div style={{ fontSize: '0.76rem', color: '#9ca3af', lineHeight: 1.4 }}>
+                Breaking down highly complex, scary concepts into simple pieces.
+              </div>
+            </div>
+          </div>
+
+          {/* Key Advantage Highlight Banner */}
           <div style={{
-            marginTop: '20px',
+            marginTop: '10px',
             background: 'linear-gradient(90deg, rgba(244,63,94,0.08) 0%, transparent 100%)',
             borderLeft: '3px solid var(--color-magenta)',
-            padding: '12px 14px',
+            padding: '10px 12px',
             borderRadius: '0 8px 8px 0',
-            boxShadow: '0 4px 12px rgba(0,0,0,0.2)'
+            boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
+            display: 'flex',
+            gap: '10px',
+            alignItems: 'flex-start'
           }}>
-            <div style={{ display: 'flex', gap: '8px', alignItems: 'flex-start' }}>
-              <span style={{ fontSize: '1.1rem', marginTop: '-2px' }}>💡</span>
-              <div>
-                <div style={{ fontSize: '0.78rem', color: '#ffffff', fontWeight: 700, marginBottom: '2px', letterSpacing: '0.5px' }}>KEY ADVANTAGE</div>
-                <div style={{ fontSize: '0.76rem', color: '#d1d5db', lineHeight: 1.4 }}>
-                  I know how to script videos, build retention hooks, and explain concepts to students.
-                </div>
+            <Lightbulb size={16} style={{ color: 'var(--color-magenta)', flexShrink: 0, marginTop: '1px' }} />
+            <div>
+              <div style={{ fontSize: '0.72rem', color: '#ffffff', fontWeight: 700, marginBottom: '1px', letterSpacing: '0.5px' }}>KEY ADVANTAGE</div>
+              <div style={{ fontSize: '0.75rem', color: '#d1d5db', lineHeight: 1.4 }}>
+                I know how to script videos, build retention hooks, and explain concepts to students.
               </div>
             </div>
           </div>
         </div>
 
-        {/* Column 2: Core Competencies */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', justifyContent: 'space-between' }}>
-          
-          {/* Storytelling Card */}
-          <div className="glass-panel card-hover-effect" style={{ 
-            flex: 1, 
-            display: 'flex', 
-            flexDirection: 'column', 
-            justifyContent: 'center', 
-            padding: '20px', 
-            background: 'linear-gradient(135deg, rgba(13,17,28,0.7) 0%, rgba(99,102,241,0.03) 100%)', 
-            borderColor: 'rgba(99,102,241,0.15)',
-            borderRadius: '16px', 
-            transition: 'all 0.3s ease',
-            minHeight: '135px'
-          }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--color-indigo)', fontSize: '0.95rem', fontWeight: 700, marginBottom: '8px' }}>
-              <div style={{ padding: '6px', background: 'rgba(99,102,241,0.1)', borderRadius: '6px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <Play size={14} fill="currentColor" style={{ color: 'var(--color-indigo)' }} />
-              </div>
-              Storytelling
-            </div>
-            <div style={{ fontSize: '0.78rem', color: '#9ca3af', lineHeight: 1.45 }}>
-              Script writing, hook design, storylines, and maintaining audience retention.
-            </div>
-          </div>
-
-          {/* Learning Design Card */}
-          <div className="glass-panel card-hover-effect" style={{ 
-            flex: 1, 
-            display: 'flex', 
-            flexDirection: 'column', 
-            justifyContent: 'center', 
-            padding: '20px', 
-            background: 'linear-gradient(135deg, rgba(13,17,28,0.7) 0%, rgba(6,182,212,0.03) 100%)', 
-            borderColor: 'rgba(6,182,212,0.15)',
-            borderRadius: '16px', 
-            transition: 'all 0.3s ease',
-            minHeight: '135px'
-          }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--color-cyan)', fontSize: '0.95rem', fontWeight: 700, marginBottom: '8px' }}>
-              <div style={{ padding: '6px', background: 'rgba(6,182,212,0.1)', borderRadius: '6px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <BrainCircuit size={14} style={{ color: 'var(--color-cyan)' }} />
-              </div>
-              Learning Design
-            </div>
-            <div style={{ fontSize: '0.78rem', color: '#9ca3af', lineHeight: 1.45 }}>
-              Breaking down highly complex, scary concepts into simple pieces.
-            </div>
-          </div>
-
-        </div>
-
-        {/* Column 3: Proofs - Media Gallery */}
+        {/* Right Column: Media Stack (YouTube Video & Working Photo) */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', justifyContent: 'space-between' }}>
           
           {/* YouTube Video link */}
@@ -154,7 +138,8 @@ export const TimelineMe: React.FC = () => {
               alignItems: 'center',
               justifyContent: 'center',
               cursor: 'pointer',
-              minHeight: '135px'
+              minHeight: '140px',
+              transition: 'all 0.3s ease'
             }}
           >
             <div style={{
@@ -177,7 +162,7 @@ export const TimelineMe: React.FC = () => {
             <img 
               src={`${base}byjus_video_screenshot.png`} 
               alt="Byjus Video Screenshot" 
-              style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.8 }}
+              style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.8, transition: 'transform 0.4s ease' }}
             />
             <div style={{ 
               position: 'absolute', 
@@ -199,6 +184,7 @@ export const TimelineMe: React.FC = () => {
 
           {/* Abhishek Profile at BYJU'S */}
           <div 
+            className="profile-image-container"
             style={{ 
               borderRadius: '16px', 
               overflow: 'hidden', 
@@ -209,13 +195,14 @@ export const TimelineMe: React.FC = () => {
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              minHeight: '135px'
+              minHeight: '140px',
+              transition: 'all 0.3s ease'
             }}
           >
             <img 
               src={`${base}byjus_profile.jpg`} 
               alt="Working in BYJUS" 
-              style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+              style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.4s ease' }}
             />
             <div style={{ 
               position: 'absolute', 
@@ -243,6 +230,18 @@ export const TimelineMe: React.FC = () => {
           from { opacity: 0; transform: translateY(8px); }
           to { opacity: 1; transform: translateY(0); }
         }
+        .main-role-card:hover {
+          border-color: rgba(244, 63, 94, 0.7) !important;
+          box-shadow: 0 12px 40px rgba(244, 63, 94, 0.12), inset 0 1px 0 rgba(255,255,255,0.1) !important;
+        }
+        .video-thumbnail-link:hover img {
+          transform: scale(1.05);
+          opacity: 0.9 !important;
+        }
+        .video-thumbnail-link:hover {
+          border-color: rgba(244, 63, 94, 0.5) !important;
+          box-shadow: 0 12px 30px rgba(244, 63, 94, 0.15) !important;
+        }
         .video-thumbnail-link:hover .youtube-play-btn {
           transform: scale(1.1);
           background: #ff0000 !important;
@@ -251,10 +250,12 @@ export const TimelineMe: React.FC = () => {
         .video-thumbnail-link .youtube-play-btn {
           transition: all 0.2s ease;
         }
-        .card-hover-effect:hover {
+        .profile-image-container:hover img {
+          transform: scale(1.05);
+        }
+        .profile-image-container:hover {
           border-color: rgba(255, 255, 255, 0.18) !important;
-          background: rgba(255, 255, 255, 0.04) !important;
-          transform: translateY(-2px);
+          box-shadow: 0 12px 30px rgba(255, 255, 255, 0.1) !important;
         }
       `}</style>
     </div>
