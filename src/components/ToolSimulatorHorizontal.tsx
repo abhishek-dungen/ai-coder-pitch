@@ -86,7 +86,7 @@ export const ToolSimulatorHorizontal: React.FC = () => {
             style={{
               width: '100%',
               height: 'auto',
-              maxHeight: 'calc(100vh - 220px)', // Increased space for video by reducing layout gaps/offsets
+              maxHeight: 'calc(100vh - 315px)',
               borderRadius: '16px',
               border: '1px solid var(--color-border)',
               boxShadow: '0 12px 45px rgba(6, 182, 212, 0.35)',

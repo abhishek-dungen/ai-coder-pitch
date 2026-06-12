@@ -280,7 +280,7 @@ export const App: React.FC = () => {
         </section>
 
         {/* SLIDE 5B: BUILT PROOFS PORTFOLIO HORIZONTAL REDESIGN */}
-        <section className="slide" style={{ padding: '80px 60px 30px 60px' }}>
+        <section className="slide" style={{ padding: '80px 60px 90px 60px' }}>
           <motion.div 
             initial={{ opacity: 0, x: 50 }}
             whileInView={{ opacity: 1, x: 0 }}
