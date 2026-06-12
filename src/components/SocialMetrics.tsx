@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Play, Heart, MessageCircle, Share2, Bookmark, 
-  TrendingUp, Users, Grid, Settings, ArrowLeft, ChevronRight, 
-  Pin, ExternalLink, Sparkles, Plus, Info
+  Grid, Settings, ArrowLeft, ChevronRight, 
+  Pin, ExternalLink, Plus
 } from 'lucide-react';
 
 interface ReelData {
@@ -118,7 +118,6 @@ const reelsDataset: ReelData[] = [
 ];
 
 export const SocialMetrics: React.FC = () => {
-  const [activeTab, setActiveTab] = useState<'profile' | 'dashboard'>('profile');
   const [selectedReelIndex, setSelectedReelIndex] = useState<number | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [progress, setProgress] = useState(0);
@@ -126,49 +125,9 @@ export const SocialMetrics: React.FC = () => {
   const [floatingEmojis, setFloatingEmojis] = useState<{ id: number; x: number; type: string }[]>([]);
   const [likesCounter, setLikesCounter] = useState(0);
 
-  // Counter animation states
-  const [followers, setFollowers] = useState(0);
-  const [views, setViews] = useState(0);
-  const [reached, setReached] = useState(0);
-  const [netFollowers, setNetFollowers] = useState(0);
-
   // Get base path dynamically for GitHub Pages / Subfolders
   const base = import.meta.env.BASE_URL || '/';
   const profileImg = `${base}profile_view.jpeg`;
-
-  useEffect(() => {
-    let start = 0;
-    const endF = 13600; // 13.6K followers
-    const endV = 1230000; // 12.3L views
-    const endR = 460000; // 4.6L reached
-    const endN = 8300; // +8.3T (8.3K) net followers
-    const duration = 1500;
-    const step = 16;
-    const ticks = duration / step;
-    
-    const incrementF = Math.ceil(endF / ticks);
-    const incrementV = Math.ceil(endV / ticks);
-    const incrementR = Math.ceil(endR / ticks);
-    const incrementN = Math.ceil(endN / ticks);
-
-    const timer = setInterval(() => {
-      start += step;
-      setFollowers((prev) => Math.min(prev + incrementF, endF));
-      setViews((prev) => Math.min(prev + incrementV, endV));
-      setReached((prev) => Math.min(prev + incrementR, endR));
-      setNetFollowers((prev) => Math.min(prev + incrementN, endN));
-
-      if (start >= duration) {
-        clearInterval(timer);
-        setFollowers(endF);
-        setViews(endV);
-        setReached(endR);
-        setNetFollowers(endN);
-      }
-    }, step);
-
-    return () => clearInterval(timer);
-  }, []);
 
   // Sync Reels Simulator
   useEffect(() => {
@@ -233,174 +192,106 @@ export const SocialMetrics: React.FC = () => {
   const activeReel = selectedReelIndex !== null ? reelsDataset[selectedReelIndex] : null;
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', height: '100%', width: '100%' }}>
-      {/* Top metrics summary cards */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '10px' }}>
-        <div className="glass-panel" style={{ padding: '10px', display: 'flex', alignItems: 'center', gap: '8px', borderColor: 'rgba(6, 182, 212, 0.2)' }}>
-          <div style={{ padding: '6px', background: 'rgba(6, 182, 212, 0.1)', borderRadius: '6px', color: 'var(--color-cyan)', display: 'flex', alignItems: 'center' }}>
-            <Users size={16} />
-          </div>
-          <div>
-            <div style={{ fontSize: '0.65rem', color: '#9ca3af', fontFamily: 'var(--font-mono)' }}>FOLLOWERS</div>
-            <div style={{ fontSize: '1.05rem', fontWeight: 800, fontFamily: 'var(--font-display)', color: '#ffffff' }}>
-              {(followers / 1000).toFixed(1)}K
-            </div>
-          </div>
-        </div>
-
-        <div className="glass-panel" style={{ padding: '10px', display: 'flex', alignItems: 'center', gap: '8px', borderColor: 'rgba(168, 85, 247, 0.2)' }}>
-          <div style={{ padding: '6px', background: 'rgba(168, 85, 247, 0.1)', borderRadius: '6px', color: '#a855f7', display: 'flex', alignItems: 'center' }}>
-            <TrendingUp size={16} />
-          </div>
-          <div>
-            <div style={{ fontSize: '0.65rem', color: '#9ca3af', fontFamily: 'var(--font-mono)' }}>30D VIEWS</div>
-            <div style={{ fontSize: '1.05rem', fontWeight: 800, fontFamily: 'var(--font-display)', color: '#ffffff' }}>
-              {(views / 100000).toFixed(1)}L
-            </div>
-          </div>
-        </div>
-
-        <div className="glass-panel" style={{ padding: '10px', display: 'flex', alignItems: 'center', gap: '8px', borderColor: 'rgba(99, 102, 241, 0.2)' }}>
-          <div style={{ padding: '6px', background: 'rgba(99, 102, 241, 0.1)', borderRadius: '6px', color: 'var(--color-indigo)', display: 'flex', alignItems: 'center' }}>
-            <TrendingUp size={16} />
-          </div>
-          <div>
-            <div style={{ fontSize: '0.65rem', color: '#9ca3af', fontFamily: 'var(--font-mono)' }}>REACHED (30d)</div>
-            <div style={{ fontSize: '1.05rem', fontWeight: 800, fontFamily: 'var(--font-display)', color: '#ffffff' }}>
-              {(reached / 100000).toFixed(1)}L
-            </div>
-          </div>
-        </div>
-
-        <div className="glass-panel" style={{ padding: '10px', display: 'flex', alignItems: 'center', gap: '8px', borderColor: 'rgba(16, 185, 129, 0.2)' }}>
-          <div style={{ padding: '6px', background: 'rgba(16, 185, 129, 0.1)', borderRadius: '6px', color: '#10b981', display: 'flex', alignItems: 'center' }}>
-            <Users size={16} />
-          </div>
-          <div>
-            <div style={{ fontSize: '0.65rem', color: '#9ca3af', fontFamily: 'var(--font-mono)', display: 'flex', alignItems: 'center', gap: '2px' }}>
-              NET FOLL. <span title="Hindi Locale: +8.3T (T=Thousand)" style={{ cursor: 'help', display: 'inline-flex', alignItems: 'center' }}><Info size={9} /></span>
-            </div>
-            <div style={{ fontSize: '1.05rem', fontWeight: 800, fontFamily: 'var(--font-display)', color: '#ffffff' }}>
-              +{(netFollowers / 1000).toFixed(1)}T
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Main Panels Layout: Mockup Phone + Details panel */}
-      <div style={{ display: 'grid', gridTemplateColumns: '1.1fr 0.9fr', gap: '16px', flexGrow: 1, minHeight: 0 }}>
-        
-        {/* Instagram App Simulator Frame */}
-        <div className="glass-panel" style={{
-          padding: '0',
-          display: 'flex',
-          flexDirection: 'column',
-          background: '#090a0f',
-          borderColor: 'var(--color-border)',
-          borderRadius: '16px',
-          overflow: 'hidden',
-          position: 'relative',
-          height: '420px',
-          boxShadow: '0 8px 32px rgba(0, 0, 0, 0.5)'
+    <div style={{ 
+      display: 'flex', 
+      flexDirection: 'row', 
+      gap: '16px', 
+      height: '425px', 
+      width: '100%',
+      justifyContent: 'center',
+      alignItems: 'center'
+    }}>
+      
+      {/* =========================================================
+          BLOCK 1: INSTAGRAM PROFILE MOCKUP (WITH INTEGRATED PLAYER)
+          ========================================================= */}
+      <div className="glass-panel" style={{
+        flex: 1,
+        padding: '0',
+        display: 'flex',
+        flexDirection: 'column',
+        background: '#090a0f',
+        borderColor: 'var(--color-border)',
+        borderRadius: '16px',
+        overflow: 'hidden',
+        position: 'relative',
+        height: '100%',
+        boxShadow: '0 8px 32px rgba(0, 0, 0, 0.5)'
+      }}>
+        {/* Phone top status bar */}
+        <div style={{ 
+          display: 'flex', 
+          justifyContent: 'space-between', 
+          padding: '6px 14px', 
+          fontSize: '0.65rem', 
+          color: '#9ca3af', 
+          background: '#05060a',
+          borderBottom: '1px solid rgba(255, 255, 255, 0.05)',
+          fontFamily: 'var(--font-mono)'
         }}>
-          {/* Simulated phone top status bar */}
-          <div style={{ 
-            display: 'flex', 
-            justifyContent: 'space-between', 
-            padding: '8px 16px', 
-            fontSize: '0.7rem', 
-            color: '#9ca3af', 
-            background: '#05060a',
-            borderBottom: '1px solid rgba(255, 255, 255, 0.05)',
-            fontFamily: 'var(--font-mono)'
-          }}>
-            <span>2:44 PM</span>
-            <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
-              <span>📶 VoWiFi</span>
-              <span>🔋 61%</span>
-            </div>
+          <span>2:44 PM</span>
+          <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
+            <span>📶 VoWiFi</span>
+            <span>🔋 61%</span>
           </div>
+        </div>
 
-          {/* Simulated Instagram Header */}
-          <div style={{ 
-            display: 'flex', 
-            justifyContent: 'space-between', 
-            alignItems: 'center', 
-            padding: '10px 16px',
-            borderBottom: '1px solid rgba(255, 255, 255, 0.05)'
-          }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-              {activeTab === 'dashboard' && (
-                <ArrowLeft 
-                  size={16} 
-                  style={{ color: 'white', cursor: 'pointer' }} 
-                  onClick={() => setActiveTab('profile')} 
-                />
-              )}
-              <span style={{ fontWeight: 700, fontSize: '0.95rem', color: 'white' }}>
-                {activeTab === 'profile' ? 'excelbhaiya.abhishek' : 'Professional dashboard'}
-              </span>
-            </div>
-            <Settings size={16} style={{ color: 'white', cursor: 'pointer' }} />
-          </div>
-
-          {/* Navigation Tab Buttons inside the Mockup */}
-          <div style={{ display: 'flex', background: '#0d0f17' }}>
+        {/* Instagram Header (shows profile title or Player Back Button) */}
+        <div style={{ 
+          display: 'flex', 
+          justifyContent: 'space-between', 
+          alignItems: 'center', 
+          padding: '8px 12px',
+          borderBottom: '1px solid rgba(255, 255, 255, 0.05)',
+          background: '#090a0f',
+          minHeight: '36px'
+        }}>
+          {activeReel ? (
             <button 
-              onClick={() => setActiveTab('profile')}
+              onClick={() => { setSelectedReelIndex(null); setIsPlaying(false); }}
               style={{
-                flex: 1,
-                padding: '8px',
-                background: activeTab === 'profile' ? 'rgba(6, 182, 212, 0.08)' : 'transparent',
+                background: 'rgba(255,255,255,0.08)',
                 border: 'none',
-                borderBottom: activeTab === 'profile' ? '2px solid var(--color-cyan)' : '2px solid transparent',
-                color: activeTab === 'profile' ? 'white' : '#9ca3af',
-                fontSize: '0.75rem',
-                fontWeight: 600,
-                cursor: 'pointer',
+                borderRadius: '4px',
+                color: 'white',
+                padding: '3px 8px',
+                fontSize: '0.68rem',
                 display: 'flex',
                 alignItems: 'center',
-                justifyContent: 'center',
-                gap: '6px'
+                gap: '4px',
+                cursor: 'pointer'
               }}
             >
-              <Grid size={14} /> Profile Grid
+              <ArrowLeft size={12} /> Back to Grid
             </button>
-            <button 
-              onClick={() => setActiveTab('dashboard')}
-              style={{
-                flex: 1,
-                padding: '8px',
-                background: activeTab === 'dashboard' ? 'rgba(168, 85, 247, 0.08)' : 'transparent',
-                border: 'none',
-                borderBottom: activeTab === 'dashboard' ? '2px solid #a855f7' : '2px solid transparent',
-                color: activeTab === 'dashboard' ? 'white' : '#9ca3af',
-                fontSize: '0.75rem',
-                fontWeight: 600,
-                cursor: 'pointer',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: '6px'
-              }}
-            >
-              <TrendingUp size={14} /> Dashboard
-            </button>
-          </div>
+          ) : (
+            <span style={{ fontWeight: 700, fontSize: '0.85rem', color: 'white' }}>
+              excelbhaiya.abhishek
+            </span>
+          )}
+          <Settings size={14} style={{ color: 'white' }} />
+        </div>
 
-          {/* Mockup Content Area (Scrollable) */}
-          <div style={{ flex: 1, overflowY: 'auto', padding: '12px', background: '#090a0f' }}>
-            {activeTab === 'profile' ? (
-              // INSTAGRAM PROFILE VIEW
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-                
-                {/* Profile Stats Row */}
-                <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+        {/* Profile Scrollable Content Window */}
+        <div style={{ flex: 1, overflowY: 'auto', padding: '10px', background: '#090a0f', position: 'relative' }}>
+          
+          <AnimatePresence mode="wait">
+            {!activeReel ? (
+              // MAIN PROFILE GRID VIEW
+              <motion.div 
+                key="profile-grid"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.2 }}
+                style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}
+              >
+                {/* Stats row */}
+                <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
                   <div style={{ position: 'relative' }}>
-                    {/* Story Gradient Ring */}
                     <div style={{
-                      width: '60px',
-                      height: '60px',
+                      width: '50px',
+                      height: '50px',
                       borderRadius: '50%',
                       background: 'linear-gradient(45deg, #f9ce34 10%, #ee2a7b 50%, #6228d7 90%)',
                       display: 'flex',
@@ -418,284 +309,128 @@ export const SocialMetrics: React.FC = () => {
                         justifyContent: 'center',
                         color: 'white',
                         fontWeight: 700,
-                        fontSize: '1rem',
+                        fontSize: '0.85rem',
                         border: '2px solid #090a0f'
                       }}>
                         AK
                       </div>
                     </div>
-                    {/* Plus Icon Badge */}
                     <div style={{
                       position: 'absolute',
                       bottom: '0',
                       right: '0',
                       background: 'var(--color-cyan)',
                       borderRadius: '50%',
-                      width: '16px',
-                      height: '16px',
+                      width: '14px',
+                      height: '14px',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
                       color: 'black',
                       fontWeight: 'bold',
-                      fontSize: '10px'
+                      fontSize: '8px'
                     }}>
-                      <Plus size={10} />
+                      <Plus size={8} />
                     </div>
                   </div>
 
                   <div style={{ display: 'flex', flexGrow: 1, justifyContent: 'space-around', textAlign: 'center' }}>
                     <div>
-                      <div style={{ fontSize: '0.9rem', fontWeight: 700, color: 'white' }}>137</div>
-                      <div style={{ fontSize: '0.65rem', color: '#9ca3af' }}>posts</div>
+                      <div style={{ fontSize: '0.8rem', fontWeight: 700, color: 'white' }}>137</div>
+                      <div style={{ fontSize: '0.6rem', color: '#9ca3af' }}>posts</div>
                     </div>
                     <div>
-                      <div style={{ fontSize: '0.9rem', fontWeight: 700, color: 'white' }}>13.6K</div>
-                      <div style={{ fontSize: '0.65rem', color: '#9ca3af' }}>followers</div>
+                      <div style={{ fontSize: '0.8rem', fontWeight: 700, color: 'white' }}>13.6K</div>
+                      <div style={{ fontSize: '0.6rem', color: '#9ca3af' }}>followers</div>
                     </div>
                     <div>
-                      <div style={{ fontSize: '0.9rem', fontWeight: 700, color: 'white' }}>1</div>
-                      <div style={{ fontSize: '0.65rem', color: '#9ca3af' }}>following</div>
+                      <div style={{ fontSize: '0.8rem', fontWeight: 700, color: 'white' }}>1</div>
+                      <div style={{ fontSize: '0.6rem', color: '#9ca3af' }}>following</div>
                     </div>
                   </div>
                 </div>
 
-                {/* Profile Bio */}
+                {/* Profile Bio info */}
                 <div>
-                  <div style={{ fontSize: '0.8rem', fontWeight: 700, color: 'white' }}>Abhishek Kumar</div>
-                  <div style={{ fontSize: '0.73rem', color: '#e5e7eb', marginTop: '4px', display: 'flex', flexDirection: 'column', gap: '2px' }}>
+                  <div style={{ fontSize: '0.75rem', fontWeight: 700, color: 'white' }}>Abhishek Kumar</div>
+                  <div style={{ fontSize: '0.68rem', color: '#e5e7eb', marginTop: '2px', display: 'flex', flexDirection: 'column', gap: '1px', lineHeight: 1.25 }}>
                     <div>👨‍💻 8+ Years of Corporate Experience</div>
                     <div>💯 New Excel Hack Every Alternate Day</div>
                     <div>👇 Excel +AI Career LIVE Masterclass</div>
-                    <a href="http://www.excelbhaiyaabhishek.com/excel-career-3hr" target="_blank" rel="noreferrer" style={{ color: 'var(--color-cyan)', display: 'flex', alignItems: 'center', gap: '3px', textDecoration: 'none', fontSize: '0.73rem', marginTop: '2px' }}>
-                      <span style={{ textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap', maxWidth: '200px' }}>www.excelbhaiyaabhishek.com/excel-career-3hr</span>
-                      <ExternalLink size={10} />
+                    <a href="http://www.excelbhaiyaabhishek.com/excel-career-3hr" target="_blank" rel="noreferrer" style={{ color: 'var(--color-cyan)', display: 'flex', alignItems: 'center', gap: '2px', textDecoration: 'none', fontSize: '0.65rem' }}>
+                      <span style={{ textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap', maxWidth: '170px' }}>www.excelbhaiyaabhishek.com</span>
+                      <ExternalLink size={8} />
                     </a>
                   </div>
                 </div>
 
-                {/* Banner Link to Professional Dashboard */}
-                <div 
-                  onClick={() => setActiveTab('dashboard')}
-                  className="interactive"
-                  style={{
-                    background: 'rgba(255,255,255,0.05)',
-                    borderRadius: '8px',
-                    padding: '8px 12px',
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                    cursor: 'pointer',
-                    border: '1px solid rgba(255,255,255,0.05)'
-                  }}
-                >
-                  <div style={{ display: 'flex', flexDirection: 'column' }}>
-                    <span style={{ fontSize: '0.75rem', fontWeight: 700, color: 'white' }}>Professional dashboard</span>
-                    <span style={{ fontSize: '0.65rem', color: '#10b981', display: 'flex', alignItems: 'center', gap: '2px', marginTop: '1px' }}>
-                      ↗ 12.3L views in the last 30 days.
-                    </span>
-                  </div>
-                  <ChevronRight size={14} style={{ color: '#9ca3af' }} />
+                {/* Reels Pinned tab icon */}
+                <div style={{ borderBottom: '1px solid rgba(255,255,255,0.05)', paddingBottom: '4px', display: 'flex', justifyContent: 'center' }}>
+                  <Grid size={14} style={{ color: 'white' }} />
                 </div>
 
-                {/* Reels Grid (3 columns) */}
-                <div>
-                  <div style={{ borderBottom: '1px solid rgba(255,255,255,0.05)', paddingBottom: '8px', display: 'flex', justifyContent: 'center' }}>
-                    <Grid size={16} style={{ color: 'white' }} />
-                  </div>
-                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '4px', marginTop: '6px' }}>
-                    {reelsDataset.map((reel, index) => (
-                      <div 
-                        key={reel.id} 
-                        onClick={() => selectReel(index)}
-                        className="interactive reel-grid-cell"
-                        style={{ 
-                          aspectRatio: '9/16', 
-                          backgroundImage: `url(${profileImg})`,
-                          backgroundSize: '304% auto',
-                          backgroundPosition: reel.bgPos,
-                          backgroundRepeat: 'no-repeat',
-                          borderRadius: '4px',
-                          position: 'relative',
-                          overflow: 'hidden',
-                          cursor: 'pointer',
-                          border: selectedReelIndex === index ? '2px solid var(--color-cyan)' : '1px solid rgba(255,255,255,0.05)',
-                          display: 'flex',
-                          flexDirection: 'column',
-                          justifyContent: 'flex-end',
-                          padding: '6px',
-                          transition: 'border 0.2s ease'
-                        }}
-                      >
-                        {/* Pinned Icon Overlay */}
-                        {reel.isPinned && (
-                          <div style={{ position: 'absolute', top: '4px', right: '4px', background: 'rgba(0,0,0,0.6)', padding: '3px', borderRadius: '4px', display: 'flex', alignItems: 'center' }}>
-                            <Pin size={10} style={{ color: 'white', transform: 'rotate(45deg)' }} />
-                          </div>
-                        )}
-                        {/* Overlay play button on hover */}
-                        <div style={{
-                          position: 'absolute',
-                          inset: 0,
-                          background: 'rgba(0,0,0,0.15)',
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          opacity: 0,
-                          transition: 'opacity 0.2s ease',
-                        }}
-                        className="hover-overlay"
-                        >
-                          <Play size={20} fill="white" style={{ color: 'white' }} />
+                {/* Grid layout */}
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '3px', marginTop: '2px' }}>
+                  {reelsDataset.map((reel, index) => (
+                    <div 
+                      key={reel.id} 
+                      onClick={() => selectReel(index)}
+                      className="interactive reel-grid-cell"
+                      style={{ 
+                        aspectRatio: '9/16', 
+                        backgroundImage: `url(${profileImg})`,
+                        backgroundSize: '304% auto',
+                        backgroundPosition: reel.bgPos,
+                        backgroundRepeat: 'no-repeat',
+                        borderRadius: '3px',
+                        position: 'relative',
+                        overflow: 'hidden',
+                        cursor: 'pointer',
+                        border: '1px solid rgba(255,255,255,0.05)',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        justifyContent: 'flex-end',
+                        padding: '4px'
+                      }}
+                    >
+                      {reel.isPinned && (
+                        <div style={{ position: 'absolute', top: '3px', right: '3px', background: 'rgba(0,0,0,0.6)', padding: '2px', borderRadius: '3px', display: 'flex', alignItems: 'center' }}>
+                          <Pin size={8} style={{ color: 'white', transform: 'rotate(45deg)' }} />
                         </div>
+                      )}
+                      <div style={{
+                        position: 'absolute',
+                        inset: 0,
+                        background: 'rgba(0,0,0,0.15)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        opacity: 0,
+                        transition: 'opacity 0.2s ease',
+                      }}
+                      className="hover-overlay"
+                      >
+                        <Play size={16} fill="white" style={{ color: 'white' }} />
                       </div>
-                    ))}
-                  </div>
+                    </div>
+                  ))}
                 </div>
-              </div>
+              </motion.div>
             ) : (
-              // PROFESSIONAL DASHBOARD VIEW
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
-                <div>
-                  <h3 style={{ fontSize: '0.8rem', color: '#9ca3af', fontWeight: 600, textTransform: 'uppercase', fontFamily: 'var(--font-mono)' }}>Insights</h3>
-                  <p style={{ fontSize: '0.65rem', color: '#6b7280', marginTop: '2px' }}>Last 30 days</p>
-                  
-                  {/* Dashboard stats panel items */}
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginTop: '8px' }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '10px', background: 'rgba(255,255,255,0.02)', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.05)' }}>
-                      <div>
-                        <div style={{ fontSize: '0.7rem', color: '#9ca3af' }}>Views</div>
-                        <div style={{ fontSize: '1rem', fontWeight: 700, color: 'white', marginTop: '2px' }}>12.3L <span style={{ color: '#22c55e', fontSize: '0.75rem' }}>↗</span></div>
-                      </div>
-                      <ChevronRight size={14} style={{ color: '#6b7280' }} />
-                    </div>
-
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '10px', background: 'rgba(255,255,255,0.02)', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.05)' }}>
-                      <div>
-                        <div style={{ fontSize: '0.7rem', color: '#9ca3af' }}>Accounts reached</div>
-                        <div style={{ fontSize: '1rem', fontWeight: 700, color: 'white', marginTop: '2px' }}>4.6L <span style={{ color: '#22c55e', fontSize: '0.75rem' }}>↗</span></div>
-                      </div>
-                      <ChevronRight size={14} style={{ color: '#6b7280' }} />
-                    </div>
-
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '10px', background: 'rgba(255,255,255,0.02)', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.05)' }}>
-                      <div>
-                        <div style={{ fontSize: '0.7rem', color: '#9ca3af' }}>Net followers</div>
-                        <div style={{ fontSize: '1rem', fontWeight: 700, color: 'white', marginTop: '2px' }}>+8.3T <span style={{ color: '#22c55e', fontSize: '0.75rem' }}>↗</span></div>
-                      </div>
-                      <ChevronRight size={14} style={{ color: '#6b7280' }} />
-                    </div>
-                  </div>
-                </div>
-
-                {/* Next Steps Section */}
-                <div>
-                  <h3 style={{ fontSize: '0.8rem', color: '#9ca3af', fontWeight: 600, textTransform: 'uppercase', fontFamily: 'var(--font-mono)' }}>Next steps</h3>
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginTop: '8px' }}>
-                    <div style={{ display: 'flex', gap: '10px', padding: '8px', background: 'rgba(255,255,255,0.02)', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.03)' }}>
-                      <div style={{ minWidth: '32px', height: '32px', background: 'rgba(6, 182, 212, 0.1)', color: 'var(--color-cyan)', borderRadius: '6px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.8rem' }}>🎙️</div>
-                      <div>
-                        <h4 style={{ fontSize: '0.72rem', fontWeight: 700, color: 'white' }}>Edit audio like a pro</h4>
-                        <p style={{ fontSize: '0.62rem', color: '#9ca3af', marginTop: '2px', lineHeight: 1.3 }}>Get studio-quality sound with import, enhance and fade tools.</p>
-                      </div>
-                    </div>
-
-                    <div style={{ display: 'flex', gap: '10px', padding: '8px', background: 'rgba(255,255,255,0.02)', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.03)' }}>
-                      <div style={{ minWidth: '32px', height: '32px', background: 'rgba(168, 85, 247, 0.1)', color: '#a855f7', borderRadius: '6px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.8rem' }}>🔥</div>
-                      <div>
-                        <h4 style={{ fontSize: '0.72rem', fontWeight: 700, color: 'white' }}>Find your next hit with trial reels</h4>
-                        <p style={{ fontSize: '0.62rem', color: '#9ca3af', marginTop: '2px', lineHeight: 1.3 }}>See how your content performs with non-followers first.</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Your Tools Section */}
-                <div>
-                  <h3 style={{ fontSize: '0.8rem', color: '#9ca3af', fontWeight: 600, textTransform: 'uppercase', fontFamily: 'var(--font-mono)' }}>Your tools</h3>
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '1px', background: 'rgba(255, 255, 255, 0.05)', borderRadius: '8px', overflow: 'hidden', marginTop: '8px' }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '8px 12px', background: '#0d0f17', fontSize: '0.7rem' }}>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'white' }}>
-                        <span>📊</span>
-                        <span>Monthly recap</span>
-                        <span style={{ background: '#2563eb', color: 'white', padding: '2px 6px', borderRadius: '10px', fontSize: '0.55rem', fontWeight: 'bold' }}>New</span>
-                      </div>
-                      <ChevronRight size={12} style={{ color: '#6b7280' }} />
-                    </div>
-
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '8px 12px', background: '#0d0f17', fontSize: '0.7rem' }}>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'white' }}>
-                        <span>💡</span>
-                        <span>Best practices</span>
-                      </div>
-                      <ChevronRight size={12} style={{ color: '#6b7280' }} />
-                    </div>
-
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '8px 12px', background: '#0d0f17', fontSize: '0.7rem' }}>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'white' }}>
-                        <span>✨</span>
-                        <span>Inspiration</span>
-                      </div>
-                      <ChevronRight size={12} style={{ color: '#6b7280' }} />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
-        </div>
-
-        {/* Dynamic Simulator & Storytelling Breakdown Side */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', justifyContent: 'center' }}>
-          
-          <AnimatePresence mode="wait">
-            {activeReel ? (
-              // IF REEL IS SELECTED, SHOW THE PLAY SIMULATOR
-              <motion.div 
-                key={activeReel.id}
-                initial={{ opacity: 0, y: 15 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -15 }}
-                transition={{ duration: 0.3 }}
-                className="glass-panel"
-                style={{ 
-                  padding: '16px', 
-                  borderColor: 'var(--color-cyan-glow)', 
-                  background: 'linear-gradient(135deg, rgba(9, 10, 15, 0.9) 0%, rgba(6, 182, 212, 0.05) 100%)',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  gap: '12px',
-                  position: 'relative'
-                }}
+              // SIMULATED REEL PLAYER OVERLAY (Renders inside the phone frame)
+              <motion.div
+                key="reel-player"
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.95 }}
+                transition={{ duration: 0.2 }}
+                style={{ display: 'flex', flexDirection: 'column', gap: '8px', height: '100%' }}
               >
-                {/* Back button to clear selection */}
-                <div style={{ display: 'flex', justifySelf: 'flex-start', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <button 
-                    onClick={() => { setSelectedReelIndex(null); setIsPlaying(false); }}
-                    style={{
-                      background: 'rgba(255,255,255,0.08)',
-                      border: 'none',
-                      borderRadius: '4px',
-                      color: 'white',
-                      padding: '4px 8px',
-                      fontSize: '0.68rem',
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '4px',
-                      cursor: 'pointer'
-                    }}
-                  >
-                    <ArrowLeft size={12} /> Back to Profile Info
-                  </button>
-                  <span style={{ fontSize: '0.68rem', color: '#10b981', fontFamily: 'var(--font-mono)' }}>REEL WORKFLOW</span>
-                </div>
-
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                  <h3 style={{ fontSize: '0.85rem', fontWeight: 700, color: 'white', borderBottom: '1px solid rgba(255,255,255,0.05)', paddingBottom: '8px', lineHeight: 1.3 }}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                  <h4 style={{ fontSize: '0.75rem', fontWeight: 700, color: 'white', lineHeight: 1.25 }}>
                     {activeReel.title}
-                  </h3>
+                  </h4>
                   
-                  {/* Instagram Live Reel link button */}
                   {activeReel.instagramUrl && (
                     <a 
                       href={activeReel.instagramUrl} 
@@ -705,32 +440,31 @@ export const SocialMetrics: React.FC = () => {
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        gap: '6px',
+                        gap: '4px',
                         background: 'linear-gradient(45deg, #f9ce34 10%, #ee2a7b 50%, #6228d7 90%)',
                         color: 'white',
                         border: 'none',
-                        borderRadius: '6px',
-                        padding: '8px 12px',
-                        fontSize: '0.75rem',
+                        borderRadius: '4px',
+                        padding: '6px 10px',
+                        fontSize: '0.65rem',
                         fontWeight: 700,
                         textDecoration: 'none',
                         cursor: 'pointer',
-                        boxShadow: '0 4px 12px rgba(238, 42, 123, 0.25)',
-                        marginBottom: '4px'
+                        boxShadow: '0 4px 10px rgba(238, 42, 123, 0.2)'
                       }}
                       className="interactive"
                     >
                       <span>View Live Reel on Instagram</span>
-                      <ExternalLink size={12} />
+                      <ExternalLink size={10} />
                     </a>
                   )}
                 </div>
 
-                {/* Simulated Video Screen Panel */}
+                {/* Simulated Screen */}
                 <div style={{ 
-                  height: '130px', 
+                  height: '110px', 
                   background: '#040508', 
-                  borderRadius: '8px', 
+                  borderRadius: '6px', 
                   border: '1px solid rgba(255,255,255,0.08)',
                   display: 'flex', 
                   flexDirection: 'column',
@@ -738,23 +472,21 @@ export const SocialMetrics: React.FC = () => {
                   alignItems: 'center', 
                   position: 'relative',
                   overflow: 'hidden',
-                  padding: '12px'
+                  padding: '8px'
                 }}>
-                  {/* Floating particles */}
-                  <div style={{ position: 'absolute', inset: 0, opacity: 0.1, backgroundImage: 'radial-gradient(circle, var(--color-cyan) 1px, transparent 1px)', backgroundSize: '12px 12px' }} />
+                  <div style={{ position: 'absolute', inset: 0, opacity: 0.08, backgroundImage: 'radial-gradient(circle, var(--color-cyan) 1px, transparent 1px)', backgroundSize: '10px 10px' }} />
 
-                  {/* Playback Controls & Floating Emojis */}
                   {isPlaying ? (
                     <div style={{ zIndex: 1, textAlign: 'center' }}>
-                      <div className="animate-float" style={{ fontSize: '2.2rem', marginBottom: '4px' }}>
+                      <div className="animate-float" style={{ fontSize: '1.8rem', marginBottom: '2px' }}>
                         {activeSegment === 'hook' && '⚡'}
                         {activeSegment === 'body' && '📊'}
                         {activeSegment === 'cta' && '👉'}
                       </div>
-                      <div style={{ fontSize: '0.62rem', fontFamily: 'var(--font-mono)', color: 'var(--color-cyan)', textTransform: 'uppercase', letterSpacing: '1px' }}>
-                        Simulating Playback
+                      <div style={{ fontSize: '0.55rem', fontFamily: 'var(--font-mono)', color: 'var(--color-cyan)', textTransform: 'uppercase', letterSpacing: '1px' }}>
+                        Playback
                       </div>
-                      <div style={{ fontSize: '0.72rem', color: 'white', marginTop: '6px', fontWeight: 600, padding: '0 10px', lineHeight: 1.3 }}>
+                      <div style={{ fontSize: '0.62rem', color: 'white', marginTop: '4px', fontWeight: 600, padding: '0 6px', lineHeight: 1.25 }}>
                         {activeSegment === 'hook' && activeReel.hookText}
                         {activeSegment === 'body' && activeReel.bodyText}
                         {activeSegment === 'cta' && activeReel.ctaText}
@@ -764,21 +496,21 @@ export const SocialMetrics: React.FC = () => {
                     <button 
                       onClick={() => setIsPlaying(true)}
                       className="btn btn-primary"
-                      style={{ borderRadius: '50%', width: '44px', height: '44px', padding: 0, justifyContent: 'center', zIndex: 2 }}
+                      style={{ borderRadius: '50%', width: '36px', height: '36px', padding: 0, justifyContent: 'center', zIndex: 2 }}
                     >
-                      <Play size={18} fill="currentColor" style={{ marginLeft: '3px' }} />
+                      <Play size={14} fill="currentColor" style={{ marginLeft: '2px' }} />
                     </button>
                   )}
 
-                  {/* Floating emojis overlay */}
+                  {/* Floating hearts */}
                   {floatingEmojis.map((emoji) => (
                     <span
                       key={emoji.id}
                       style={{
                         position: 'absolute',
-                        bottom: '10px',
+                        bottom: '8px',
                         left: `${emoji.x}%`,
-                        fontSize: '1.4rem',
+                        fontSize: '1.2rem',
                         opacity: 0,
                         transform: 'translateY(0)',
                         animation: 'floatUp 2s cubic-bezier(0.18, 0.89, 0.32, 1.28) forwards',
@@ -790,7 +522,7 @@ export const SocialMetrics: React.FC = () => {
                     </span>
                   ))}
 
-                  {/* Progress timeline line */}
+                  {/* Progress timeline */}
                   <div style={{ 
                     position: 'absolute', 
                     bottom: 0, 
@@ -802,117 +534,190 @@ export const SocialMetrics: React.FC = () => {
                   }} />
                 </div>
 
-                {/* Hook / Body / CTA Script Panel cards */}
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', fontSize: '0.72rem' }}>
+                {/* Progress markers */}
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', fontSize: '0.65rem', lineHeight: 1.2 }}>
                   <div style={{ 
-                    padding: '6px 10px', 
-                    borderRadius: '6px',
+                    padding: '4px 8px', 
+                    borderRadius: '4px',
                     borderLeft: activeSegment === 'hook' ? '3px solid var(--color-magenta)' : '3px solid transparent',
-                    background: activeSegment === 'hook' ? 'rgba(244, 63, 94, 0.05)' : 'rgba(255,255,255,0.01)',
-                    transition: 'all 0.25s ease'
+                    background: activeSegment === 'hook' ? 'rgba(244, 63, 94, 0.05)' : 'rgba(255,255,255,0.01)'
                   }}>
-                    <strong style={{ color: 'var(--color-magenta)' }}>1. Hook (0-3s)</strong>: Intriguing, filters feed scrolls immediately.
+                    <strong style={{ color: 'var(--color-magenta)' }}>1. Hook (0-3s)</strong>: Intriguing start.
                   </div>
                   <div style={{ 
-                    padding: '6px 10px', 
-                    borderRadius: '6px',
+                    padding: '4px 8px', 
+                    borderRadius: '4px',
                     borderLeft: activeSegment === 'body' ? '3px solid var(--color-cyan)' : '3px solid transparent',
-                    background: activeSegment === 'body' ? 'rgba(6, 182, 212, 0.05)' : 'rgba(255,255,255,0.01)',
-                    transition: 'all 0.25s ease'
+                    background: activeSegment === 'body' ? 'rgba(6, 182, 212, 0.05)' : 'rgba(255,255,255,0.01)'
                   }}>
-                    <strong style={{ color: 'var(--color-cyan)' }}>2. Body (3-12s)</strong>: Fast-paced build, showing prompt & final code output.
+                    <strong style={{ color: 'var(--color-cyan)' }}>2. Body (3-12s)</strong>: Fast prompt/code build.
                   </div>
                   <div style={{ 
-                    padding: '6px 10px', 
-                    borderRadius: '6px',
+                    padding: '4px 8px', 
+                    borderRadius: '4px',
                     borderLeft: activeSegment === 'cta' ? '3px solid var(--color-indigo)' : '3px solid transparent',
-                    background: activeSegment === 'cta' ? 'rgba(99, 102, 241, 0.05)' : 'rgba(255,255,255,0.01)',
-                    transition: 'all 0.25s ease'
+                    background: activeSegment === 'cta' ? 'rgba(99, 102, 241, 0.05)' : 'rgba(255,255,255,0.01)'
                   }}>
-                    <strong style={{ color: 'var(--color-indigo)' }}>3. CTA (12-15s)</strong>: Converts viewers into loyal community.
+                    <strong style={{ color: 'var(--color-indigo)' }}>3. CTA (12-15s)</strong>: CTA conversions.
                   </div>
                 </div>
 
-                {/* Social Actions Strip for simulator */}
+                {/* Social interactive strip */}
                 <div style={{ 
                   display: 'flex', 
                   justifyContent: 'space-between', 
                   borderTop: '1px solid rgba(255,255,255,0.05)', 
-                  paddingTop: '8px',
-                  fontSize: '0.72rem'
+                  paddingTop: '6px',
+                  fontSize: '0.65rem'
                 }}>
-                  <button onClick={() => handleActionClick('like')} className="interactive" style={{ background: 'none', border: 'none', color: '#f3f4f6', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }}>
-                    <Heart size={14} fill={likesCounter > 0 ? 'var(--color-magenta)' : 'none'} style={{ color: 'var(--color-magenta)' }} />
+                  <button onClick={() => handleActionClick('like')} className="interactive" style={{ background: 'none', border: 'none', color: '#f3f4f6', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '3px' }}>
+                    <Heart size={12} fill={likesCounter > 0 ? 'var(--color-magenta)' : 'none'} style={{ color: 'var(--color-magenta)' }} />
                     <span>{likesCounter > 0 ? (parseFloat(activeReel.likes) + likesCounter/1000).toFixed(2) + 'K' : activeReel.likes}</span>
                   </button>
-                  <button className="interactive" style={{ background: 'none', border: 'none', color: '#f3f4f6', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }}>
-                    <MessageCircle size={14} style={{ color: 'var(--color-cyan)' }} /> <span>{activeReel.comments}</span>
+                  <button className="interactive" style={{ background: 'none', border: 'none', color: '#f3f4f6', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '3px' }}>
+                    <MessageCircle size={12} style={{ color: 'var(--color-cyan)' }} /> <span>{activeReel.comments}</span>
                   </button>
-                  <button onClick={() => handleActionClick('save')} className="interactive" style={{ background: 'none', border: 'none', color: '#f3f4f6', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }}>
-                    <Bookmark size={14} style={{ color: '#eab308' }} /> <span>{activeReel.saves}</span>
+                  <button onClick={() => handleActionClick('save')} className="interactive" style={{ background: 'none', border: 'none', color: '#f3f4f6', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '3px' }}>
+                    <Bookmark size={12} style={{ color: '#eab308' }} /> <span>{activeReel.saves}</span>
                   </button>
-                  <button onClick={() => handleActionClick('share')} className="interactive" style={{ background: 'none', border: 'none', color: '#f3f4f6', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }}>
-                    <Share2 size={14} style={{ color: 'var(--color-indigo)' }} /> <span>{activeReel.shares}</span>
+                  <button onClick={() => handleActionClick('share')} className="interactive" style={{ background: 'none', border: 'none', color: '#f3f4f6', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '3px' }}>
+                    <Share2 size={12} style={{ color: 'var(--color-indigo)' }} /> <span>{activeReel.shares}</span>
                   </button>
                 </div>
-
-              </motion.div>
-            ) : (
-              // IF NO REEL SELECTED, SHOW INSTRUCTION & CHANNEL GROWTH SUMMARY
-              <motion.div 
-                key="instruction-panel"
-                initial={{ opacity: 0, y: 15 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -15 }}
-                transition={{ duration: 0.3 }}
-                className="glass-panel"
-                style={{ 
-                  padding: '20px', 
-                  border: '1px dashed rgba(6, 182, 212, 0.3)',
-                  background: 'linear-gradient(135deg, rgba(6, 182, 212, 0.02) 0%, rgba(99, 102, 241, 0.02) 100%)',
-                  textAlign: 'center',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  gap: '12px',
-                  alignItems: 'center'
-                }}
-              >
-                <div style={{
-                  padding: '12px',
-                  background: 'rgba(6, 182, 212, 0.1)',
-                  borderRadius: '50%',
-                  color: 'var(--color-cyan)',
-                  marginBottom: '4px',
-                  display: 'inline-flex'
-                }}>
-                  <Sparkles size={24} />
-                </div>
-                <h3 style={{ fontSize: '1rem', fontWeight: 800, color: 'white' }}>
-                  Interactive Instagram Mockup
-                </h3>
-                <p style={{ fontSize: '0.78rem', color: '#9ca3af', lineHeight: 1.4, maxWidth: '280px' }}>
-                  Experience real organic metrics, posts, and bio data.
-                </p>
-                
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', width: '100%', textAlign: 'left', marginTop: '10px' }}>
-                  <div style={{ fontSize: '0.7rem', padding: '6px 10px', background: 'rgba(255,255,255,0.02)', borderRadius: '6px', border: '1px solid rgba(255,255,255,0.05)', color: '#e5e7eb' }}>
-                    📱 <strong>Interactive Grid:</strong> Click on any Reel thumbnail to simulate play, script timing, and likes.
-                  </div>
-                  <div style={{ fontSize: '0.7rem', padding: '6px 10px', background: 'rgba(255,255,255,0.02)', borderRadius: '6px', border: '1px solid rgba(255,255,255,0.05)', color: '#e5e7eb' }}>
-                    📈 <strong>Professional Dashboard:</strong> Toggle the dashboard tab to view 30-day views (12.3L) and reach.
-                  </div>
-                </div>
-
-                <button 
-                  onClick={() => selectReel(0)} 
-                  className="btn btn-primary interactive"
-                  style={{ width: '100%', padding: '10px', marginTop: '10px', fontSize: '0.75rem', display: 'flex', alignItems: 'center', justifySelf: 'center', justifyContent: 'center', gap: '6px' }}
-                >
-                  <Play size={14} fill="currentColor" /> Simulate Top Pinned Reel
-                </button>
               </motion.div>
             )}
           </AnimatePresence>
+          
+        </div>
+      </div>
+
+      {/* =========================================================
+          BLOCK 2: INSTAGRAM PROFESSIONAL DASHBOARD
+          ========================================================= */}
+      <div className="glass-panel" style={{
+        flex: 1,
+        padding: '0',
+        display: 'flex',
+        flexDirection: 'column',
+        background: '#090a0f',
+        borderColor: 'var(--color-border)',
+        borderRadius: '16px',
+        overflow: 'hidden',
+        height: '100%',
+        boxShadow: '0 8px 32px rgba(0, 0, 0, 0.5)'
+      }}>
+        {/* Phone top status bar */}
+        <div style={{ 
+          display: 'flex', 
+          justifyContent: 'space-between', 
+          padding: '6px 14px', 
+          fontSize: '0.65rem', 
+          color: '#9ca3af', 
+          background: '#05060a',
+          borderBottom: '1px solid rgba(255, 255, 255, 0.05)',
+          fontFamily: 'var(--font-mono)'
+        }}>
+          <span>2:44 PM</span>
+          <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
+            <span>📶 VoWiFi</span>
+            <span>🔋 61%</span>
+          </div>
+        </div>
+
+        {/* Header bar */}
+        <div style={{ 
+          display: 'flex', 
+          alignItems: 'center', 
+          padding: '8px 12px',
+          borderBottom: '1px solid rgba(255, 255, 255, 0.05)',
+          background: '#090a0f',
+          minHeight: '36px'
+        }}>
+          <span style={{ fontWeight: 700, fontSize: '0.85rem', color: 'white' }}>
+            Professional dashboard
+          </span>
+        </div>
+
+        {/* Dashboard contents */}
+        <div style={{ flex: 1, overflowY: 'auto', padding: '10px', background: '#090a0f', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+          {/* Insights block */}
+          <div>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <span style={{ fontSize: '0.75rem', color: '#9ca3af', fontWeight: 600, textTransform: 'uppercase', fontFamily: 'var(--font-mono)' }}>Insights</span>
+              <span style={{ fontSize: '0.6rem', color: '#6b7280' }}>Last 30 days</span>
+            </div>
+            
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '5px', marginTop: '5px' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '6px 10px', background: 'rgba(255,255,255,0.02)', borderRadius: '6px', border: '1px solid rgba(255,255,255,0.04)' }}>
+                <div>
+                  <div style={{ fontSize: '0.62rem', color: '#9ca3af' }}>Views</div>
+                  <div style={{ fontSize: '0.85rem', fontWeight: 700, color: 'white', marginTop: '1px' }}>12.3L <span style={{ color: '#22c55e', fontSize: '0.7rem' }}>↗</span></div>
+                </div>
+                <ChevronRight size={12} style={{ color: '#6b7280' }} />
+              </div>
+
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '6px 10px', background: 'rgba(255,255,255,0.02)', borderRadius: '6px', border: '1px solid rgba(255,255,255,0.04)' }}>
+                <div>
+                  <div style={{ fontSize: '0.62rem', color: '#9ca3af' }}>Accounts reached</div>
+                  <div style={{ fontSize: '0.85rem', fontWeight: 700, color: 'white', marginTop: '1px' }}>4.6L <span style={{ color: '#22c55e', fontSize: '0.7rem' }}>↗</span></div>
+                </div>
+                <ChevronRight size={12} style={{ color: '#6b7280' }} />
+              </div>
+
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '6px 10px', background: 'rgba(255,255,255,0.02)', borderRadius: '6px', border: '1px solid rgba(255,255,255,0.04)' }}>
+                <div>
+                  <div style={{ fontSize: '0.62rem', color: '#9ca3af' }}>Net followers</div>
+                  <div style={{ fontSize: '0.85rem', fontWeight: 700, color: 'white', marginTop: '1px' }}>+8.3T <span style={{ color: '#22c55e', fontSize: '0.7rem' }}>↗</span></div>
+                </div>
+                <ChevronRight size={12} style={{ color: '#6b7280' }} />
+              </div>
+            </div>
+          </div>
+
+          {/* Next Steps block */}
+          <div>
+            <h3 style={{ fontSize: '0.75rem', color: '#9ca3af', fontWeight: 600, textTransform: 'uppercase', fontFamily: 'var(--font-mono)' }}>Next steps</h3>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '5px', marginTop: '5px' }}>
+              <div style={{ display: 'flex', gap: '8px', padding: '6px', background: 'rgba(255,255,255,0.02)', borderRadius: '6px', border: '1px solid rgba(255,255,255,0.03)' }}>
+                <div style={{ minWidth: '24px', height: '24px', background: 'rgba(6, 182, 212, 0.1)', color: 'var(--color-cyan)', borderRadius: '4px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.65rem' }}>🎙️</div>
+                <div>
+                  <h4 style={{ fontSize: '0.68rem', fontWeight: 700, color: 'white' }}>Edit audio like a pro</h4>
+                  <p style={{ fontSize: '0.58rem', color: '#9ca3af', marginTop: '1px', lineHeight: 1.2 }}>Get studio-quality sound with enhance tools.</p>
+                </div>
+              </div>
+
+              <div style={{ display: 'flex', gap: '8px', padding: '6px', background: 'rgba(255,255,255,0.02)', borderRadius: '6px', border: '1px solid rgba(255,255,255,0.03)' }}>
+                <div style={{ minWidth: '24px', height: '24px', background: 'rgba(168, 85, 247, 0.1)', color: '#a855f7', borderRadius: '4px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.65rem' }}>🔥</div>
+                <div>
+                  <h4 style={{ fontSize: '0.68rem', fontWeight: 700, color: 'white' }}>Find your next hit with trial reels</h4>
+                  <p style={{ fontSize: '0.58rem', color: '#9ca3af', marginTop: '1px', lineHeight: 1.2 }}>See performance with non-followers first.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Your Tools list */}
+          <div>
+            <h3 style={{ fontSize: '0.75rem', color: '#9ca3af', fontWeight: 600, textTransform: 'uppercase', fontFamily: 'var(--font-mono)' }}>Your tools</h3>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '1px', background: 'rgba(255, 255, 255, 0.05)', borderRadius: '6px', overflow: 'hidden', marginTop: '5px' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '6px 10px', background: '#0d0f17', fontSize: '0.65rem' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: 'white' }}>
+                  <span>📊</span>
+                  <span>Monthly recap</span>
+                  <span style={{ background: '#2563eb', color: 'white', padding: '1px 4px', borderRadius: '8px', fontSize: '0.5rem', fontWeight: 'bold' }}>New</span>
+                </div>
+                <ChevronRight size={10} style={{ color: '#6b7280' }} />
+              </div>
+
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '6px 10px', background: '#0d0f17', fontSize: '0.65rem' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: 'white' }}>
+                  <span>💡</span>
+                  <span>Best practices</span>
+                </div>
+                <ChevronRight size={10} style={{ color: '#6b7280' }} />
+              </div>
+            </div>
+          </div>
         </div>
 
       </div>
