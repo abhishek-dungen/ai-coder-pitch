@@ -305,7 +305,6 @@ export const MonetizationGrid: React.FC = () => {
       icon: BookOpen,
       deliverables: [
         'Draft 4-week syllabus: Cursor workflows, React builders, and server hosting.',
-        'Setup gated Discord community server and student dashboard portals.',
         'Run beta cohort with 15 initial power users to gather product feedback.'
       ],
       complexity: 'Medium',
@@ -323,7 +322,6 @@ export const MonetizationGrid: React.FC = () => {
       icon: Handshake,
       deliverables: [
         'Standardize sponsorship rate sheets with fixed ₹600 CPM tier packages.',
-        'Create open resource index on GitHub citing partner products.',
         'Deliver 5-minute integration case studies in main video chapters.'
       ],
       complexity: 'Low',
@@ -410,16 +408,6 @@ export const MonetizationGrid: React.FC = () => {
   // Calculations
   const activeStreamRev = activeStream.calc(subscribers, coursePrice, sponsorsCount);
   const totalRev = streams.reduce((acc, curr) => acc + curr.calc(subscribers, coursePrice, sponsorsCount), 0);
-
-  // Status tiers
-  let channelTier = 'Micro-Niche Builder';
-  if (subscribers >= 250) channelTier = 'Elite Dev-Influencer';
-  else if (subscribers >= 150) channelTier = 'Niche Authority Leader';
-  else if (subscribers >= 50) channelTier = 'High-Authority Creator';
-
-  let priceTier = 'Volume-Optimized Pricing';
-  if (coursePrice >= 6000) priceTier = 'Premium Developer Cohort';
-  else if (coursePrice >= 3000) priceTier = 'Balanced Value Tier';
 
   const ActiveIcon = activeStream.icon;
 
@@ -538,27 +526,6 @@ export const MonetizationGrid: React.FC = () => {
           </div>
         </div>
 
-        {/* Monospace simulation console */}
-        <div style={{
-          background: 'rgba(5, 6, 10, 0.6)',
-          border: '1.5px solid rgba(255, 255, 255, 0.04)',
-          borderRadius: '6px',
-          padding: '8px 10px',
-          fontFamily: 'var(--font-mono)',
-          fontSize: '0.58rem',
-          color: '#34d399',
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '2px',
-          boxShadow: 'inset 0 0 10px rgba(0,0,0,0.5)',
-          lineHeight: 1.3
-        }}>
-          <span style={{ color: '#60a5fa', fontWeight: 'bold' }}>SYSTEM STATUS: SIMULATING</span>
-          <span>&gt; Tier: <span style={{ color: 'white' }}>{channelTier}</span></span>
-          <span>&gt; CPM Payout: <span style={{ color: 'white' }}>₹600 CPM (India)</span></span>
-          <span>&gt; Class Tier: <span style={{ color: 'white' }}>{priceTier}</span></span>
-          <span>&gt; Streams: <span style={{ color: '#fbbf24' }}>6 Connected</span></span>
-        </div>
       </div>
 
       {/* Right Column: Dynamic Output */}
@@ -689,17 +656,6 @@ export const MonetizationGrid: React.FC = () => {
                     ₹{activeStreamRev.toLocaleString()}
                   </span>
                 </div>
-                <span style={{ 
-                  fontSize: '0.58rem', 
-                  color: '#94a3b8', 
-                  fontFamily: 'var(--font-mono)', 
-                  background: 'rgba(255,255,255,0.04)', 
-                  padding: '2px 6px', 
-                  borderRadius: '4px',
-                  border: '1px solid rgba(255,255,255,0.05)'
-                }}>
-                  {totalRev > 0 ? ((activeStreamRev / totalRev) * 100).toFixed(1) : 0}% contribution
-                </span>
               </div>
             </div>
 
@@ -729,27 +685,8 @@ export const MonetizationGrid: React.FC = () => {
             </div>
           </div>
 
-          {/* Bottom Row: Metadata Tags & Grand Total */}
+          {/* Bottom Row: Grand Total */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginTop: '2px' }}>
-            {/* Metadata pills */}
-            <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '4px', background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.04)', padding: '3px 8px', borderRadius: '4px', fontSize: '0.62rem', color: '#94a3b8', fontFamily: 'var(--font-mono)' }}>
-                <span>Complexity:</span>
-                <span style={{ 
-                  color: activeStream.complexity === 'Low' ? '#10b981' : activeStream.complexity === 'Medium' ? '#fbbf24' : '#ef4444', 
-                  fontWeight: 'bold' 
-                }}>{activeStream.complexity}</span>
-              </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '4px', background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.04)', padding: '3px 8px', borderRadius: '4px', fontSize: '0.62rem', color: '#94a3b8', fontFamily: 'var(--font-mono)' }}>
-                <span>Time-to-Launch:</span>
-                <span style={{ color: '#ffffff', fontWeight: 'bold' }}>{activeStream.timeToLaunch}</span>
-              </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '4px', background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.04)', padding: '3px 8px', borderRadius: '4px', fontSize: '0.62rem', color: '#94a3b8', fontFamily: 'var(--font-mono)' }}>
-                <span>Funnel:</span>
-                <span style={{ color: 'var(--color-cyan)', fontWeight: 'bold' }}>{activeStream.funnelChannel}</span>
-              </div>
-            </div>
-
             {/* Aggregate Footnote Dashboard */}
             <div style={{
               background: 'rgba(99, 102, 241, 0.05)',
@@ -766,7 +703,7 @@ export const MonetizationGrid: React.FC = () => {
             }}>
               <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
                 <TrendingUp size={14} style={{ color: 'var(--color-cyan)' }} />
-                <span>🚀 <strong>Aggregated Projected Revenue:</strong></span>
+                <span><strong>Aggregated Projected Revenue:</strong></span>
               </span>
               <span style={{ fontSize: '0.9rem', color: 'var(--color-cyan)', fontWeight: 800 }}>
                 ₹{totalRev.toLocaleString()} / mo
