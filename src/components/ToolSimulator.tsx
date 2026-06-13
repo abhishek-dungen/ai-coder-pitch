@@ -24,13 +24,13 @@ export const ToolSimulator: React.FC = () => {
 
   const tools: Tool[] = [
     { id: 'excel', name: 'Excel Automated Reports', icon: <RefreshCw size={16} />, tagline: 'CSV & data-cleaning system.' },
-    { id: 'portfolio', name: 'AI Portfolio', icon: <Laptop size={16} />, tagline: 'Personal landing layouts.' },
     { id: 'dashboard', name: 'AI-Built Dashboards', icon: <Grid size={16} />, tagline: 'Custom widget orchestrator.' },
     { id: 'expense', name: 'Expense Manager', icon: <DollarSign size={16} />, tagline: 'Personalized financial tracking.' },
     { id: 'log', name: 'Habit Tracker', icon: <Clock size={16} />, tagline: 'Activity and routine tracker.' },
     { id: 'notes', name: 'Note-Taking App', icon: <FileText size={16} />, tagline: 'Customized notes & tags.' },
     { id: 'payments', name: 'Integrated Payment Dashboard', icon: <BarChart3 size={16} />, tagline: 'Multi-gateway collections.' },
-    { id: 'zoom', name: 'Webinar Analytics', icon: <Users size={16} />, tagline: 'Zoom retention & Q&A tracker.' }
+    { id: 'zoom', name: 'Webinar Analytics', icon: <Users size={16} />, tagline: 'Zoom retention & Q&A tracker.' },
+    { id: 'portfolio', name: 'AI Portfolio', icon: <Laptop size={16} />, tagline: 'Personal landing layouts.' }
   ];
 
   const [activeToolId, setActiveToolId] = useState<string>('excel');

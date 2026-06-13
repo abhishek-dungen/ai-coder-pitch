@@ -23,13 +23,13 @@ export const ToolSimulatorHorizontal: React.FC = () => {
 
   const tools: Tool[] = [
     { id: 'excel', name: 'Excel Automated Reports', icon: <RefreshCw size={16} /> },
-    { id: 'portfolio', name: 'AI Portfolio', icon: <Laptop size={16} /> },
     { id: 'dashboard', name: 'AI-Built Dashboards', icon: <Grid size={16} /> },
     { id: 'expense', name: 'Expense Manager', icon: <DollarSign size={16} /> },
     { id: 'log', name: 'Habit Tracker', icon: <Clock size={16} /> },
     { id: 'notes', name: 'Note-Taking App', icon: <FileText size={16} /> },
     { id: 'payments', name: 'Integrated Payment Dashboard', icon: <BarChart3 size={16} /> },
-    { id: 'zoom', name: 'Webinar Analytics', icon: <Users size={16} /> }
+    { id: 'zoom', name: 'Webinar Analytics', icon: <Users size={16} /> },
+    { id: 'portfolio', name: 'AI Portfolio', icon: <Laptop size={16} /> }
   ];
 
   const [activeToolId, setActiveToolId] = useState<string>('excel');
