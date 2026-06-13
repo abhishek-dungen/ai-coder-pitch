@@ -727,18 +727,11 @@ interface Milestone {
   title: string;
   focusItems: string[];
   color: string;
-  metricLabel: string;
-  metricValue: string;
-  telemetry: { label: string; value: string }[];
-  simLogsTemplates: string[];
 }
 
 export const MilestoneTimeline: React.FC = () => {
   const [activePhase, setActivePhase] = useState<number>(1);
   const [checkedItems, setCheckedItems] = useState<Record<string, boolean>>({});
-  const [simProgress, setSimProgress] = useState<Record<number, number>>({ 1: 0, 2: 0, 3: 0 });
-  const [simLogs, setSimLogs] = useState<Record<number, string[]>>({ 1: [], 2: [], 3: [] });
-  const [isSimulating, setIsSimulating] = useState<Record<number, boolean>>({ 1: false, 2: false, 3: false });
 
   const milestones: Milestone[] = [
     {
@@ -751,20 +744,7 @@ export const MilestoneTimeline: React.FC = () => {
         'Upload short-form videos explaining the hooks, AI prompts, and real use-case solutions.',
         'Build baseline face-led brand identity as the expert "Advanced AI Coder".'
       ],
-      color: 'var(--color-cyan)',
-      metricLabel: 'Base Brand Authority',
-      metricValue: 'Verified',
-      telemetry: [
-        { label: 'Target Sub Reach', value: '25K' },
-        { label: 'Weekly Video Logs', value: '8 Episodes' },
-        { label: 'GitHub Templates', value: '5 Repos' }
-      ],
-      simLogsTemplates: [
-        '[INIT] Booting Phase 1 Trust Engine...',
-        '[BUILD] Deploying custom dashboard code templates...',
-        '[VLOG] Weekly logs upload schedule established.',
-        '[SUCCESS] Brand authority score verified at 94%!'
-      ]
+      color: 'var(--color-cyan)'
     },
     {
       id: 2,
@@ -776,20 +756,7 @@ export const MilestoneTimeline: React.FC = () => {
         'Launch free open-source templates library to drive saves, shares, and email signups.',
         'Familiarize audience with specific coding workflows, establishing routine recall.'
       ],
-      color: 'var(--color-indigo)',
-      metricLabel: 'Community Retention',
-      metricValue: '85% Recall',
-      telemetry: [
-        { label: 'Template Clones', value: '2,500+' },
-        { label: 'Active Commenters', value: '1,200+' },
-        { label: 'Newsletter Leads', value: '3,000+' }
-      ],
-      simLogsTemplates: [
-        '[INIT] Launching Phase 2 Recall Automations...',
-        '[PARSING] Scanning comments for feature requests...',
-        '[DISTRIBUTION] Open-source libraries cloning active.',
-        '[SUCCESS] Viewer workflow recall established!'
-      ]
+      color: 'var(--color-indigo)'
     },
     {
       id: 3,
@@ -801,71 +768,9 @@ export const MilestoneTimeline: React.FC = () => {
         'Initiate sponsor campaigns with SaaS dev tools (Cursor, hosting services).',
         'Deploy first tiny paid subscription products solving direct administrative problems.'
       ],
-      color: 'var(--color-magenta)',
-      metricLabel: 'Monthly Run Rate (INR)',
-      metricValue: '₹2,50,000+',
-      telemetry: [
-        { label: 'Cohort Conversion', value: '0.3%' },
-        { label: 'Active SaaS Users', value: '150+' },
-        { label: 'CPM Sponsorships', value: '₹600 CPM' }
-      ],
-      simLogsTemplates: [
-        '[INIT] Spin up Phase 3 Payout Pipelines...',
-        '[GATING] Course portals gated and syllabus active.',
-        '[STRIPE] Micro-SaaS payment integrations verified.',
-        '[SUCCESS] Monthly run-rate ₹2.5L+ milestone achieved!'
-      ]
+      color: 'var(--color-magenta)'
     }
   ];
-
-  const handleSimulate = (id: number) => {
-    if (isSimulating[id]) return;
-
-    // Reset progress and logs
-    setSimProgress(prev => ({ ...prev, [id]: 0 }));
-    setSimLogs(prev => ({ ...prev, [id]: [] }));
-    setIsSimulating(prev => ({ ...prev, [id]: true }));
-
-    const template = milestones.find(m => m.id === id)?.simLogsTemplates || [];
-    let progress = 0;
-    let logIndex = 0;
-
-    const interval = setInterval(() => {
-      progress += 10;
-      if (progress > 100) {
-        progress = 100;
-        clearInterval(interval);
-        setIsSimulating(prev => ({ ...prev, [id]: false }));
-        
-        // Auto check all focus items in this phase
-        const phaseItems = milestones.find(m => m.id === id)?.focusItems || [];
-        setCheckedItems(prev => {
-          const updated = { ...prev };
-          phaseItems.forEach((_, index) => {
-            updated[`${id}-${index}`] = true;
-          });
-          return updated;
-        });
-      }
-
-      setSimProgress(prev => ({ ...prev, [id]: progress }));
-
-      // Add logs dynamically
-      if (progress >= 10 && logIndex === 0 && template[0]) {
-        setSimLogs(prev => ({ ...prev, [id]: [template[0]] }));
-        logIndex = 1;
-      } else if (progress >= 40 && logIndex === 1 && template[1]) {
-        setSimLogs(prev => ({ ...prev, [id]: [...prev[id], template[1]] }));
-        logIndex = 2;
-      } else if (progress >= 80 && logIndex === 2 && template[2]) {
-        setSimLogs(prev => ({ ...prev, [id]: [...prev[id], template[2]] }));
-        logIndex = 3;
-      } else if (progress === 100 && logIndex === 3 && template[3]) {
-        setSimLogs(prev => ({ ...prev, [id]: [...prev[id], template[3]] }));
-        logIndex = 4;
-      }
-    }, 250);
-  };
 
   const toggleCheck = (phaseId: number, itemIndex: number) => {
     const key = `${phaseId}-${itemIndex}`;
@@ -876,9 +781,6 @@ export const MilestoneTimeline: React.FC = () => {
     <div style={{ display: 'flex', gap: '20px', width: '100%', height: '100%', minHeight: 0, boxSizing: 'border-box' }}>
       {milestones.map((m) => {
         const isActive = activePhase === m.id;
-        const progress = simProgress[m.id];
-        const logs = simLogs[m.id];
-        const simulating = isSimulating[m.id];
 
         return (
           <div
@@ -889,8 +791,8 @@ export const MilestoneTimeline: React.FC = () => {
               flex: 1,
               display: 'flex',
               flexDirection: 'column',
-              justifyContent: 'space-between',
-              padding: '14px 18px',
+              justifyContent: 'flex-start',
+              padding: '16px 20px',
               borderRadius: '12px',
               border: `1.5px solid ${isActive ? m.color : 'rgba(255,255,255,0.05)'}`,
               background: 'linear-gradient(135deg, rgba(13, 17, 28, 0.7) 0%, rgba(255, 255, 255, 0.01) 100%)',
@@ -898,11 +800,12 @@ export const MilestoneTimeline: React.FC = () => {
               transition: 'all 0.3s ease',
               minHeight: 0,
               cursor: 'pointer',
-              transform: isActive ? 'scale(1.01)' : 'scale(1)'
+              transform: isActive ? 'scale(1.01)' : 'scale(1)',
+              gap: '12px'
             }}
           >
             {/* Header Section */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '2px', borderBottom: '1px solid rgba(255,255,255,0.04)', paddingBottom: '6px' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '2px', borderBottom: '1px solid rgba(255,255,255,0.04)', paddingBottom: '8px' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <span style={{ fontSize: '0.62rem', color: m.color, fontFamily: 'var(--font-mono)', fontWeight: 700 }}>
                   {m.phaseLabel}
@@ -926,12 +829,12 @@ export const MilestoneTimeline: React.FC = () => {
             </div>
 
             {/* Checklist items */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', margin: '8px 0', flexGrow: 1, minHeight: 0 }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', flexGrow: 1, minHeight: 0 }}>
               <span style={{ fontSize: '0.62rem', color: '#64748b', fontFamily: 'var(--font-mono)', textTransform: 'uppercase', display: 'flex', alignItems: 'center', gap: '4px' }}>
                 <Sparkles size={10} style={{ color: m.color }} />
                 Focus Objectives Checklist
               </span>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', overflowY: 'auto', paddingRight: '4px' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', overflowY: 'auto' }}>
                 {m.focusItems.map((item, idx) => {
                   const itemKey = `${m.id}-${idx}`;
                   const isChecked = checkedItems[itemKey] || false;
@@ -946,10 +849,10 @@ export const MilestoneTimeline: React.FC = () => {
                         display: 'flex',
                         alignItems: 'flex-start',
                         gap: '8px',
-                        padding: '6px 8px',
-                        borderRadius: '6px',
-                        background: isChecked ? 'rgba(255,255,255,0.02)' : 'transparent',
-                        border: `1px solid ${isChecked ? `${m.color}18` : 'transparent'}`,
+                        padding: '8px 10px',
+                        borderRadius: '8px',
+                        background: isChecked ? 'rgba(255,255,255,0.02)' : 'rgba(255,255,255,0.01)',
+                        border: `1px solid ${isChecked ? `${m.color}18` : 'rgba(255,255,255,0.03)'}`,
                         transition: 'all 0.2s ease',
                         cursor: 'pointer'
                       }}
@@ -965,9 +868,9 @@ export const MilestoneTimeline: React.FC = () => {
                         }}
                       />
                       <span style={{ 
-                        fontSize: '0.66rem', 
+                        fontSize: '0.68rem', 
                         color: isChecked ? '#94a3b8' : '#cbd5e1', 
-                        lineHeight: 1.3,
+                        lineHeight: 1.35,
                         textDecoration: isChecked ? 'line-through' : 'none',
                         transition: 'all 0.2s ease'
                       }}>
@@ -976,94 +879,6 @@ export const MilestoneTimeline: React.FC = () => {
                     </div>
                   );
                 })}
-              </div>
-            </div>
-
-            {/* Telemetry Metrics Panel */}
-            <div style={{
-              background: 'rgba(255, 255, 255, 0.01)',
-              border: '1px solid rgba(255, 255, 255, 0.04)',
-              borderRadius: '8px',
-              padding: '8px 10px',
-              margin: '4px 0',
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '4px'
-            }}>
-              <span style={{ fontSize: '0.58rem', color: '#64748b', fontFamily: 'var(--font-mono)', textTransform: 'uppercase', borderBottom: '1px solid rgba(255, 255, 255, 0.03)', paddingBottom: '3px', display: 'flex', alignItems: 'center', gap: '4px' }}>
-                <TrendingUp size={10} style={{ color: m.color }} />
-                {m.metricLabel}: <span style={{ color: '#ffffff', fontWeight: 'bold' }}>{m.metricValue}</span>
-              </span>
-              <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 0.8fr', gap: '2px', fontSize: '0.6rem' }}>
-                {m.telemetry.map((t, idx) => (
-                  <React.Fragment key={idx}>
-                    <span style={{ color: '#94a3b8' }}>{t.label}:</span>
-                    <span style={{ color: 'white', fontWeight: 600, fontFamily: 'var(--font-mono)', textAlign: 'right' }}>{t.value}</span>
-                  </React.Fragment>
-                ))}
-              </div>
-            </div>
-
-            {/* Simulation Monospace Console Terminal & Button */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', marginTop: '4px' }}>
-              {/* Terminal Log */}
-              {logs.length > 0 && (
-                <div style={{
-                  background: 'rgba(5, 6, 10, 0.7)',
-                  border: '1px solid rgba(255, 255, 255, 0.03)',
-                  borderRadius: '6px',
-                  padding: '6px 8px',
-                  fontFamily: 'var(--font-mono)',
-                  fontSize: '0.55rem',
-                  color: '#34d399',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  gap: '1px',
-                  boxShadow: 'inset 0 0 10px rgba(0,0,0,0.5)',
-                  lineHeight: 1.25,
-                  minHeight: '60px'
-                }}>
-                  {logs.map((log, idx) => (
-                    <span key={idx} style={{ color: log.startsWith('[SUCCESS]') ? '#60a5fa' : log.startsWith('[INIT]') ? '#a78bfa' : '#34d399' }}>
-                      {log}
-                    </span>
-                  ))}
-                </div>
-              )}
-
-              {/* Progress and Button */}
-              <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-                {simulating && (
-                  <div style={{ flexGrow: 1, height: '4px', background: 'rgba(255,255,255,0.06)', borderRadius: '2px', overflow: 'hidden' }}>
-                    <div style={{ width: `${progress}%`, height: '100%', background: m.color, borderRadius: '2px', transition: 'width 0.25s linear' }} />
-                  </div>
-                )}
-                
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleSimulate(m.id);
-                  }}
-                  className="interactive"
-                  disabled={simulating}
-                  style={{
-                    flexGrow: simulating ? 0 : 1,
-                    padding: '6px 10px',
-                    borderRadius: '6px',
-                    background: simulating ? 'transparent' : `${m.color}15`,
-                    border: `1.5px solid ${simulating ? 'rgba(255,255,255,0.05)' : m.color}`,
-                    color: simulating ? '#64748b' : '#ffffff',
-                    fontSize: '0.68rem',
-                    fontFamily: 'var(--font-mono)',
-                    fontWeight: 700,
-                    cursor: simulating ? 'not-allowed' : 'pointer',
-                    transition: 'all 0.2s ease',
-                    textAlign: 'center',
-                    whiteSpace: 'nowrap'
-                  }}
-                >
-                  {simulating ? `Simulating ${progress}%` : progress === 100 ? 'Re-run Phase Run' : 'Simulate Phase Run'}
-                </button>
               </div>
             </div>
           </div>
