@@ -20,24 +20,24 @@ export const ContentWorkflow: React.FC = () => {
       icon: <HelpCircle size={13} />,
       color: '#10b981', // Emerald
       title: '1. The Pain Point (Problem)',
-      details: 'Concept: Define a highly relatable everyday bottleneck. Example: Sifting through 500+ cluttered group chat messages every morning just to find critical updates and action points.',
+      details: 'Concept: Define a daily workflow bottleneck.\nExample: Morning clutter of 500+ unread group chat messages.',
     },
     {
       id: 2,
       label: 'Idea',
       icon: <Lightbulb size={13} />,
       color: '#f59e0b', // Gold
-      title: '2. The Solution Concept (Idea)',
-      details: 'Concept: Design a lightweight, single-task utility. Example: An interactive dashboard where clicking a group tab instantly generates a concise bullet-point summary of the past 24 hours.',
+      title: '2. The Concept (Idea)',
+      details: 'Concept: Design a single-task utility.\nExample: Dashboard summarizing chats with one click.',
     },
     {
       id: 3,
       label: 'Prompt',
       icon: <FileEdit size={13} />,
       color: '#06b6d4', // Cyan
-      title: '3. Coder Agent Instructions (Prompt)',
-      details: 'Concept: Translate requirements into structured developer instructions. Example: Write a prompt directing Google Antigravity to build a React page that parses local chat database exports.',
-      codeSnippet: `Prompt: Create a local React app that loads chat sqlite/json backups, groups logs by group name, and executes a summarization API.`
+      title: '3. Instructions (Prompt)',
+      details: 'Concept: Write instructions for the LLM coder.\nExample: Prompting agent to build a React chat log viewer.',
+      codeSnippet: `Build a React page that loads chat JSON logs, filters by group, and calls a summarization API.`
     },
     {
       id: 4,
@@ -45,41 +45,40 @@ export const ContentWorkflow: React.FC = () => {
       icon: <Cpu size={13} />,
       color: '#6366f1', // Indigo
       title: '4. Autonomous Build (AI Workflow)',
-      details: 'Concept: Deploy coding agents to execute the codebase. Example: The agent parses the database schema, compiles the UI wrapper, configures routing, and runs local tests autonomously.',
+      details: 'Concept: Deploy coding agents to write the app.\nExample: Agent generates code and runs tests.',
     },
     {
       id: 5,
       label: 'Building',
       icon: <Hammer size={13} />,
       color: '#ec4899', // Magenta
-      title: '5. Co-Pilot Refinement (Building)',
-      details: 'Concept: Write prompts to handle layout edge cases and configure core APIs. Example: We craft two specific prompts: one for layout edge cases (e.g. system messages), and one for the summarization API.',
-      codeSnippet: `System API Prompt:
-"Summarize this chat log. Extract action items, decisions, and key speakers into short, clean bullet points."`
+      title: '5. Copilot Refinement (Building)',
+      details: 'Concept: Fine-tune code and configure APIs.\nExample: Instructing LLM to refine the summary output structure.',
+      codeSnippet: `"Summarize this chat log. Extract action items and decisions into short bullet points."`
     },
     {
       id: 6,
       label: 'Product',
       icon: <ShieldCheck size={13} />,
       color: '#8b5cf6', // Purple
-      title: '6. The Finished Application (Product)',
-      details: 'Concept: Present a fully functional, production-ready web tool. Example: A responsive dashboard featuring message count trends, group tabs, and instant AI summary sections.',
+      title: '6. The Finished Tool (Product)',
+      details: 'Concept: Deploy a clean, working web application.\nExample: Web dashboard with chat summary tabs.',
     },
     {
       id: 7,
       label: 'Use Case',
       icon: <HelpCircle size={13} />,
       color: '#06b6d4', // Cyan
-      title: '7. Real-World Execution (Use Case)',
-      details: 'Concept: Show the tool solving the problem in real-time. Example: Launch the app at 8:00 AM, select active work/family groups, and get caught up on all channels in under 10 seconds.',
+      title: '7. Real-World Test (Use Case)',
+      details: 'Concept: Solve the pain point in real-time.\nExample: Get caught up on all chat channels in 10 seconds.',
     },
     {
       id: 8,
       label: 'Benefit',
       icon: <Award size={13} />,
       color: '#f59e0b', // Gold
-      title: '8. The Value Proposition (Benefit)',
-      details: 'Concept: Quantify time saved and cognitive load reduced. Example: Save 30+ minutes of scrolling daily, ensure key tasks are never missed, and maintain focus throughout the day.',
+      title: '8. Value (Benefit)',
+      details: 'Concept: Quantify direct time saved.\nExample: Save 30+ mins of daily scrolling and stay focused.',
     }
   ];
 
