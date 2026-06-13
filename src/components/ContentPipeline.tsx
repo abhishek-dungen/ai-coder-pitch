@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 interface ToolIdea {
   title: string;
-  category: 'personal' | 'business' | 'media' | 'finance' | 'education' | 'lifestyle' | 'developer' | 'marketing';
+  category: 'personal' | 'business' | 'media' | 'finance' | 'education' | 'lifestyle' | 'developer' | 'marketing' | 'automation' | 'agents';
   desc: string;
   prompt: string;
 }
@@ -16,7 +16,9 @@ export const ContentPipeline: React.FC = () => {
     { id: 'education', label: 'Education & Study', color: '#f59e0b' }, // Gold
     { id: 'lifestyle', label: 'Lifestyle & Health', color: '#ec4899' }, // Pink
     { id: 'developer', label: 'Developer Utilities', color: '#8b5cf6' }, // Purple
-    { id: 'marketing', label: 'Marketing & Growth', color: '#06b6d4' } // Cyan
+    { id: 'marketing', label: 'Marketing & Growth', color: '#06b6d4' }, // Cyan
+    { id: 'automation', label: 'Workflow Automation', color: '#ff7e33' }, // Orange
+    { id: 'agents', label: 'AI Agent Builders', color: '#00f2fe' } // Neon Teal
   ] as const;
 
   const [activeFilter, setActiveFilter] = useState<typeof categories[number]['id']>('personal');
@@ -153,11 +155,45 @@ export const ContentPipeline: React.FC = () => {
     { title: 'Social Growth Tracker', category: 'marketing', desc: 'Graph comparative subscriber timelines.', prompt: 'Comparative charts plotting growth rates of competitor channels.' },
     { title: 'Call-to-Action Library', category: 'marketing', desc: 'Visual templates for high-performing buttons.', prompt: 'Click selection panel outputting copy-ready CTAs.' },
     { title: 'Buyer Persona Deck', category: 'marketing', desc: 'Compile demographic pain points cards.', prompt: 'Visual user cards showing bio, pain points, and product fit logs.' },
-    { title: 'AB Test Significance', category: 'marketing', desc: 'Verify metrics variances statistics.', prompt: 'Input variations visits and conversions to display significance levels.' },
+    { title: 'AB Test Significance', category: 'marketing', desc: 'Verify metrics variances statistics.', prompt: 'Input variations visits and conversions to display significance levels level.' },
     { title: 'Affiliate Program Ledger', category: 'marketing', desc: 'Commission rates and link parameters logger.', prompt: 'Ledger showing referral brands, custom URLs, and payout states.' },
     { title: 'Promo Coupon Organizer', category: 'marketing', desc: 'Coupon dates, codes, and discounts tracker.', prompt: 'Coupons grid showing code, discount value, and expiry calendars.' },
     { title: 'User Funnel Blueprint', category: 'marketing', desc: 'Flowcharts charting client paths.', prompt: 'Multi-step layout describing user touchpoints and metrics.' },
-    { title: 'Meta Tags Compiler', category: 'marketing', desc: 'SEO descriptions with lengths audits.', prompt: 'Field inputs tracking length recommendations for clean index cards.' }
+    { title: 'Meta Tags Compiler', category: 'marketing', desc: 'SEO descriptions with lengths audits.', prompt: 'Field inputs tracking length recommendations for clean index cards.' },
+
+    // 9. WORKFLOW AUTOMATION
+    { title: 'Slack Alert Dispatcher', category: 'automation', desc: 'Automate channel notices based on DB triggers.', prompt: 'Create script routing database triggers to Slack webhook messages.' },
+    { title: 'Web Scraper Deck', category: 'automation', desc: 'Extract HTML lists from URL feeds.', prompt: 'Design dashboard tracking scraping sessions with tables and export options.' },
+    { title: 'File Sync Monitor', category: 'automation', desc: 'Auto-backup local folders to cloud storage tags.', prompt: 'Simple file directory checker displaying sync progress bars.' },
+    { title: 'API Integration Hub', category: 'automation', desc: 'Wire data pipelines between multiple SaaS systems.', prompt: 'Graph panel showing API flows: Input ➔ Transform ➔ Output.' },
+    { title: 'CSV Combiner Tool', category: 'automation', desc: 'Merge mismatched CSV reports automatically.', prompt: 'Drag and drop files to combine rows based on header matching.' },
+    { title: 'Social Media Poster', category: 'automation', desc: 'Schedule posts across multi-platform feeds.', prompt: 'Calendar manager displaying automated queue statuses.' },
+    { title: 'Broken Link Checker', category: 'automation', desc: 'Scan web domains and flag error codes.', prompt: 'Input URL to output a list of bad links with status code tags.' },
+    { title: 'Auto Backup Scheduler', category: 'automation', desc: 'Set database dump intervals and notify via email.', prompt: 'Simple CRON-based console configuring database backup schedules.' },
+    { title: 'Database Cleaner Bot', category: 'automation', desc: 'Auto-purge stale session data rows.', prompt: 'Tracker illustrating database size reduction from clean runs.' },
+    { title: 'Webhook Simulator', category: 'automation', desc: 'Test custom webhook responses and payloads.', prompt: 'Visual console listening for webhook hits and displaying JSON details.' },
+    { title: 'Text Alerts Bot', category: 'automation', desc: 'Route critical alerts to mobile SMS gateways.', prompt: 'Simple rules editor triggering SMS warnings when thresholds fail.' },
+    { title: 'PDF Text Extractor', category: 'automation', desc: 'Extract plain text from uploaded files.', prompt: 'Upload area parsing PDF structures and rendering clean text blocks.' },
+    { title: 'Currency Rate Watcher', category: 'automation', desc: 'Track exchange rates and email thresholds.', prompt: 'Grid of currency pairs highlighting custom target triggers.' },
+    { title: 'RSS Aggregator Bot', category: 'automation', desc: 'Pool multiple blogs into standard logs.', prompt: 'Feed reader pooling articles and sorting by publication dates.' },
+    { title: 'System Health Checker', category: 'automation', desc: 'Auto-ping server status checkpoints.', prompt: 'Visual dashboard plotting server response times and uptime averages.' },
+
+    // 10. AI AGENT BUILDERS
+    { title: 'Autonomous Researcher', category: 'agents', desc: 'Crawl and summarize articles for a topic.', prompt: 'Deploy agent to fetch top 5 Google results and write a synthesis brief.' },
+    { title: 'Code Bug Scanner', category: 'agents', desc: 'Analyze files for code efficiency and bugs.', prompt: 'Input code box highlighting syntax suggestions and performance updates.' },
+    { title: 'Customer Support Agent', category: 'agents', desc: 'Auto-draft replies to customer complaints.', prompt: 'Input email ticket to output drafts matching specific voice tones.' },
+    { title: 'SEO Content Outliner', category: 'agents', desc: 'Draft outlines using focus keyword rules.', prompt: 'Feed keyword lists to agent to layout headings and word counts.' },
+    { title: 'Resume Optimizer Agent', category: 'agents', desc: 'Tailor resume bullets to job listings.', prompt: 'Match resume text against job postings and highlight missing tags.' },
+    { title: 'Data Anonymizer Agent', category: 'agents', desc: 'Clean sensitive credentials from datasets.', prompt: 'Text scanner replacing credentials with mock values.' },
+    { title: 'Legal Contract Auditor', category: 'agents', desc: 'Flag high-risk liability terms in PDFs.', prompt: 'Upload contract to identify missing liabilities terms and warnings.' },
+    { title: 'Product Spec Draft', category: 'agents', desc: 'Auto-draft PRD sheets from short text ideas.', prompt: 'Fill specs form yielding standard Product Requirement Documents.' },
+    { title: 'SQL Schema Architect', category: 'agents', desc: 'Generate SQL creation structures from text.', prompt: 'Input database layout in plain text to output raw SQL creation scripts.' },
+    { title: 'Translation Validator', category: 'agents', desc: 'Translate and cross-check phrase context.', prompt: 'Translate phrases into target languages and back to ensure clarity.' },
+    { title: 'Social Sentiment Agent', category: 'agents', desc: 'Assess customer sentiment on product forums.', prompt: 'Input comment threads to chart Positive, Neutral, Negative splits.' },
+    { title: 'Mock Interview Coach', category: 'agents', desc: 'Ask context interview questions and score results.', prompt: 'Chat window asking interview questions and scoring user responses.' },
+    { title: 'Auto Caption Script', category: 'agents', desc: 'Add chapters and matching emojis to transcripts.', prompt: 'Reformat audio transcription text to include emojis and line splits.' },
+    { title: 'Competitor Auditor', category: 'agents', desc: 'Watch competitor sites for structural updates.', prompt: 'Visual diff showing pricing changes on target domain paths.' },
+    { title: 'Marketing Persona Agent', category: 'agents', desc: 'Evaluate ad copy based on demographic persona profiles.', prompt: 'Input product prompt to generate mock user feedback cards.' }
   ];
 
   const filteredIdeas = ideas.filter(idea => idea.category === activeFilter);
