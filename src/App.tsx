@@ -74,7 +74,7 @@ export const App: React.FC = () => {
       <header>
         <div className="logo interactive" onClick={() => jumpToSlide(0)}>
           <BrainCircuit size={22} style={{ color: 'var(--color-cyan)' }} />
-          <span>AI_CODING_WITH_ABHISHEK</span>
+          <span>This Project 9 Lives X AI_CODING_WITH_ABHISHEK</span>
         </div>
       </header>
 
@@ -126,50 +126,36 @@ export const App: React.FC = () => {
         </section>
 
         {/* SLIDE 1: CURRENT CONTEXT */}
-        <section className="slide">
+        <section className="slide" style={{ padding: '60px 40px 40px 40px' }}>
           <motion.div 
             initial={{ opacity: 0, x: 50 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: false, amount: 0.1 }}
             transition={{ duration: 0.6 }}
             className="slide-content-wrapper"
+            style={{ gridTemplateColumns: '1fr', gap: '12px', maxWidth: '1000px', margin: '0 auto', display: 'flex', flexDirection: 'column', alignItems: 'center' }}
           >
-            <div className="slide-title-area">
-              <h2 className="title-large" style={{ fontSize: '2rem', lineHeight: 1.25 }}>
+            {/* Title and Button Block above SocialMetrics */}
+            <div style={{ textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '6px' }}>
+              <h2 className="title-large" style={{ fontSize: '2rem', lineHeight: 1.25, margin: 0 }}>
                 Instagram? Been there, <span className="title-accent">done that.</span>
               </h2>
-              <p className="slide-description">
-                I’m a seasoned creator who speaks fluent 'Algorithm.' I don't test the waters; I dive right in.
-              </p>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', color: '#9ca3af', fontSize: '0.88rem', marginTop: '16px' }}>
-                <div style={{ display: 'flex', alignItems: 'flex-start', gap: '8px' }}>
-                  <span style={{ color: 'var(--color-cyan)', marginTop: '2px' }}>✔</span>
-                  <span><strong>Proven Scale:</strong> Built Excel Bhaiya Abhishek from scratch, dominating Hindi-language tech.</span>
-                </div>
-                <div style={{ display: 'flex', alignItems: 'flex-start', gap: '8px' }}>
-                  <span style={{ color: 'var(--color-cyan)', marginTop: '2px' }}>✔</span>
-                  <span><strong>Mass Appeal:</strong> Captured the massive Hindi heartland using pure organic distribution.</span>
-                </div>
-                <div style={{ display: 'flex', alignItems: 'flex-start', gap: '8px' }}>
-                  <span style={{ color: 'var(--color-cyan)', marginTop: '2px' }}>✔</span>
-                  <span><strong>Project 9 Lives: AI_CODING_WITH_ABHISHEK:</strong> The channel will be brand new, but there will be no learning curve—just a veteran creator pulling the trigger from Day 1.</span>
-                </div>
-              </div>
-              <div style={{ marginTop: '20px' }}>
+              <div>
                 <a 
                   href="https://www.instagram.com/excelbhaiya.abhishek/" 
                   target="_blank" 
                   rel="noreferrer"
                   className="btn btn-secondary interactive"
                   style={{ 
-                    padding: '8px 16px', 
-                    fontSize: '0.8rem', 
+                    padding: '6px 14px', 
+                    fontSize: '0.75rem', 
                     display: 'inline-flex', 
                     alignItems: 'center', 
                     gap: '6px',
                     borderColor: 'rgba(238, 42, 123, 0.3)',
                     background: 'linear-gradient(45deg, rgba(249, 206, 52, 0.1) 0%, rgba(238, 42, 123, 0.1) 50%, rgba(98, 40, 215, 0.1) 100%)',
-                    color: '#ffffff'
+                    color: '#ffffff',
+                    marginTop: '2px'
                   }}
                 >
                   <span>Explore Live Channel (@excelbhaiya.abhishek)</span>
@@ -177,7 +163,49 @@ export const App: React.FC = () => {
                 </a>
               </div>
             </div>
-            <SocialMetrics />
+
+            {/* SocialMetrics Component (The Block) */}
+            <div style={{ width: '100%', flexGrow: 1, minHeight: 0 }}>
+              <SocialMetrics />
+            </div>
+
+            {/* Text items below SocialMetrics Block */}
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', width: '100%', marginTop: '2px' }}>
+              <div 
+                className="glass-panel" 
+                style={{ 
+                  padding: '8px 12px', 
+                  borderColor: 'rgba(6, 182, 212, 0.2)', 
+                  background: 'rgba(13, 17, 28, 0.5)',
+                  fontSize: '0.8rem',
+                  lineHeight: 1.4,
+                  borderRadius: '10px',
+                  display: 'flex',
+                  alignItems: 'flex-start',
+                  gap: '8px'
+                }}
+              >
+                <span style={{ color: 'var(--color-cyan)', fontWeight: 'bold' }}>✔</span>
+                <span><strong>Proven Scale:</strong> Built Excel Bhaiya Abhishek from scratch, dominating Hindi-language tech.</span>
+              </div>
+              <div 
+                className="glass-panel" 
+                style={{ 
+                  padding: '8px 12px', 
+                  borderColor: 'rgba(244, 63, 94, 0.2)', 
+                  background: 'rgba(13, 17, 28, 0.5)',
+                  fontSize: '0.8rem',
+                  lineHeight: 1.4,
+                  borderRadius: '10px',
+                  display: 'flex',
+                  alignItems: 'flex-start',
+                  gap: '8px'
+                }}
+              >
+                <span style={{ color: 'var(--color-magenta)', fontWeight: 'bold' }}>✔</span>
+                <span><strong>Project 9 Lives: This Project 9 Lives X AI_CODING_WITH_ABHISHEK:</strong> The channel will be brand new, but there will be no learning curve—just a veteran creator pulling the trigger from Day 1.</span>
+              </div>
+            </div>
           </motion.div>
         </section>
 
@@ -203,20 +231,16 @@ export const App: React.FC = () => {
             viewport={{ once: false, amount: 0.1 }}
             transition={{ duration: 0.6 }}
             className="slide-content-wrapper"
-            style={{ gridTemplateColumns: '1.1fr 0.9fr', gap: '40px' }}
+            style={{ gridTemplateColumns: '1fr', textAlign: 'center', maxWidth: '850px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '14px' }}
           >
-            <div className="slide-title-area">
-              <h2 className="title-large" style={{ fontSize: '2.2rem', lineHeight: 1.2 }}>
+            <div className="slide-title-area" style={{ alignItems: 'center', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              <h2 className="title-large" style={{ fontSize: '2.3rem', lineHeight: 1.2 }}>
                 My Chosen Niche: <span className="title-accent">Building everyday AI tools I wish existed</span>
               </h2>
               
-              <h3 style={{ fontSize: '1.3rem', color: 'var(--color-cyan)', fontFamily: 'var(--font-display)', marginTop: '14px', fontWeight: 700 }}>
+              <h3 style={{ fontSize: '1.3rem', color: 'var(--color-cyan)', fontFamily: 'var(--font-display)', fontWeight: 700, margin: 0 }}>
                 Zero code. 100% leverage.
               </h3>
-              
-              <p className="slide-description" style={{ fontSize: '0.9rem', lineHeight: 1.6, marginTop: '8px', color: '#d1d5db' }}>
-                I build builders. I show regular people with absolute zero coding knowledge how to forge customized apps that solve real-world problems. Pure execution. Instant impact.
-              </p>
             </div>
             
             <div 
@@ -229,17 +253,22 @@ export const App: React.FC = () => {
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                height: '100%',
-                maxHeight: '400px',
-                background: 'rgba(13,17,28,0.7)'
+                width: '100%',
+                maxHeight: '320px',
+                background: 'rgba(13,17,28,0.7)',
+                padding: '6px'
               }}
             >
               <img 
                 src={`${base}Images/image3.png`} 
                 alt="Niche Concept" 
-                style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+                style={{ width: '100%', height: '100%', objectFit: 'contain', maxHeight: '300px' }}
               />
             </div>
+
+            <p className="slide-description" style={{ fontSize: '0.92rem', lineHeight: 1.6, color: '#d1d5db', maxWidth: '750px', margin: 0 }}>
+              I build builders. I show regular people with absolute zero coding knowledge how to forge customized apps that solve real-world problems. Pure execution. Instant impact.
+            </p>
           </motion.div>
         </section>
 
@@ -251,42 +280,18 @@ export const App: React.FC = () => {
             viewport={{ once: false, amount: 0.1 }}
             transition={{ duration: 0.6 }}
             className="slide-content-wrapper"
-            style={{ gridTemplateColumns: '1fr 1.2fr', gap: '30px' }}
+            style={{ gridTemplateColumns: '0.8fr 1.2fr' }}
           >
-            <div className="slide-title-area" style={{ display: 'flex', flexDirection: 'column', height: '100%', justifyContent: 'space-between' }}>
-              <div>
-                <h2 className="title-large" style={{ fontSize: '2.2rem', lineHeight: 1.25 }}>
-                  Why I chose <span className="title-accent">this niche?</span>
-                </h2>
-                <p className="slide-description" style={{ fontSize: '1rem', color: 'var(--color-cyan)', fontWeight: 600, marginTop: '10px', lineHeight: 1.4, fontStyle: 'italic', borderLeft: '3px solid var(--color-cyan)', paddingLeft: '12px' }}>
-                  "I don’t just test AI tools. I push them to their absolute limits."
-                </p>
-                <p style={{ fontSize: '0.82rem', color: '#d1d5db', lineHeight: 1.5, marginTop: '10px' }}>
-                  (I am a power user of the entire developer ecosystem—from Claude Code, VS Code, Codex, Cursor, Replit, and Claude Cowork, to OpenClaw)
-                </p>
-              </div>
-              
-              <div 
-                className="glass-panel" 
-                style={{ 
-                  borderRadius: '12px', 
-                  overflow: 'hidden', 
-                  border: '1px solid rgba(255, 255, 255, 0.08)',
-                  boxShadow: '0 8px 24px rgba(0,0,0,0.5)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  marginTop: '16px',
-                  height: '180px',
-                  background: 'rgba(13,17,28,0.7)'
-                }}
-              >
-                <img 
-                  src={`${base}Images/image4.png`} 
-                  alt="Ecosystem Tools" 
-                  style={{ width: '100%', height: '100%', objectFit: 'contain' }}
-                />
-              </div>
+            <div className="slide-title-area">
+              <h2 className="title-large" style={{ fontSize: '2.3rem', lineHeight: 1.25 }}>
+                Why I chose <span className="title-accent">this niche?</span>
+              </h2>
+              <p className="slide-description" style={{ fontSize: '1.05rem', color: 'var(--color-cyan)', fontWeight: 600, marginTop: '14px', lineHeight: 1.4, fontStyle: 'italic', borderLeft: '3px solid var(--color-cyan)', paddingLeft: '12px' }}>
+                "I don’t just test AI tools. I push them to their absolute limits."
+              </p>
+              <p style={{ fontSize: '0.86rem', color: '#d1d5db', lineHeight: 1.6, marginTop: '14px' }}>
+                (I am a power user of the entire developer ecosystem—from Claude Code, VS Code, Codex, Cursor, Replit, and Claude Cowork, to OpenClaw)
+              </p>
             </div>
             <TerminalPrompt />
           </motion.div>
