@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { HelpCircle, Lightbulb, FileEdit, Cpu, Hammer, ShieldCheck, Award } from 'lucide-react';
 
@@ -84,6 +84,22 @@ export const ContentWorkflow: React.FC = () => {
 
   // Default to null (all cards collapsed on initial load)
   const [activeStepId, setActiveStepId] = useState<number | null>(null);
+
+  // Close active card when clicking anywhere outside
+  useEffect(() => {
+    const handleDocumentClick = (e: MouseEvent) => {
+      if (activeStepId !== null) {
+        const target = e.target as HTMLElement;
+        if (!target.closest('.workflow-card') && !target.closest('.staircase-svg')) {
+          setActiveStepId(null);
+        }
+      }
+    };
+    document.addEventListener('click', handleDocumentClick);
+    return () => {
+      document.removeEventListener('click', handleDocumentClick);
+    };
+  }, [activeStepId]);
 
   // Isometric landing positions inside SVG (scaled to fit inside 380px height)
   const landings = [
