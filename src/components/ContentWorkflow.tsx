@@ -19,71 +19,72 @@ export const ContentWorkflow: React.FC = () => {
       label: 'Problem',
       icon: <HelpCircle size={13} />,
       color: '#10b981', // Emerald
-      title: 'Overwhelmed by Group Chats',
-      details: 'Daily group chats are extremely cluttered with hundreds of unread messages. Catching up on what happened in each group takes hours of manual scrolling.',
+      title: '1. The Pain Point (Problem)',
+      details: 'Concept: Define a highly relatable everyday bottleneck. Example: Sifting through 500+ cluttered group chat messages every morning just to find critical updates and action points.',
     },
     {
       id: 2,
       label: 'Idea',
       icon: <Lightbulb size={13} />,
       color: '#f59e0b', // Gold
-      title: 'Instant Group Summarizer',
-      details: 'An AI application that compiles daily summaries of group chat histories. Users simply select a group tab to view a concise digest of what occurred.',
+      title: '2. The Solution Concept (Idea)',
+      details: 'Concept: Design a lightweight, single-task utility. Example: An interactive dashboard where clicking a group tab instantly generates a concise bullet-point summary of the past 24 hours.',
     },
     {
       id: 3,
       label: 'Prompt',
       icon: <FileEdit size={13} />,
       color: '#06b6d4', // Cyan
-      title: 'Database & Agent Setup',
-      details: 'Instruct the Google Antigravity coder agent to build a local React page that parses the local WhatsApp sqlite/json history database and sends transcripts to a summarization endpoint.',
-      codeSnippet: `Prompt: Create a React app that imports WhatsApp SQLite chat exports, aggregates messages by date/group, and runs them through a daily summarizer API.`
+      title: '3. Coder Agent Instructions (Prompt)',
+      details: 'Concept: Translate requirements into structured developer instructions. Example: Write a prompt directing Google Antigravity to build a React page that parses local chat database exports.',
+      codeSnippet: `Prompt: Create a local React app that loads chat sqlite/json backups, groups logs by group name, and executes a summarization API.`
     },
     {
       id: 4,
       label: 'AI Workflow',
       icon: <Cpu size={13} />,
       color: '#6366f1', // Indigo
-      title: 'Agent Code Execution',
-      details: 'The agent analyzes the local database schema, compiles the parsing scripts, structures the UI tabs, and installs charting libraries autonomously.',
+      title: '4. Autonomous Build (AI Workflow)',
+      details: 'Concept: Deploy coding agents to execute the codebase. Example: The agent parses the database schema, compiles the UI wrapper, configures routing, and runs local tests autonomously.',
     },
     {
       id: 5,
       label: 'Building',
       icon: <Hammer size={13} />,
       color: '#ec4899', // Magenta
-      title: 'Refining App & API Instructions',
-      details: 'We write two core instructions: one frontend builder prompt handling layout edge cases (e.g. media attachments, missing days), and one system API prompt.',
+      title: '5. Co-Pilot Refinement (Building)',
+      details: 'Concept: Write prompts to handle layout edge cases and configure core APIs. Example: We craft two specific prompts: one for layout edge cases (e.g. system messages), and one for the summarization API.',
       codeSnippet: `System API Prompt:
-"Summarize this WhatsApp transcript. Extract action items, decisions made, and highlight who said what in short bullet points."`
+"Summarize this chat log. Extract action items, decisions, and key speakers into short, clean bullet points."`
     },
     {
       id: 6,
       label: 'Product',
       icon: <ShieldCheck size={13} />,
       color: '#8b5cf6', // Purple
-      title: 'Fully Functional Local App',
-      details: 'A local, fully-responsive dashboard featuring group folders, searchable daily logs, clean metric widgets, and instant AI summary sections.',
+      title: '6. The Finished Application (Product)',
+      details: 'Concept: Present a fully functional, production-ready web tool. Example: A responsive dashboard featuring message count trends, group tabs, and instant AI summary sections.',
     },
     {
       id: 7,
       label: 'Use Case',
       icon: <HelpCircle size={13} />,
       color: '#06b6d4', // Cyan
-      title: '10-Second Catch-up Routine',
-      details: 'Launch the app every morning, click on active work/family groups, and instantly catch up on 500+ messages in seconds without reading transcripts.',
+      title: '7. Real-World Execution (Use Case)',
+      details: 'Concept: Show the tool solving the problem in real-time. Example: Launch the app at 8:00 AM, select active work/family groups, and get caught up on all channels in under 10 seconds.',
     },
     {
       id: 8,
       label: 'Benefit',
       icon: <Award size={13} />,
       color: '#f59e0b', // Gold
-      title: 'Reclaim Focus & Time',
-      details: 'Save 30+ minutes of scrolling daily. Never miss critical decisions, deadlines, or announcements while maintaining peace of mind.',
+      title: '8. The Value Proposition (Benefit)',
+      details: 'Concept: Quantify time saved and cognitive load reduced. Example: Save 30+ minutes of scrolling daily, ensure key tasks are never missed, and maintain focus throughout the day.',
     }
   ];
 
-  const [activeStepId, setActiveStepId] = useState<number>(1);
+  // Default to null (no card expanded initially)
+  const [activeStepId, setActiveStepId] = useState<number | null>(null);
 
   // Isometric landing positions inside SVG
   const landings = [
@@ -99,6 +100,72 @@ export const ContentWorkflow: React.FC = () => {
 
   const oddSteps = steps.filter(s => s.id % 2 !== 0);
   const evenSteps = steps.filter(s => s.id % 2 === 0);
+
+  // Expanded heights depending on content size
+  const getExpandedHeight = (id: number) => {
+    if (id === 3 || id === 5) return 210; // steps with code snippets
+    return 130; // standard text height
+  };
+
+  // Solve overlapping positions dynamically
+  const solvePositions = (sideSteps: Step[]) => {
+    // Sort from top to bottom (cy ascending)
+    const sorted = [...sideSteps].sort((a, b) => landings[a.id - 1].cy - landings[b.id - 1].cy);
+    const resolved: Record<number, { top: number; height: number }> = {};
+
+    // Base positions
+    sorted.forEach(step => {
+      resolved[step.id] = {
+        top: landings[step.id - 1].cy,
+        height: step.id === activeStepId ? getExpandedHeight(step.id) : 32
+      };
+    });
+
+    if (activeStepId === null) {
+      return resolved;
+    }
+
+    const activeIndex = sorted.findIndex(s => s.id === activeStepId);
+    if (activeIndex === -1) return resolved; // Active step is on the other side
+
+    // Clamp active card inside container bounds [16, 474] to prevent vertical cropping
+    const activeHeight = getExpandedHeight(activeStepId);
+    const minY = 16 + activeHeight / 2;
+    const maxY = 474 - activeHeight / 2;
+    const clampedActiveTop = Math.max(minY, Math.min(maxY, landings[activeStepId - 1].cy));
+    resolved[activeStepId].top = clampedActiveTop;
+
+    // Upward pass (shift items above active step up)
+    for (let i = activeIndex - 1; i >= 0; i--) {
+      const current = sorted[i];
+      const below = sorted[i + 1];
+      const belowTop = resolved[below.id].top;
+      const belowHeight = resolved[below.id].height;
+      const limit = belowTop - belowHeight / 2 - 8; // top boundary minus 8px gap
+
+      const baseTop = landings[current.id - 1].cy;
+      const currentHeight = resolved[current.id].height;
+      resolved[current.id].top = Math.min(baseTop, limit - currentHeight / 2);
+    }
+
+    // Downward pass (shift items below active step down)
+    for (let i = activeIndex + 1; i < sorted.length; i++) {
+      const current = sorted[i];
+      const above = sorted[i - 1];
+      const aboveTop = resolved[above.id].top;
+      const aboveHeight = resolved[above.id].height;
+      const limit = aboveTop + aboveHeight / 2 + 8; // bottom boundary plus 8px gap
+
+      const baseTop = landings[current.id - 1].cy;
+      const currentHeight = resolved[current.id].height;
+      resolved[current.id].top = Math.max(baseTop, limit + currentHeight / 2);
+    }
+
+    return resolved;
+  };
+
+  const leftPositions = solvePositions(oddSteps);
+  const rightPositions = solvePositions(evenSteps);
 
   return (
     <div style={{
@@ -119,7 +186,7 @@ export const ContentWorkflow: React.FC = () => {
         {/* LEFT COLUMN STEP CARD ACCORDION (ODD STEPS) */}
         {oddSteps.map((step) => {
           const isActive = step.id === activeStepId;
-          const landing = landings[step.id - 1];
+          const pos = leftPositions[step.id];
 
           return (
             <motion.div
@@ -129,7 +196,7 @@ export const ContentWorkflow: React.FC = () => {
               className="interactive workflow-card"
               style={{
                 position: 'absolute',
-                top: `${landing.cy}px`,
+                top: `${pos.top}px`,
                 transform: 'translateY(-50%)',
                 right: '680px', // Anchor at X = 200px
                 width: isActive ? '250px' : '140px',
@@ -139,7 +206,7 @@ export const ContentWorkflow: React.FC = () => {
                   : 'rgba(255, 255, 255, 0.02)',
                 border: `1.5px solid ${isActive ? step.color : 'rgba(255, 255, 255, 0.06)'}`,
                 padding: isActive ? '12px 14px' : '0 12px',
-                height: isActive ? 'auto' : '32px',
+                height: `${pos.height}px`,
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'center',
@@ -147,7 +214,8 @@ export const ContentWorkflow: React.FC = () => {
                 cursor: 'pointer',
                 zIndex: isActive ? 10 : 2,
                 overflow: 'hidden',
-                textAlign: 'left'
+                textAlign: 'left',
+                transition: 'border-color 0.25s, background-color 0.25s'
               }}
             >
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px', width: '100%', minHeight: '28px' }}>
@@ -184,7 +252,6 @@ export const ContentWorkflow: React.FC = () => {
                 </div>
               </div>
 
-              {/* Collapsed view leaves title hidden, active expands title, description, code */}
               {isActive && (
                 <motion.div
                   initial={{ opacity: 0 }}
@@ -270,11 +337,12 @@ export const ContentWorkflow: React.FC = () => {
             {oddSteps.map(step => {
               const landing = landings[step.id - 1];
               const isActive = step.id === activeStepId;
+              const cardY = leftPositions[step.id].top;
               return (
                 <line 
                   key={`line-${step.id}`}
                   x1="10" 
-                  y1={landing.cy} 
+                  y1={cardY} 
                   x2={landing.cx - 35} 
                   y2={landing.cy}
                   stroke={isActive ? step.color : 'rgba(255, 255, 255, 0.08)'}
@@ -289,11 +357,12 @@ export const ContentWorkflow: React.FC = () => {
             {evenSteps.map(step => {
               const landing = landings[step.id - 1];
               const isActive = step.id === activeStepId;
+              const cardY = rightPositions[step.id].top;
               return (
                 <line 
                   key={`line-${step.id}`}
                   x1="450" 
-                  y1={landing.cy} 
+                  y1={cardY} 
                   x2={landing.cx + 35} 
                   y2={landing.cy}
                   stroke={isActive ? step.color : 'rgba(255, 255, 255, 0.08)'}
@@ -327,7 +396,7 @@ export const ContentWorkflow: React.FC = () => {
         {/* RIGHT COLUMN STEP CARD ACCORDION (EVEN STEPS) */}
         {evenSteps.map((step) => {
           const isActive = step.id === activeStepId;
-          const landing = landings[step.id - 1];
+          const pos = rightPositions[step.id];
 
           return (
             <motion.div
@@ -337,7 +406,7 @@ export const ContentWorkflow: React.FC = () => {
               className="interactive workflow-card"
               style={{
                 position: 'absolute',
-                top: `${landing.cy}px`,
+                top: `${pos.top}px`,
                 transform: 'translateY(-50%)',
                 left: '680px', // Anchor at X = 680px
                 width: isActive ? '250px' : '140px',
@@ -347,7 +416,7 @@ export const ContentWorkflow: React.FC = () => {
                   : 'rgba(255, 255, 255, 0.02)',
                 border: `1.5px solid ${isActive ? step.color : 'rgba(255, 255, 255, 0.06)'}`,
                 padding: isActive ? '12px 14px' : '0 12px',
-                height: isActive ? 'auto' : '32px',
+                height: `${pos.height}px`,
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'center',
@@ -355,7 +424,8 @@ export const ContentWorkflow: React.FC = () => {
                 cursor: 'pointer',
                 zIndex: isActive ? 10 : 2,
                 overflow: 'hidden',
-                textAlign: 'left'
+                textAlign: 'left',
+                transition: 'border-color 0.25s, background-color 0.25s'
               }}
             >
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px', width: '100%', minHeight: '28px' }}>
@@ -392,7 +462,6 @@ export const ContentWorkflow: React.FC = () => {
                 </div>
               </div>
 
-              {/* Collapsed view leaves details hidden, active expands title, description */}
               {isActive && (
                 <motion.div
                   initial={{ opacity: 0 }}
@@ -446,7 +515,7 @@ export const ContentWorkflow: React.FC = () => {
       const cx = start.cx + (end.cx - start.cx) * t;
       const cy = start.cy + (end.cy - start.cy) * t;
 
-      const isPathActive = activeStepId >= targetStep.id;
+      const isPathActive = activeStepId !== null && activeStepId >= targetStep.id;
 
       stairTreads.push(
         <g 
@@ -577,7 +646,7 @@ export const ContentWorkflow: React.FC = () => {
 const styleTag = (
   <style>{`
     .workflow-card {
-      transition: border-color 0.25s, background-color 0.25s;
+      transition: border-color 0.25s, background-color 0.25s, box-shadow 0.25s;
     }
     .workflow-card:hover {
       border-color: rgba(255, 255, 255, 0.20) !important;
@@ -616,10 +685,9 @@ const styleTag = (
       .staircase-svg {
         position: relative !important;
         max-height: 280px !important;
-        order: -1 !important; /* Move stairs to top on mobile */
+        order: -1 !important;
         margin: 20px auto !important;
       }
-      /* Hide connection lines on mobile */
       .staircase-svg line {
         display: none !important;
       }
