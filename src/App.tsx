@@ -12,7 +12,7 @@ import { AudienceList, MonetizationGrid, MilestoneTimeline } from './components/
 
 const slidesData = [
   { id: 'welcome', title: 'Building Everyday AI Tools I Wish Existed', tagline: 'Pitch Deck Introduction' },
-  { id: 'context', title: 'Instagram? Been there, done that', tagline: 'Slide 01' },
+  { id: 'context', title: 'Instagram Content Creation? Been there, done that', tagline: 'Slide 01' },
   { id: 'why-me', title: 'My Journey in Content Creation', tagline: 'Slide 02' },
   { id: 'niche', title: 'My Chosen Niche: Building everyday AI tools I wish existed', tagline: 'Slide 03' },
   { id: 'stack', title: 'Why I chose this niche?', tagline: 'Slide 04' },
@@ -137,7 +137,7 @@ export const App: React.FC = () => {
             {/* Title and Button Block above SocialMetrics */}
             <div style={{ textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '6px' }}>
               <h2 className="title-large" style={{ fontSize: '2rem', lineHeight: 1.25, margin: 0 }}>
-                Instagram? Been there, <span className="title-accent">done that.</span>
+                Instagram Content Creation? Been there, <span className="title-accent">done that.</span>
               </h2>
               <div>
                 <a 
