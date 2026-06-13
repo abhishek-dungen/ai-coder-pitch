@@ -280,7 +280,7 @@ export const App: React.FC = () => {
         </section>
 
         {/* SLIDE 5B: BUILT PROOFS PORTFOLIO HORIZONTAL REDESIGN */}
-        <section className="slide" style={{ padding: '80px 60px 90px 60px' }}>
+        <section className="slide" style={{ padding: '70px 40px 60px 40px' }}>
           <motion.div 
             initial={{ opacity: 0, x: 50 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -289,9 +289,9 @@ export const App: React.FC = () => {
             className="slide-content-wrapper"
             style={{ gridTemplateColumns: '1fr' }}
           >
-            <div style={{ display: 'flex', flexDirection: 'column', height: '100%', width: '100%', gap: '16px' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', height: '100%', width: '100%', gap: '8px' }}>
               <div style={{ textAlign: 'center' }}>
-                <h2 className="title-large" style={{ fontSize: '2.5rem', marginBottom: '8px' }}>
+                <h2 className="title-large" style={{ fontSize: '2rem', marginBottom: '4px' }}>
                   Proof of Execution <span className="title-accent">Tools I Already Built</span>
                 </h2>
               </div>
@@ -303,7 +303,7 @@ export const App: React.FC = () => {
         </section>
 
         {/* SLIDE 6: CORE CONTENT IDEA WORKFLOW */}
-        <section className="slide" style={{ padding: '80px 60px 90px 60px' }}>
+        <section className="slide" style={{ padding: '70px 40px 60px 40px' }}>
           <motion.div 
             initial={{ opacity: 0, x: 50 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -312,16 +312,16 @@ export const App: React.FC = () => {
             className="slide-content-wrapper"
             style={{ gridTemplateColumns: '1fr' }}
           >
-            <div style={{ display: 'flex', flexDirection: 'column', height: '100%', width: '100%', gap: '16px' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', height: '100%', width: '100%', gap: '8px' }}>
               <div style={{ textAlign: 'center' }}>
-                <h2 className="title-large" style={{ fontSize: '2.5rem', marginBottom: '8px' }}>
+                <h2 className="title-large" style={{ fontSize: '2rem', marginBottom: '4px' }}>
                   Core Journey of <span className="title-accent">Each Video</span>
                 </h2>
-                <p className="slide-description" style={{ maxWidth: '800px', margin: '0 auto', fontSize: '1rem', color: '#9ca3af' }}>
+                <p className="slide-description" style={{ maxWidth: '800px', margin: '0 auto', fontSize: '0.85rem', color: '#9ca3af' }}>
                   Each video takes the viewer on a complete journey from pain point to practical solution.
                 </p>
               </div>
-              <div style={{ flexGrow: 1, minHeight: 0, display: 'flex', flexDirection: 'column', marginTop: '10px' }}>
+              <div style={{ flexGrow: 1, minHeight: 0, display: 'flex', flexDirection: 'column', marginTop: '4px' }}>
                 <ContentWorkflow />
               </div>
             </div>
@@ -329,7 +329,7 @@ export const App: React.FC = () => {
         </section>
 
         {/* SLIDE 7: PIPELINE OF IDEAS */}
-        <section className="slide" style={{ padding: '80px 60px 90px 60px' }}>
+        <section className="slide" style={{ padding: '70px 40px 60px 40px' }}>
           <motion.div 
             initial={{ opacity: 0, x: 50 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -338,13 +338,13 @@ export const App: React.FC = () => {
             className="slide-content-wrapper"
             style={{ gridTemplateColumns: '1fr' }}
           >
-            <div style={{ display: 'flex', flexDirection: 'column', height: '100%', width: '100%', gap: '16px' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', height: '100%', width: '100%', gap: '8px' }}>
               <div style={{ textAlign: 'center' }}>
-                <h2 className="title-large" style={{ fontSize: '2.5rem', marginBottom: '8px' }}>
+                <h2 className="title-large" style={{ fontSize: '2rem', marginBottom: '4px' }}>
                   Content Won't <span className="title-accent">Dry Out</span>
                 </h2>
               </div>
-              <div style={{ flexGrow: 1, minHeight: 0, display: 'flex', flexDirection: 'column', marginTop: '10px' }}>
+              <div style={{ flexGrow: 1, minHeight: 0, display: 'flex', flexDirection: 'column', marginTop: '4px' }}>
                 <ContentPipeline />
               </div>
             </div>

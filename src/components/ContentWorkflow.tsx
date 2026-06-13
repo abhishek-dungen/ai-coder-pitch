@@ -86,22 +86,22 @@ export const ContentWorkflow: React.FC = () => {
   // Default to null (all cards collapsed on initial load)
   const [activeStepId, setActiveStepId] = useState<number | null>(null);
 
-  // Isometric landing positions inside SVG (scaled to fit inside 440px height)
+  // Isometric landing positions inside SVG (scaled to fit inside 380px height)
   const landings = [
-    { id: 1, cx: 160, cy: 365 },
-    { id: 2, cx: 300, cy: 320 },
-    { id: 3, cx: 160, cy: 275 },
-    { id: 4, cx: 300, cy: 230 },
-    { id: 5, cx: 160, cy: 185 },
-    { id: 6, cx: 300, cy: 140 },
-    { id: 7, cx: 160, cy: 95 },
-    { id: 8, cx: 300, cy: 50 }
+    { id: 1, cx: 160, cy: 320 },
+    { id: 2, cx: 300, cy: 280 },
+    { id: 3, cx: 160, cy: 240 },
+    { id: 4, cx: 300, cy: 200 },
+    { id: 5, cx: 160, cy: 160 },
+    { id: 6, cx: 300, cy: 120 },
+    { id: 7, cx: 160, cy: 80 },
+    { id: 8, cx: 300, cy: 40 }
   ];
 
   // Get expanded height based on step content
   const getExpandedHeight = (id: number) => {
     if (id === 3 || id === 5) return 215; // has code snippet
-    return 130; // standard text details
+    return 135; // standard active card height
   };
 
   // 1D Physics Relaxation Solver to resolve overlapping and screen cropping
@@ -113,13 +113,13 @@ export const ContentWorkflow: React.FC = () => {
     const Y = sorted.map(s => landings[s.id - 1].cy);
     const H = sorted.map(s => s.id === activeStepId ? getExpandedHeight(s.id) : 28);
 
-    // 2. Clamp active card within container bounds first [16, 424]
+    // 2. Clamp active card within container bounds first [16, 364]
     if (activeStepId !== null) {
       const activeIdx = sorted.findIndex(s => s.id === activeStepId);
       if (activeIdx !== -1) {
         const h = H[activeIdx];
         const minY = h / 2 + 16;
-        const maxY = 440 - h / 2 - 16;
+        const maxY = 380 - h / 2 - 16;
         Y[activeIdx] = Math.max(minY, Math.min(maxY, Y[activeIdx]));
       }
     }
@@ -148,8 +148,8 @@ export const ContentWorkflow: React.FC = () => {
         const shift = 16 - (Y[0] - H[0]/2);
         for (let i = 0; i < n; i++) Y[i] += shift;
       }
-      if (Y[n-1] + H[n-1]/2 > 424) {
-        const shift = (Y[n-1] + H[n-1]/2) - 424;
+      if (Y[n-1] + H[n-1]/2 > 364) {
+        const shift = (Y[n-1] + H[n-1]/2) - 364;
         for (let i = 0; i < n; i++) Y[i] -= shift;
       }
     }
@@ -188,8 +188,8 @@ export const ContentWorkflow: React.FC = () => {
       <div className="staircase-container" style={{
         position: 'relative',
         width: '880px',
-        height: '440px',
-        minHeight: '440px'
+        height: '380px',
+        minHeight: '380px'
       }}>
         
         {/* LEFT COLUMN STEP CARD ACCORDION (ODD STEPS) */}
@@ -214,7 +214,7 @@ export const ContentWorkflow: React.FC = () => {
                   ? `linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, ${step.color}0a 100%)` 
                   : 'rgba(255, 255, 255, 0.02)',
                 border: `1.5px solid ${isActive ? step.color : 'rgba(255, 255, 255, 0.06)'}`,
-                padding: isActive ? '12px 14px' : '0 10px',
+                padding: isActive ? '10px 12px' : '0 10px',
                 height: `${pos.height}px`,
                 display: 'flex',
                 flexDirection: 'column',
@@ -286,22 +286,22 @@ export const ContentWorkflow: React.FC = () => {
               {isActive && (
                 <div 
                   onClick={(e) => e.stopPropagation()} // Stop propagation to allow text selection without closing card
-                  style={{ marginTop: '8px', overflow: 'hidden' }}
+                  style={{ marginTop: '6px', overflow: 'hidden' }}
                 >
-                  <h5 style={{ fontSize: '0.85rem', fontWeight: 700, color: 'white', margin: '0 0 4px 0', fontFamily: 'var(--font-display)' }}>
+                  <h5 style={{ fontSize: '0.8rem', fontWeight: 700, color: 'white', margin: '0 0 4px 0', fontFamily: 'var(--font-display)' }}>
                     {step.title}
                   </h5>
-                  <p style={{ fontSize: '0.75rem', color: '#9ca3af', lineHeight: 1.35, margin: '0 0 4px 0' }}>
+                  <p style={{ fontSize: '0.72rem', color: '#9ca3af', lineHeight: 1.25, margin: '0 0 4px 0' }}>
                     {step.details}
                   </p>
                   {step.codeSnippet && (
                     <pre style={{
                       margin: '4px 0 0 0',
-                      padding: '6px 8px',
+                      padding: '4px 6px',
                       background: '#040508',
                       border: '1px solid rgba(6, 182, 212, 0.15)',
                       borderRadius: '6px',
-                      fontSize: '0.62rem',
+                      fontSize: '0.58rem',
                       color: '#a7f3d0',
                       whiteSpace: 'pre-wrap',
                       fontFamily: 'var(--font-mono)'
@@ -321,13 +321,13 @@ export const ContentWorkflow: React.FC = () => {
           left: '210px',
           top: 0,
           width: '460px',
-          height: '440px',
+          height: '380px',
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center'
         }}>
           <svg 
-            viewBox="0 0 460 440" 
+            viewBox="0 0 460 380" 
             className="staircase-svg"
             style={{ 
               width: '100%', 
@@ -633,7 +633,7 @@ export const ContentWorkflow: React.FC = () => {
         {/* 3D TALL WHITE PEDESTAL COLUMN */}
         {/* Column Left Wall */}
         <polygon
-          points={`${cx - 36},${cy} ${cx},${cy + 16} ${cx},${cy + 70} ${cx - 36},${cy + 54}`}
+          points={`${cx - 36},${cy} ${cx},${cy + 16} ${cx},${cy + 50} ${cx - 36},${cy + 34}`}
           fill="url(#wall-left)"
           stroke={isActive ? `${step.color}44` : 'rgba(255,255,255,0.03)'}
           strokeWidth={isActive ? 1 : 0.5}
@@ -641,7 +641,7 @@ export const ContentWorkflow: React.FC = () => {
         />
         {/* Column Right Wall */}
         <polygon
-          points={`${cx},${cy + 16} ${cx + 36},${cy} ${cx + 36},${cy + 54} ${cx},${cy + 70}`}
+          points={`${cx},${cy + 16} ${cx + 36},${cy} ${cx + 36},${cy + 34} ${cx},${cy + 50}`}
           fill="url(#wall-right)"
           stroke={isActive ? `${step.color}44` : 'rgba(255,255,255,0.03)'}
           strokeWidth={isActive ? 1 : 0.5}
