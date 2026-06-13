@@ -92,13 +92,31 @@ export const App: React.FC = () => {
             viewport={{ once: false, amount: 0.1 }}
             transition={{ duration: 0.8 }}
             className="slide-content-wrapper"
-            style={{ gridTemplateColumns: '1fr', textAlign: 'center', maxWidth: '800px' }}
+            style={{ gridTemplateColumns: '1fr', textAlign: 'center', maxWidth: '850px' }}
           >
-            <div className="slide-title-area" style={{ alignItems: 'center', display: 'flex', flexDirection: 'column' }}>
-              <h1 className="title-large" style={{ fontSize: '3rem', lineHeight: 1.2 }}>
-                Building Everyday <span className="title-accent">AI Tools</span> I Wish Existed
-              </h1>
-              <div style={{ marginTop: '24px', display: 'flex', gap: '12px' }}>
+            <div className="slide-title-area" style={{ alignItems: 'center', display: 'flex', flexDirection: 'column', gap: '20px' }}>
+              <div 
+                className="glass-panel" 
+                style={{ 
+                  borderRadius: '16px', 
+                  overflow: 'hidden', 
+                  border: '1px solid rgba(255, 255, 255, 0.08)',
+                  boxShadow: '0 8px 24px rgba(0,0,0,0.5)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  width: '100%',
+                  maxHeight: '450px',
+                  background: 'rgba(13,17,28,0.4)'
+                }}
+              >
+                <img 
+                  src={`${base}Images/image2.png`} 
+                  alt="Building Everyday AI Tools I Wish Existed" 
+                  style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+                />
+              </div>
+              <div style={{ display: 'flex', gap: '12px' }}>
                 <button onClick={() => jumpToSlide(1)} className="btn btn-primary interactive">
                   Swpie Right <ArrowRight size={16} />
                 </button>
