@@ -17,6 +17,7 @@ const slidesData = [
   { id: 'why-me', title: 'My Journey in Content Creation', tagline: 'Slide 02' },
   { id: 'niche', title: 'My Chosen Niche: Building everyday AI tools I wish existed', tagline: 'Slide 03' },
   { id: 'stack', title: 'Why I chose this niche?', tagline: 'Slide 04' },
+  { id: 'stack-image', title: 'Why I chose this niche? (Visual Stack)', tagline: 'Slide 04B' },
   { id: 'proof-horizontal', title: 'Proof of Execution Tools I Already Built', tagline: 'Slide 05' },
   { id: 'workflow', title: 'Core Channel Content Idea', tagline: 'Slide 06' },
   { id: 'pipeline', title: 'The Content wont Dry out.....The ideas below are just the beginning', tagline: 'Slide 07' },
@@ -294,6 +295,55 @@ export const App: React.FC = () => {
               </p>
             </div>
             <TerminalPrompt />
+          </motion.div>
+        </section>
+
+        {/* SLIDE 4B: WHY NICHE WORKS (IMAGE VERSION) */}
+        <section className="slide">
+          <motion.div 
+            initial={{ opacity: 0, x: 50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: false, amount: 0.1 }}
+            transition={{ duration: 0.6 }}
+            className="slide-content-wrapper"
+            style={{ gridTemplateColumns: '1fr', textAlign: 'center', maxWidth: '850px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '14px' }}
+          >
+            <div className="slide-title-area" style={{ alignItems: 'center', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              <h2 className="title-large" style={{ fontSize: '2.3rem', lineHeight: 1.2 }}>
+                Why I chose <span className="title-accent">this niche?</span>
+              </h2>
+              
+              <p className="slide-description" style={{ fontSize: '1.05rem', color: 'var(--color-cyan)', fontWeight: 600, margin: 0, fontStyle: 'italic', borderLeft: '3px solid var(--color-cyan)', paddingLeft: '12px' }}>
+                "I don’t just test AI tools. I push them to their absolute limits."
+              </p>
+            </div>
+            
+            <div 
+              className="glass-panel" 
+              style={{ 
+                borderRadius: '16px', 
+                overflow: 'hidden', 
+                border: '1px solid rgba(255, 255, 255, 0.08)',
+                boxShadow: '0 12px 32px rgba(0,0,0,0.5)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                width: '100%',
+                maxHeight: '420px',
+                background: 'rgba(13,17,28,0.7)',
+                padding: '6px'
+              }}
+            >
+              <img 
+                src={`${base}Images/image4.png`} 
+                alt="Ecosystem Stack" 
+                style={{ width: '100%', height: '100%', objectFit: 'contain', maxHeight: '400px' }}
+              />
+            </div>
+
+            <p style={{ fontSize: '0.86rem', color: '#d1d5db', lineHeight: 1.6, maxWidth: '780px', margin: 0 }}>
+              (I am a power user of the entire developer ecosystem—from Claude Code, VS Code, Codex, Cursor, Replit, and Claude Cowork, to OpenClaw) I’ve stress-tested them all to build working apps, rogue automations, and bulletproof workflows. The sandbox phase is over—it's time to show the world how it’s actually done:
+            </p>
           </motion.div>
         </section>
 
