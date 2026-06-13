@@ -288,7 +288,7 @@ export const SocialMetrics: React.FC = () => {
         </div>
       </div>
 
-      {/* Side-by-side Blocks (restored to 420px height) */}
+      {/* Side-by-side Blocks (restored to 340px height) */}
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', flexGrow: 1, minHeight: 0 }}>
         
         {/* =========================================================
@@ -303,7 +303,7 @@ export const SocialMetrics: React.FC = () => {
           borderRadius: '16px',
           overflow: 'hidden',
           position: 'relative',
-          height: '420px',
+          height: '340px',
           boxShadow: '0 8px 32px rgba(0, 0, 0, 0.5)'
         }}>
           {/* Phone top status bar */}
@@ -707,7 +707,7 @@ export const SocialMetrics: React.FC = () => {
           borderColor: 'var(--color-border)',
           borderRadius: '16px',
           overflow: 'hidden',
-          height: '420px',
+          height: '340px',
           boxShadow: '0 8px 32px rgba(0, 0, 0, 0.5)'
         }}>
           {/* Phone top status bar */}

@@ -234,7 +234,7 @@ export const App: React.FC = () => {
             style={{ gridTemplateColumns: '1fr', textAlign: 'center', maxWidth: '850px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '14px' }}
           >
             <div className="slide-title-area" style={{ alignItems: 'center', display: 'flex', flexDirection: 'column', gap: '8px' }}>
-              <h2 className="title-large" style={{ fontSize: '2.3rem', lineHeight: 1.2 }}>
+              <h2 className="title-large" style={{ fontSize: '2rem', whiteSpace: 'nowrap', lineHeight: 1.2 }}>
                 My Chosen Niche: <span className="title-accent">Building everyday AI tools I wish existed</span>
               </h2>
               
@@ -249,12 +249,12 @@ export const App: React.FC = () => {
                 borderRadius: '16px', 
                 overflow: 'hidden', 
                 border: '1px solid rgba(255, 255, 255, 0.08)',
-                boxShadow: '0 8px 24px rgba(0,0,0,0.5)',
+                boxShadow: '0 12px 32px rgba(0,0,0,0.5)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
                 width: '100%',
-                maxHeight: '320px',
+                maxHeight: '420px',
                 background: 'rgba(13,17,28,0.7)',
                 padding: '6px'
               }}
@@ -262,7 +262,7 @@ export const App: React.FC = () => {
               <img 
                 src={`${base}Images/image3.png`} 
                 alt="Niche Concept" 
-                style={{ width: '100%', height: '100%', objectFit: 'contain', maxHeight: '300px' }}
+                style={{ width: '100%', height: '100%', objectFit: 'contain', maxHeight: '400px' }}
               />
             </div>
 
@@ -290,7 +290,7 @@ export const App: React.FC = () => {
                 "I don’t just test AI tools. I push them to their absolute limits."
               </p>
               <p style={{ fontSize: '0.86rem', color: '#d1d5db', lineHeight: 1.6, marginTop: '14px' }}>
-                (I am a power user of the entire developer ecosystem—from Claude Code, VS Code, Codex, Cursor, Replit, and Claude Cowork, to OpenClaw)
+                (I am a power user of the entire developer ecosystem—from Claude Code, VS Code, Codex, Cursor, Replit, and Claude Cowork, to OpenClaw) I’ve stress-tested them all to build working apps, rogue automations, and bulletproof workflows. The sandbox phase is over—it's time to show the world how it’s actually done
               </p>
             </div>
             <TerminalPrompt />
