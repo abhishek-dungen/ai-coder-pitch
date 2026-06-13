@@ -21,7 +21,7 @@ const slidesData = [
   { id: 'proof', title: 'Proof of Execution & Built Tools', tagline: 'Slide 05' },
   { id: 'proof-horizontal', title: 'Proof of Execution Tools I Already Built', tagline: 'Slide 05B' },
   { id: 'workflow', title: 'Core Channel Content Idea', tagline: 'Slide 06' },
-  { id: 'pipeline', title: 'The ideas below are just the beginning', tagline: 'Slide 07' },
+  { id: 'pipeline', title: 'The Content wont Dry out.....The ideas below are just the beginning', tagline: 'Slide 07' },
   { id: 'audience', title: 'Target Audience Profile', tagline: 'Slide 08' },
   { id: 'monetize', title: 'Monetization Potential Routes', tagline: 'Slide 09' },
   { id: 'focus', title: 'Primary Six-Month Focus', tagline: 'Slide 10' }
@@ -340,8 +340,8 @@ export const App: React.FC = () => {
           >
             <div style={{ display: 'flex', flexDirection: 'column', height: '100%', width: '100%', gap: '8px' }}>
               <div style={{ textAlign: 'center' }}>
-                <h2 className="title-large" style={{ fontSize: '2rem', marginBottom: '4px' }}>
-                  The ideas below are <span className="title-accent">just the beginning</span>
+                <h2 className="title-large" style={{ fontSize: '1.8rem', marginBottom: '4px' }}>
+                  The Content wont Dry out.....<span className="title-accent">The ideas below are just the beginning</span>
                 </h2>
               </div>
               <div style={{ flexGrow: 1, minHeight: 0, display: 'flex', flexDirection: 'column', marginTop: '4px' }}>
