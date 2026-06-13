@@ -1,4 +1,9 @@
 import React, { useState } from 'react';
+import { 
+  Users, DollarSign, Megaphone, BookOpen, 
+  Handshake, Briefcase, Percent, Presentation, Cpu, 
+  TrendingUp, Sparkles
+} from 'lucide-react';
 
 /* ==========================================================================
    1. AUDIENCE MODULE
@@ -275,6 +280,11 @@ interface Stream {
   strategy: string;
   color: string;
   formulaLabel: string;
+  icon: React.ComponentType<{ size?: number; style?: React.CSSProperties }>;
+  deliverables: string[];
+  complexity: 'Low' | 'Medium' | 'High';
+  timeToLaunch: string;
+  funnelChannel: string;
   calc: (subs: number, coursePrice: number, sponsorsCount: number) => number;
 }
 
@@ -292,6 +302,15 @@ export const MonetizationGrid: React.FC = () => {
       strategy: 'Develop a 4-week cohort training program. Teach non-engineers to construct fully functional pages, scrapers, and dashboards.',
       color: 'var(--color-cyan)',
       formulaLabel: '0.3% conversion of subscribers per year at selected cohort fee',
+      icon: BookOpen,
+      deliverables: [
+        'Draft 4-week syllabus: Cursor workflows, React builders, and server hosting.',
+        'Setup gated Discord community server and student dashboard portals.',
+        'Run beta cohort with 15 initial power users to gather product feedback.'
+      ],
+      complexity: 'Medium',
+      timeToLaunch: '3 Weeks',
+      funnelChannel: 'YouTube Video Guides',
       calc: (subs, price, sponsors) => Math.round((subs * 1000 * 0.003 * price) / 12) + (sponsors * 0)
     },
     {
@@ -301,6 +320,15 @@ export const MonetizationGrid: React.FC = () => {
       strategy: 'Showcase tools (like Cursor, Replit, or local database services) solving real-world bottlenecks in tutorials.',
       color: 'var(--color-indigo)',
       formulaLabel: '$35 CPM on average video view volumes (est. 1.2x subscriber reach monthly)',
+      icon: Handshake,
+      deliverables: [
+        'Standardize sponsorship rate sheets with fixed $35 CPM tier packages.',
+        'Create open resource index on GitHub citing partner products.',
+        'Deliver 5-minute integration case studies in main video chapters.'
+      ],
+      complexity: 'Low',
+      timeToLaunch: '1 Week',
+      funnelChannel: 'LinkedIn & Newsletters',
       calc: (subs, price, sponsors) => Math.round(subs * 1000 * 1.2 * sponsors * (35 / 1000)) + (price * 0)
     },
     {
@@ -310,6 +338,15 @@ export const MonetizationGrid: React.FC = () => {
       strategy: 'Offer custom pipeline consulting audits to companies wanting to deploy agent-led scrapers and reports dashboards.',
       color: 'var(--color-magenta)',
       formulaLabel: 'Est. 2 custom enterprise pipeline audits per month at standard rate scaling with channel scale',
+      icon: Briefcase,
+      deliverables: [
+        'Design operations audit questionnaire and pipeline checklist assets.',
+        'Assemble reusable scraper & database deployment boilerplates.',
+        'Embed custom booking links inside video and article descriptions.'
+      ],
+      complexity: 'High',
+      timeToLaunch: '1 Week',
+      funnelChannel: 'Consulting Portals',
       calc: (subs, price, sponsors) => Math.round(1500 + (subs * 10)) + (price * 0) + (sponsors * 0)
     },
     {
@@ -319,6 +356,15 @@ export const MonetizationGrid: React.FC = () => {
       strategy: 'Earn recurring payouts on compiler subscriptions, Claude APIs, database backends, and cursor-copilots recommendations.',
       color: '#10b981', // Emerald
       formulaLabel: '0.8% active subscriber base using affiliate links generating average $4/mo payout',
+      icon: Percent,
+      deliverables: [
+        'Apply to top partner programs (Cursor, Replit, Vercel, Claude API).',
+        'Create interactive tech-stack selector tool for viewers.',
+        'Automate referral URL link insertion in descriptions and bios.'
+      ],
+      complexity: 'Low',
+      timeToLaunch: 'Immediate',
+      funnelChannel: 'Github Stack Pages',
       calc: (subs, price, sponsors) => Math.round(subs * 1000 * 0.008 * 4) + (price * 0) + (sponsors * 0)
     },
     {
@@ -328,6 +374,15 @@ export const MonetizationGrid: React.FC = () => {
       strategy: 'Run monthly live training webinars teaching quick workflow creation and funneling traffic to courses.',
       color: '#f59e0b', // Gold
       formulaLabel: 'Monthly attendance of 0.25% of subscriber reach at $19 ticket fee',
+      icon: Presentation,
+      deliverables: [
+        'Build 90-minute live syllabus: "Deploy a full AI agent in one hour".',
+        'Configure event ticketing flow and webhook email sender.',
+        'Create high-value study guide cheatsheet PDF for attendees.'
+      ],
+      complexity: 'Medium',
+      timeToLaunch: '2 Weeks',
+      funnelChannel: 'Live Streams & Events',
       calc: (subs, price, sponsors) => Math.round(subs * 1000 * 0.0025 * 19) + (price * 0) + (sponsors * 0)
     },
     {
@@ -337,6 +392,15 @@ export const MonetizationGrid: React.FC = () => {
       strategy: 'Launch standalone tools (like Zoom logs attendance checkers) as micro-SaaS subscriptions for the community.',
       color: '#8b5cf6', // Purple
       formulaLabel: '0.15% subscriber base paying monthly $15 subscription fee for micro-utilities',
+      icon: Cpu,
+      deliverables: [
+        'Ideate micro-utilities (Zoom attendance parser, CSV formatter, etc.).',
+        'Construct clean Vite / Vanilla CSS client-side UI dashboard app.',
+        'Implement Stripe portal backend for recurring subscriptions.'
+      ],
+      complexity: 'High',
+      timeToLaunch: '4 Weeks',
+      funnelChannel: 'Product Directories',
       calc: (subs, price, sponsors) => Math.round(subs * 1000 * 0.0015 * 15) + (price * 0) + (sponsors * 0)
     }
   ];
@@ -346,6 +410,18 @@ export const MonetizationGrid: React.FC = () => {
   // Calculations
   const activeStreamRev = activeStream.calc(subscribers, coursePrice, sponsorsCount);
   const totalRev = streams.reduce((acc, curr) => acc + curr.calc(subscribers, coursePrice, sponsorsCount), 0);
+
+  // Status tiers
+  let channelTier = 'Micro-Niche Builder';
+  if (subscribers >= 250) channelTier = 'Elite Dev-Influencer';
+  else if (subscribers >= 150) channelTier = 'Niche Authority Leader';
+  else if (subscribers >= 50) channelTier = 'High-Authority Creator';
+
+  let priceTier = 'Volume-Optimized Pricing';
+  if (coursePrice >= 200) priceTier = 'Premium Developer Cohort';
+  else if (coursePrice >= 100) priceTier = 'Balanced Value Tier';
+
+  const ActiveIcon = activeStream.icon;
 
   return (
     <div style={{ display: 'flex', gap: '20px', width: '100%', height: '100%', minHeight: 0, boxSizing: 'border-box' }}>
@@ -361,11 +437,12 @@ export const MonetizationGrid: React.FC = () => {
           flexDirection: 'column', 
           gap: '12px',
           borderRadius: '12px',
-          justifyContent: 'center',
+          justifyContent: 'flex-start',
           borderColor: 'rgba(255, 255, 255, 0.06)'
         }}
       >
-        <div style={{ borderBottom: '1px solid rgba(255, 255, 255, 0.06)', paddingBottom: '6px' }}>
+        <div style={{ borderBottom: '1px solid rgba(255, 255, 255, 0.06)', paddingBottom: '6px', display: 'flex', alignItems: 'center', gap: '6px' }}>
+          <Sparkles size={14} style={{ color: 'var(--color-cyan)' }} />
           <strong style={{ fontSize: '0.78rem', color: '#ffffff', fontFamily: 'var(--font-mono)', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
             📊 REVENUE SIMULATOR
           </strong>
@@ -373,8 +450,11 @@ export const MonetizationGrid: React.FC = () => {
 
         {/* Reach Slider */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.68rem', color: '#94a3b8', fontFamily: 'var(--font-mono)' }}>
-            <span>SUBSCRIBER REACH</span>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.68rem', color: '#94a3b8', fontFamily: 'var(--font-mono)' }}>
+            <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+              <Users size={12} style={{ color: 'var(--color-cyan)' }} />
+              SUBSCRIBER REACH
+            </span>
             <span style={{ color: 'var(--color-cyan)', fontWeight: 'bold' }}>{subscribers}K</span>
           </div>
           <input 
@@ -391,8 +471,11 @@ export const MonetizationGrid: React.FC = () => {
 
         {/* Course Price Slider */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.68rem', color: '#94a3b8', fontFamily: 'var(--font-mono)' }}>
-            <span>COHORT COURSE PRICE</span>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.68rem', color: '#94a3b8', fontFamily: 'var(--font-mono)' }}>
+            <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+              <DollarSign size={12} style={{ color: 'var(--color-magenta)' }} />
+              COHORT COURSE PRICE
+            </span>
             <span style={{ color: 'var(--color-magenta)', fontWeight: 'bold' }}>${coursePrice}</span>
           </div>
           <input 
@@ -409,8 +492,11 @@ export const MonetizationGrid: React.FC = () => {
 
         {/* Sponsors Slider */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.68rem', color: '#94a3b8', fontFamily: 'var(--font-mono)' }}>
-            <span>SPONSORSHIPS / MONTH</span>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.68rem', color: '#94a3b8', fontFamily: 'var(--font-mono)' }}>
+            <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+              <Megaphone size={12} style={{ color: 'var(--color-indigo)' }} />
+              SPONSORSHIPS / MONTH
+            </span>
             <span style={{ color: 'var(--color-indigo)', fontWeight: 'bold' }}>{sponsorsCount} campaigns</span>
           </div>
           <input 
@@ -424,6 +510,55 @@ export const MonetizationGrid: React.FC = () => {
             style={{ width: '100%' }}
           />
         </div>
+
+        {/* Rich Telemetry Sub-panel */}
+        <div style={{
+          marginTop: '4px',
+          background: 'rgba(255, 255, 255, 0.01)',
+          border: '1px solid rgba(255, 255, 255, 0.05)',
+          borderRadius: '8px',
+          padding: '10px',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '6px'
+        }}>
+          <span style={{ fontSize: '0.62rem', color: '#64748b', fontFamily: 'var(--font-mono)', textTransform: 'uppercase', borderBottom: '1px solid rgba(255, 255, 255, 0.03)', paddingBottom: '3px', display: 'flex', alignItems: 'center', gap: '4px' }}>
+            <TrendingUp size={10} style={{ color: 'var(--color-cyan)' }} />
+            Simulation Telemetry
+          </span>
+          <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 0.8fr', gap: '4px', fontSize: '0.65rem' }}>
+            <span style={{ color: '#94a3b8' }}>Est. Annual Views:</span>
+            <span style={{ color: 'white', fontWeight: 600, fontFamily: 'var(--font-mono)', textAlign: 'right' }}>{(subscribers * 1000 * 1.2 * 12).toLocaleString()}</span>
+            
+            <span style={{ color: '#94a3b8' }}>Cohort Students/yr:</span>
+            <span style={{ color: 'white', fontWeight: 600, fontFamily: 'var(--font-mono)', textAlign: 'right' }}>{Math.round(subscribers * 1000 * 0.003).toLocaleString()}</span>
+            
+            <span style={{ color: '#94a3b8' }}>High-Intent Leads:</span>
+            <span style={{ color: 'white', fontWeight: 600, fontFamily: 'var(--font-mono)', textAlign: 'right' }}>{Math.round(subscribers * 1000 * 0.05).toLocaleString()}</span>
+          </div>
+        </div>
+
+        {/* Monospace simulation console */}
+        <div style={{
+          background: 'rgba(5, 6, 10, 0.6)',
+          border: '1.5px solid rgba(255, 255, 255, 0.04)',
+          borderRadius: '6px',
+          padding: '8px 10px',
+          fontFamily: 'var(--font-mono)',
+          fontSize: '0.58rem',
+          color: '#34d399',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '2px',
+          boxShadow: 'inset 0 0 10px rgba(0,0,0,0.5)',
+          lineHeight: 1.3
+        }}>
+          <span style={{ color: '#60a5fa', fontWeight: 'bold' }}>SYSTEM STATUS: SIMULATING</span>
+          <span>&gt; Tier: <span style={{ color: 'white' }}>{channelTier}</span></span>
+          <span>&gt; CPM Payout: <span style={{ color: 'white' }}>$35 CPM</span></span>
+          <span>&gt; Class Tier: <span style={{ color: 'white' }}>{priceTier}</span></span>
+          <span>&gt; Streams: <span style={{ color: '#fbbf24' }}>6 Connected</span></span>
+        </div>
       </div>
 
       {/* Right Column: Dynamic Output */}
@@ -432,14 +567,15 @@ export const MonetizationGrid: React.FC = () => {
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '8px' }}>
           {streams.map((s) => {
             const isActive = s.id === activeStreamId;
+            const StreamIcon = s.icon;
             return (
               <button
                 key={s.id}
                 onClick={() => setActiveStreamId(s.id)}
                 className="interactive"
                 style={{
-                  padding: '6px 8px',
-                  borderRadius: '6px',
+                  padding: '8px 10px',
+                  borderRadius: '8px',
                   background: isActive ? 'rgba(255, 255, 255, 0.04)' : 'rgba(255, 255, 255, 0.01)',
                   border: `1.5px solid ${isActive ? s.color : 'rgba(255, 255, 255, 0.05)'}`,
                   color: isActive ? '#ffffff' : '#9ca3af',
@@ -447,7 +583,10 @@ export const MonetizationGrid: React.FC = () => {
                   fontFamily: 'var(--font-display)',
                   fontWeight: isActive ? 700 : 500,
                   cursor: 'pointer',
-                  textAlign: 'center',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '6px',
                   whiteSpace: 'nowrap',
                   overflow: 'hidden',
                   textOverflow: 'ellipsis',
@@ -455,6 +594,7 @@ export const MonetizationGrid: React.FC = () => {
                   boxShadow: isActive ? `0 0 10px ${s.color}15` : 'none'
                 }}
               >
+                <StreamIcon size={12} style={{ color: isActive ? s.color : '#64748b' }} />
                 {s.title}
               </button>
             );
@@ -469,7 +609,7 @@ export const MonetizationGrid: React.FC = () => {
             border: `1.5px solid ${activeStream.color}`,
             background: 'linear-gradient(135deg, rgba(13, 17, 28, 0.7) 0%, rgba(255, 255, 255, 0.01) 100%)',
             boxShadow: `0 0 25px ${activeStream.color}0a`,
-            padding: '14px 18px',
+            padding: '16px 20px',
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'space-between',
@@ -481,55 +621,157 @@ export const MonetizationGrid: React.FC = () => {
           {/* Strategy Details */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <strong style={{ fontSize: '0.85rem', color: '#ffffff', fontFamily: 'var(--font-display)' }}>
-                {activeStream.title} Strategy
-              </strong>
-              <span style={{ fontSize: '0.62rem', color: activeStream.color, fontFamily: 'var(--font-mono)' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <ActiveIcon size={16} style={{ color: activeStream.color }} />
+                <strong style={{ fontSize: '0.88rem', color: '#ffffff', fontFamily: 'var(--font-display)' }}>
+                  {activeStream.title} Strategy
+                </strong>
+              </div>
+              <span style={{ 
+                fontSize: '0.62rem', 
+                background: `${activeStream.color}15`,
+                color: activeStream.color, 
+                padding: '2px 8px',
+                borderRadius: '10px',
+                border: `1px solid ${activeStream.color}33`,
+                fontWeight: 600,
+                fontFamily: 'var(--font-mono)' 
+              }}>
                 STREAM ACTIVE
               </span>
             </div>
-            <p style={{ fontSize: '0.72rem', color: '#cbd5e1', lineHeight: 1.35, margin: '2px 0 0 0' }}>
+            <p style={{ fontSize: '0.74rem', color: '#cbd5e1', lineHeight: 1.4, margin: '4px 0 0 0' }}>
               {activeStream.strategy}
             </p>
           </div>
 
-          {/* Formulas and Projections Grid */}
-          <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 0.8fr', gap: '16px', background: 'rgba(255,255,255,0.01)', border: '1px solid rgba(255,255,255,0.04)', borderRadius: '8px', padding: '8px 12px', margin: '4px 0' }}>
-            {/* Left: Projection Rule */}
-            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-              <span style={{ fontSize: '0.58rem', color: '#94a3b8', fontFamily: 'var(--font-mono)', textTransform: 'uppercase' }}>PROJECTION METRIC</span>
-              <span style={{ fontSize: '0.65rem', color: '#e2e8f0', marginTop: '2px', lineHeight: 1.25 }}>
-                {activeStream.formulaLabel}
-              </span>
+          {/* Formulas and Projections Grid: Two Column Detail Section */}
+          <div style={{ 
+            display: 'grid', 
+            gridTemplateColumns: '1.2fr 0.8fr', 
+            gap: '16px', 
+            margin: '8px 0',
+            flexGrow: 1,
+            minHeight: 0
+          }}>
+            {/* Left Box: Math & Revenue Output */}
+            <div style={{ 
+              background: 'rgba(255,255,255,0.01)', 
+              border: '1px solid rgba(255,255,255,0.04)', 
+              borderRadius: '8px', 
+              padding: '10px 14px',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'space-between'
+            }}>
+              <div>
+                <span style={{ fontSize: '0.58rem', color: '#94a3b8', fontFamily: 'var(--font-mono)', textTransform: 'uppercase', display: 'block', marginBottom: '2px' }}>
+                  Projection Metric
+                </span>
+                <span style={{ fontSize: '0.66rem', color: '#e2e8f0', lineHeight: 1.25, display: 'block' }}>
+                  {activeStream.formulaLabel}
+                </span>
+              </div>
+              
+              <div style={{ borderTop: '1px solid rgba(255,255,255,0.04)', paddingTop: '6px', marginTop: '6px', display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between' }}>
+                <div>
+                  <span style={{ fontSize: '0.58rem', color: '#94a3b8', fontFamily: 'var(--font-mono)', display: 'block' }}>EST. MONTHLY STREAM</span>
+                  <span style={{ 
+                    fontSize: '1.25rem', 
+                    color: activeStream.color, 
+                    fontWeight: 800, 
+                    fontFamily: 'var(--font-display)', 
+                    display: 'flex', 
+                    alignItems: 'center',
+                    gap: '2px',
+                    filter: `drop-shadow(0 0 8px ${activeStream.color}33)`
+                  }}>
+                    ${activeStreamRev.toLocaleString()}
+                  </span>
+                </div>
+                <span style={{ 
+                  fontSize: '0.58rem', 
+                  color: '#94a3b8', 
+                  fontFamily: 'var(--font-mono)', 
+                  background: 'rgba(255,255,255,0.04)', 
+                  padding: '2px 6px', 
+                  borderRadius: '4px',
+                  border: '1px solid rgba(255,255,255,0.05)'
+                }}>
+                  {totalRev > 0 ? ((activeStreamRev / totalRev) * 100).toFixed(1) : 0}% contribution
+                </span>
+              </div>
             </div>
-            {/* Right: Revenue stats */}
-            <div style={{ borderLeft: '1px solid rgba(255,255,255,0.06)', paddingLeft: '16px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-              <span style={{ fontSize: '0.58rem', color: '#94a3b8', fontFamily: 'var(--font-mono)' }}>EST. MONTHLY STREAM</span>
-              <span style={{ fontSize: '1rem', color: activeStream.color, fontWeight: 700, fontFamily: 'var(--font-display)', marginTop: '2px' }}>
-                ${activeStreamRev.toLocaleString()}
+
+            {/* Right Box: Key Launch Deliverables */}
+            <div style={{ 
+              background: 'rgba(255,255,255,0.01)', 
+              border: '1px solid rgba(255,255,255,0.04)', 
+              borderRadius: '8px', 
+              padding: '10px 14px',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'flex-start',
+              gap: '6px'
+            }}>
+              <span style={{ fontSize: '0.6rem', color: '#64748b', fontFamily: 'var(--font-mono)', textTransform: 'uppercase', fontWeight: 700, borderBottom: '1px solid rgba(255,255,255,0.03)', paddingBottom: '3px', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                <Sparkles size={10} style={{ color: activeStream.color }} />
+                Key Launch Deliverables
               </span>
+              <ul style={{ paddingLeft: '0', margin: '2px 0 0 0', listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                {activeStream.deliverables.map((item, idx) => (
+                  <li key={idx} style={{ display: 'flex', alignItems: 'flex-start', gap: '6px', fontSize: '0.64rem', color: '#cbd5e1', lineHeight: 1.25 }}>
+                    <span style={{ color: activeStream.color, fontSize: '0.65rem', marginTop: '1px' }}>✔</span>
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
 
-          {/* Aggregate Footnote Dashboard */}
-          <div style={{
-            background: 'rgba(99, 102, 241, 0.05)',
-            borderLeft: '3px solid var(--color-indigo)',
-            padding: '8px 12px',
-            borderRadius: '4px',
-            fontSize: '0.75rem',
-            color: '#ffffff',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            flexShrink: 0,
-            marginTop: '2px',
-            fontFamily: 'var(--font-display)'
-          }}>
-            <span>🚀 <strong>Aggregated Projected Revenue:</strong></span>
-            <span style={{ fontSize: '0.9rem', color: 'var(--color-cyan)', fontWeight: 800 }}>
-              ${totalRev.toLocaleString()} / mo
-            </span>
+          {/* Bottom Row: Metadata Tags & Grand Total */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginTop: '2px' }}>
+            {/* Metadata pills */}
+            <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '4px', background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.04)', padding: '3px 8px', borderRadius: '4px', fontSize: '0.62rem', color: '#94a3b8', fontFamily: 'var(--font-mono)' }}>
+                <span>Complexity:</span>
+                <span style={{ 
+                  color: activeStream.complexity === 'Low' ? '#10b981' : activeStream.complexity === 'Medium' ? '#fbbf24' : '#ef4444', 
+                  fontWeight: 'bold' 
+                }}>{activeStream.complexity}</span>
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '4px', background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.04)', padding: '3px 8px', borderRadius: '4px', fontSize: '0.62rem', color: '#94a3b8', fontFamily: 'var(--font-mono)' }}>
+                <span>Time-to-Launch:</span>
+                <span style={{ color: '#ffffff', fontWeight: 'bold' }}>{activeStream.timeToLaunch}</span>
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '4px', background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.04)', padding: '3px 8px', borderRadius: '4px', fontSize: '0.62rem', color: '#94a3b8', fontFamily: 'var(--font-mono)' }}>
+                <span>Funnel:</span>
+                <span style={{ color: 'var(--color-cyan)', fontWeight: 'bold' }}>{activeStream.funnelChannel}</span>
+              </div>
+            </div>
+
+            {/* Aggregate Footnote Dashboard */}
+            <div style={{
+              background: 'rgba(99, 102, 241, 0.05)',
+              borderLeft: '3px solid var(--color-indigo)',
+              padding: '8px 12px',
+              borderRadius: '4px',
+              fontSize: '0.75rem',
+              color: '#ffffff',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              flexShrink: 0,
+              fontFamily: 'var(--font-display)'
+            }}>
+              <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                <TrendingUp size={14} style={{ color: 'var(--color-cyan)' }} />
+                <span>🚀 <strong>Aggregated Projected Revenue:</strong></span>
+              </span>
+              <span style={{ fontSize: '0.9rem', color: 'var(--color-cyan)', fontWeight: 800 }}>
+                ${totalRev.toLocaleString()} / mo
+              </span>
+            </div>
           </div>
         </div>
       </div>
