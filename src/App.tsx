@@ -10,7 +10,6 @@ import { ToolSimulator } from './components/ToolSimulator';
 import { ToolSimulatorHorizontal } from './components/ToolSimulatorHorizontal';
 import { ContentWorkflow } from './components/ContentWorkflow';
 import { ContentPipeline } from './components/ContentPipeline';
-import { ContentPipelineOrigami } from './components/ContentPipelineOrigami';
 import { AudienceList, MonetizationGrid, MilestoneTimeline } from './components/AudienceMonetization';
 
 const slidesData = [
@@ -23,7 +22,6 @@ const slidesData = [
   { id: 'proof-horizontal', title: 'Proof of Execution Tools I Already Built', tagline: 'Slide 05B' },
   { id: 'workflow', title: 'Core Channel Content Idea', tagline: 'Slide 06' },
   { id: 'pipeline', title: 'The Content wont Dry out.....The ideas below are just the beginning', tagline: 'Slide 07' },
-  { id: 'pipeline-origami', title: 'The Content wont Dry out (Origami Edition)', tagline: 'Slide 07B' },
   { id: 'audience', title: 'Target Audience Profile', tagline: 'Slide 08' },
   { id: 'focus', title: 'Primary Six-Month Focus', tagline: 'Slide 09' },
   { id: 'monetize', title: 'Monetization Potential Routes', tagline: 'Slide 10' }
@@ -348,29 +346,6 @@ export const App: React.FC = () => {
               </div>
               <div style={{ flexGrow: 1, minHeight: 0, display: 'flex', flexDirection: 'column', marginTop: '4px' }}>
                 <ContentPipeline />
-              </div>
-            </div>
-          </motion.div>
-        </section>
-
-        {/* SLIDE 7B: PIPELINE OF IDEAS (ORIGAMI) */}
-        <section className="slide" style={{ padding: '70px 40px 60px 40px' }}>
-          <motion.div 
-            initial={{ opacity: 0, x: 50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: false, amount: 0.1 }}
-            transition={{ duration: 0.6 }}
-            className="slide-content-wrapper"
-            style={{ gridTemplateColumns: '1fr' }}
-          >
-            <div style={{ display: 'flex', flexDirection: 'column', height: '100%', width: '100%', gap: '8px' }}>
-              <div style={{ textAlign: 'center' }}>
-                <h2 className="title-large" style={{ fontSize: '1.8rem', marginBottom: '4px' }}>
-                  The Content wont Dry out.....<span className="title-accent">The ideas below are just the beginning (Origami Edition)</span>
-                </h2>
-              </div>
-              <div style={{ flexGrow: 1, minHeight: 0, display: 'flex', flexDirection: 'column', marginTop: '4px' }}>
-                <ContentPipelineOrigami />
               </div>
             </div>
           </motion.div>
