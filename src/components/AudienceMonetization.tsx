@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { 
   Users, DollarSign, Megaphone, BookOpen, 
   Handshake, Briefcase, Percent, Presentation, Cpu, 
-  TrendingUp, Sparkles
+  TrendingUp, Sparkles, ChevronLeft, ChevronRight
 } from 'lucide-react';
 
 /* ==========================================================================
@@ -732,6 +732,8 @@ interface Milestone {
 export const MilestoneTimeline: React.FC = () => {
   const [activePhase, setActivePhase] = useState<number>(1);
   const [checkedItems, setCheckedItems] = useState<Record<string, boolean>>({});
+  const lastScrollTime = useRef<number>(0);
+  const touchStartX = useRef<number>(0);
 
   const milestones: Milestone[] = [
     {
@@ -777,113 +779,428 @@ export const MilestoneTimeline: React.FC = () => {
     setCheckedItems(prev => ({ ...prev, [key]: !prev[key] }));
   };
 
+  const handleWheel = (e: React.WheelEvent) => {
+    const now = Date.now();
+    if (now - lastScrollTime.current < 800) return; // 800ms throttle to prevent fast spinning
+
+    if (Math.abs(e.deltaX) > 20 || Math.abs(e.deltaY) > 20) {
+      const direction = e.deltaX !== 0 ? e.deltaX : e.deltaY;
+      if (direction > 0) {
+        // scroll right/down -> next phase
+        setActivePhase(prev => (prev === 3 ? 1 : prev + 1));
+        lastScrollTime.current = now;
+      } else {
+        // scroll left/up -> prev phase
+        setActivePhase(prev => (prev === 1 ? 3 : prev - 1));
+        lastScrollTime.current = now;
+      }
+    }
+  };
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    const touchEndX = e.changedTouches[0].clientX;
+    const diffX = touchStartX.current - touchEndX;
+
+    if (Math.abs(diffX) > 50) {
+      if (diffX > 0) {
+        // swipe left -> go next (right)
+        setActivePhase(prev => (prev === 3 ? 1 : prev + 1));
+      } else {
+        // swipe right -> go prev (left)
+        setActivePhase(prev => (prev === 1 ? 3 : prev - 1));
+      }
+    }
+  };
+
+  const activeIndex = activePhase - 1;
+  const activeMilestone = milestones[activeIndex];
+
   return (
-    <div style={{ display: 'flex', gap: '20px', width: '100%', height: '100%', minHeight: 0, boxSizing: 'border-box' }}>
-      {milestones.map((m) => {
-        const isActive = activePhase === m.id;
+    <div 
+      onWheel={handleWheel}
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
+      style={{
+        position: 'relative',
+        width: '100%',
+        height: '400px',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        perspective: '1200px',
+        overflow: 'hidden',
+        boxSizing: 'border-box'
+      }}
+    >
+      {/* Style block for animations */}
+      <style>{`
+        @keyframes hologram-sweep {
+          0% { top: -10%; }
+          100% { top: 110%; }
+        }
+        @keyframes float {
+          0% { transform: translateY(0px) rotateY(var(--rot)) translateZ(var(--tz)) scale(var(--sc)); }
+          50% { transform: translateY(-10px) rotateY(var(--rot)) translateZ(var(--tz)) scale(var(--sc)); }
+          100% { transform: translateY(0px) rotateY(var(--rot)) translateZ(var(--tz)) scale(var(--sc)); }
+        }
+        .hologram-card {
+          transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.8s ease, filter 0.8s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+        }
+        .scanlines {
+          position: absolute;
+          inset: 0;
+          pointer-events: none;
+          background: repeating-linear-gradient(
+            0deg,
+            rgba(0, 0, 0, 0.2),
+            rgba(0, 0, 0, 0.2) 1px,
+            transparent 1px,
+            transparent 2px
+          );
+          z-index: 10;
+        }
+      `}</style>
+      
+      {/* Outer 3D Wheel Stage */}
+      <div style={{
+        position: 'relative',
+        width: '320px',
+        height: '320px',
+        transformStyle: 'preserve-3d',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center'
+      }}>
+        {milestones.map((m, i) => {
+          const diff = (i - activeIndex + 3) % 3;
+          const isActive = diff === 0;
 
-        return (
-          <div
-            key={m.id}
-            onClick={() => setActivePhase(m.id)}
-            className="interactive glass-panel"
-            style={{
-              flex: 1,
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'flex-start',
-              padding: '16px 20px',
-              borderRadius: '12px',
-              border: `1.5px solid ${isActive ? m.color : 'rgba(255,255,255,0.05)'}`,
-              background: 'linear-gradient(135deg, rgba(13, 17, 28, 0.7) 0%, rgba(255, 255, 255, 0.01) 100%)',
-              boxShadow: isActive ? `0 0 25px ${m.color}0d` : 'none',
-              transition: 'all 0.3s ease',
-              minHeight: 0,
-              cursor: 'pointer',
-              transform: isActive ? 'scale(1.01)' : 'scale(1)',
-              gap: '12px'
-            }}
-          >
-            {/* Header Section */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '2px', borderBottom: '1px solid rgba(255,255,255,0.04)', paddingBottom: '8px' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <span style={{ fontSize: '0.62rem', color: m.color, fontFamily: 'var(--font-mono)', fontWeight: 700 }}>
-                  {m.phaseLabel}
-                </span>
-                <span style={{ 
-                  fontSize: '0.62rem', 
-                  background: isActive ? `${m.color}15` : 'rgba(255,255,255,0.03)',
-                  color: isActive ? m.color : '#94a3b8',
-                  padding: '2px 8px',
-                  borderRadius: '10px',
-                  border: `1px solid ${isActive ? `${m.color}33` : 'rgba(255,255,255,0.05)'}`,
-                  fontWeight: 600,
-                  fontFamily: 'var(--font-mono)'
-                }}>
-                  {m.months}
-                </span>
+          let rot: number;
+          let tz: number;
+          let tx: number;
+          let sc: number;
+          let opacity: number;
+          let zIndex: number;
+          let filter: string;
+
+          if (diff === 0) {
+            // Center Card (Active)
+            rot = 0;
+            tz = 120;
+            tx = 0;
+            sc = 1;
+            opacity = 1;
+            zIndex = 10;
+            filter = `drop-shadow(0 0 25px ${m.color}22)`;
+          } else if (diff === 1) {
+            // Right Card
+            rot = -40;
+            tz = -100;
+            tx = 250;
+            sc = 0.8;
+            opacity = 0.35;
+            zIndex = 5;
+            filter = 'blur(1px)';
+          } else {
+            // Left Card
+            rot = 40;
+            tz = -100;
+            tx = -250;
+            sc = 0.8;
+            opacity = 0.35;
+            zIndex = 5;
+            filter = 'blur(1px)';
+          }
+
+          return (
+            <div
+              key={m.id}
+              onClick={() => setActivePhase(m.id)}
+              className="hologram-card glass-panel"
+              style={{
+                position: 'absolute',
+                width: '300px',
+                height: '310px',
+                borderRadius: '16px',
+                border: `1.5px solid ${isActive ? m.color : 'rgba(255,255,255,0.06)'}`,
+                background: isActive 
+                  ? `linear-gradient(135deg, ${m.color}08 0%, rgba(5, 6, 10, 0.9) 50%, ${m.color}03 100%)`
+                  : 'linear-gradient(135deg, rgba(255,255,255,0.01) 0%, rgba(5, 6, 10, 0.95) 100%)',
+                boxShadow: isActive ? `0 0 30px ${m.color}15, inset 0 0 15px ${m.color}10` : 'none',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'flex-start',
+                padding: '16px 20px',
+                boxSizing: 'border-box',
+                cursor: 'pointer',
+                opacity: opacity,
+                zIndex: zIndex,
+                filter: filter,
+                transform: `translateX(${tx}px) rotateY(${rot}deg) translateZ(${tz}px) scale(${sc})`,
+                transformStyle: 'preserve-3d',
+                animation: isActive ? 'float 5s ease-in-out infinite' : 'none',
+                overflow: 'hidden',
+                ...({
+                  '--rot': `${rot}deg`,
+                  '--tz': `${tz}px`,
+                  '--sc': `${sc}`
+                } as React.CSSProperties)
+              }}
+            >
+              {/* Scanlines overlay for active holographic effect */}
+              {isActive && <div className="scanlines" />}
+              
+              {/* Hologram sweep line */}
+              {isActive && (
+                <div style={{
+                  position: 'absolute',
+                  left: 0,
+                  right: 0,
+                  height: '1px',
+                  background: `linear-gradient(90deg, transparent, ${m.color}, transparent)`,
+                  boxShadow: `0 0 8px ${m.color}, 0 0 15px ${m.color}`,
+                  opacity: 0.8,
+                  animation: 'hologram-sweep 4s linear infinite',
+                  pointerEvents: 'none',
+                  zIndex: 11
+                }} />
+              )}
+
+              {/* Header Section */}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '2px', borderBottom: '1px solid rgba(255,255,255,0.04)', paddingBottom: '8px', zIndex: 12 }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <span style={{ fontSize: '0.62rem', color: m.color, fontFamily: 'var(--font-mono)', fontWeight: 700 }}>
+                    {m.phaseLabel}
+                  </span>
+                  <span style={{ 
+                    fontSize: '0.62rem', 
+                    background: isActive ? `${m.color}15` : 'rgba(255,255,255,0.03)',
+                    color: isActive ? m.color : '#94a3b8',
+                    padding: '2px 8px',
+                    borderRadius: '10px',
+                    border: `1px solid ${isActive ? `${m.color}33` : 'rgba(255,255,255,0.05)'}`,
+                    fontWeight: 600,
+                    fontFamily: 'var(--font-mono)'
+                  }}>
+                    {m.months}
+                  </span>
+                </div>
+                <h3 style={{ fontSize: '0.88rem', color: '#ffffff', fontWeight: 700, margin: '4px 0 0 0', fontFamily: 'var(--font-display)' }}>
+                  {m.title}
+                </h3>
               </div>
-              <h3 style={{ fontSize: '0.9rem', color: '#ffffff', fontWeight: 700, margin: '4px 0 0 0', fontFamily: 'var(--font-display)' }}>
-                {m.title}
-              </h3>
-            </div>
 
-            {/* Checklist items */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', flexGrow: 1, minHeight: 0 }}>
-              <span style={{ fontSize: '0.62rem', color: '#64748b', fontFamily: 'var(--font-mono)', textTransform: 'uppercase', display: 'flex', alignItems: 'center', gap: '4px' }}>
-                <Sparkles size={10} style={{ color: m.color }} />
-                Focus Objectives Checklist
-              </span>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', overflowY: 'auto' }}>
-                {m.focusItems.map((item, idx) => {
-                  const itemKey = `${m.id}-${idx}`;
-                  const isChecked = checkedItems[itemKey] || false;
-                  return (
-                    <div 
-                      key={idx}
-                      onClick={(e) => {
-                        e.stopPropagation(); // prevent card selection trigger
-                        toggleCheck(m.id, idx);
-                      }}
-                      style={{
-                        display: 'flex',
-                        alignItems: 'flex-start',
-                        gap: '8px',
-                        padding: '8px 10px',
-                        borderRadius: '8px',
-                        background: isChecked ? 'rgba(255,255,255,0.02)' : 'rgba(255,255,255,0.01)',
-                        border: `1px solid ${isChecked ? `${m.color}18` : 'rgba(255,255,255,0.03)'}`,
-                        transition: 'all 0.2s ease',
-                        cursor: 'pointer'
-                      }}
-                    >
-                      <input 
-                        type="checkbox"
-                        checked={isChecked}
-                        readOnly
-                        style={{
-                          marginTop: '2px',
-                          cursor: 'pointer',
-                          accentColor: m.color
+              {/* Checklist items */}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', flexGrow: 1, minHeight: 0, marginTop: '8px', zIndex: 12 }}>
+                <span style={{ fontSize: '0.58rem', color: '#64748b', fontFamily: 'var(--font-mono)', textTransform: 'uppercase', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                  <Sparkles size={8} style={{ color: m.color }} />
+                  Focus Objectives Checklist
+                </span>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', overflowY: 'auto' }}>
+                  {m.focusItems.map((item, idx) => {
+                    const itemKey = `${m.id}-${idx}`;
+                    const isChecked = checkedItems[itemKey] || false;
+                    return (
+                      <div 
+                        key={idx}
+                        onClick={(e) => {
+                          e.stopPropagation(); // prevent card selection trigger
+                          toggleCheck(m.id, idx);
                         }}
-                      />
-                      <span style={{ 
-                        fontSize: '0.68rem', 
-                        color: isChecked ? '#94a3b8' : '#cbd5e1', 
-                        lineHeight: 1.35,
-                        textDecoration: isChecked ? 'line-through' : 'none',
-                        transition: 'all 0.2s ease'
-                      }}>
-                        {item}
-                      </span>
-                    </div>
-                  );
-                })}
+                        style={{
+                          display: 'flex',
+                          alignItems: 'flex-start',
+                          gap: '6px',
+                          padding: '6px 8px',
+                          borderRadius: '6px',
+                          background: isChecked ? 'rgba(255,255,255,0.02)' : 'rgba(255,255,255,0.01)',
+                          border: `1px solid ${isChecked ? `${m.color}18` : 'rgba(255,255,255,0.03)'}`,
+                          transition: 'all 0.2s ease',
+                          cursor: 'pointer'
+                        }}
+                      >
+                        <input 
+                          type="checkbox"
+                          checked={isChecked}
+                          readOnly
+                          style={{
+                            marginTop: '2px',
+                            cursor: 'pointer',
+                            accentColor: m.color
+                          }}
+                        />
+                        <span style={{ 
+                          fontSize: '0.65rem', 
+                          color: isChecked ? '#94a3b8' : '#cbd5e1', 
+                          lineHeight: 1.3,
+                          textDecoration: isChecked ? 'line-through' : 'none',
+                          transition: 'all 0.2s ease'
+                        }}>
+                          {item}
+                        </span>
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
             </div>
-          </div>
-        );
-      })}
+          );
+        })}
+      </div>
+
+      {/* Hologram Projector Base */}
+      <div style={{
+        position: 'absolute',
+        bottom: '45px',
+        left: '50%',
+        transform: 'translateX(-50%) rotateX(75deg)',
+        width: '240px',
+        height: '60px',
+        borderRadius: '50%',
+        border: `2px solid ${activeMilestone.color}`,
+        background: `radial-gradient(ellipse, ${activeMilestone.color}33 0%, transparent 70%)`,
+        boxShadow: `0 0 25px ${activeMilestone.color}, inset 0 0 15px ${activeMilestone.color}`,
+        transition: 'all 0.8s cubic-bezier(0.25, 1, 0.5, 1)',
+        opacity: 0.65,
+        pointerEvents: 'none',
+        zIndex: 1
+      }} />
+
+      {/* Hologram Light Ray Cone */}
+      <div style={{
+        position: 'absolute',
+        bottom: '75px',
+        left: '50%',
+        transform: 'translateX(-50%)',
+        width: '280px',
+        height: '220px',
+        background: `linear-gradient(to top, ${activeMilestone.color}12 0%, ${activeMilestone.color}02 70%, transparent 100%)`,
+        clipPath: 'polygon(10% 0%, 90% 0%, 55% 100%, 45% 100%)',
+        transition: 'all 0.8s cubic-bezier(0.25, 1, 0.5, 1)',
+        opacity: 0.4,
+        pointerEvents: 'none',
+        zIndex: 1
+      }} />
+
+      {/* Left Chevron Control */}
+      <button
+        onClick={(e) => {
+          e.stopPropagation();
+          setActivePhase(prev => (prev === 1 ? 3 : prev - 1));
+        }}
+        className="interactive"
+        style={{
+          position: 'absolute',
+          left: '20px',
+          top: '45%',
+          transform: 'translateY(-50%)',
+          width: '36px',
+          height: '36px',
+          borderRadius: '50%',
+          background: 'rgba(255, 255, 255, 0.02)',
+          border: '1.5px solid rgba(255, 255, 255, 0.08)',
+          color: '#ffffff',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          cursor: 'pointer',
+          zIndex: 20,
+          transition: 'all 0.3s ease',
+          boxShadow: '0 4px 12px rgba(0, 0, 0, 0.3)',
+        }}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.borderColor = activeMilestone.color;
+          e.currentTarget.style.boxShadow = `0 0 15px ${activeMilestone.color}44`;
+          e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)';
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.08)';
+          e.currentTarget.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.3)';
+          e.currentTarget.style.background = 'rgba(255, 255, 255, 0.02)';
+        }}
+      >
+        <ChevronLeft size={18} />
+      </button>
+
+      {/* Right Chevron Control */}
+      <button
+        onClick={(e) => {
+          e.stopPropagation();
+          setActivePhase(prev => (prev === 3 ? 1 : prev + 1));
+        }}
+        className="interactive"
+        style={{
+          position: 'absolute',
+          right: '20px',
+          top: '45%',
+          transform: 'translateY(-50%)',
+          width: '36px',
+          height: '36px',
+          borderRadius: '50%',
+          background: 'rgba(255, 255, 255, 0.02)',
+          border: '1.5px solid rgba(255, 255, 255, 0.08)',
+          color: '#ffffff',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          cursor: 'pointer',
+          zIndex: 20,
+          transition: 'all 0.3s ease',
+          boxShadow: '0 4px 12px rgba(0, 0, 0, 0.3)',
+        }}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.borderColor = activeMilestone.color;
+          e.currentTarget.style.boxShadow = `0 0 15px ${activeMilestone.color}44`;
+          e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)';
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.08)';
+          e.currentTarget.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.3)';
+          e.currentTarget.style.background = 'rgba(255, 255, 255, 0.02)';
+        }}
+      >
+        <ChevronRight size={18} />
+      </button>
+
+      {/* Hologram Phase Bullet Indicators */}
+      <div style={{
+        position: 'absolute',
+        bottom: '0px',
+        display: 'flex',
+        gap: '12px',
+        zIndex: 20
+      }}>
+        {milestones.map((m) => {
+          const isActive = activePhase === m.id;
+          return (
+            <button
+              key={m.id}
+              onClick={() => setActivePhase(m.id)}
+              className="interactive"
+              style={{
+                padding: '4px 12px',
+                borderRadius: '20px',
+                background: isActive ? `${m.color}15` : 'rgba(255, 255, 255, 0.01)',
+                border: `1.5px solid ${isActive ? m.color : 'rgba(255, 255, 255, 0.06)'}`,
+                color: isActive ? '#ffffff' : '#64748b',
+                fontSize: '0.62rem',
+                fontFamily: 'var(--font-mono)',
+                fontWeight: 700,
+                cursor: 'pointer',
+                transition: 'all 0.3s ease',
+                boxShadow: isActive ? `0 0 10px ${m.color}22` : 'none'
+              }}
+            >
+              PHASE {m.id}
+            </button>
+          );
+        })}
+      </div>
     </div>
   );
 };
