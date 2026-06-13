@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 
 interface ToolIdea {
   title: string;
@@ -22,7 +22,32 @@ export const ContentPipeline: React.FC = () => {
   ] as const;
 
   const [activeFilter, setActiveFilter] = useState<typeof categories[number]['id']>('personal');
-  const [selectedIdea, setSelectedIdea] = useState<ToolIdea | null>(null);
+  const [activeIdeaIndex, setActiveIdeaIndex] = useState<number>(0);
+  const [flippedCards, setFlippedCards] = useState<Record<string, boolean>>({});
+  const lastScrollTime = useRef<number>(0);
+
+  const toggleFlip = (title: string) => {
+    setFlippedCards(prev => ({ ...prev, [title]: !prev[title] }));
+  };
+
+  const handleCategoryWheel = (e: React.WheelEvent) => {
+    const now = Date.now();
+    if (now - lastScrollTime.current < 200) return;
+
+    if (Math.abs(e.deltaY) > 10) {
+      const activeIdx = categories.findIndex(c => c.id === activeFilter);
+      if (e.deltaY > 0) {
+        const nextIdx = (activeIdx + 1) % categories.length;
+        setActiveFilter(categories[nextIdx].id);
+      } else {
+        const prevIdx = (activeIdx - 1 + categories.length) % categories.length;
+        setActiveFilter(categories[prevIdx].id);
+      }
+      lastScrollTime.current = now;
+      setActiveIdeaIndex(0); // Reset active idea index
+      setFlippedCards({}); // Reset flips on category change
+    }
+  };
 
   const ideas: ToolIdea[] = [
     // 1. PERSONAL UTILITY
@@ -200,145 +225,429 @@ export const ContentPipeline: React.FC = () => {
 
   const activeCategoryObject = categories.find(c => c.id === activeFilter);
   const activeColor = activeCategoryObject ? activeCategoryObject.color : 'var(--color-cyan)';
+  const activeIndex = categories.findIndex(c => c.id === activeFilter);
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', height: '100%' }}>
-      {/* Category Pills (Centered, no search bar) */}
-      <div style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
-        <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap', justifyContent: 'center' }}>
-          {categories.map((cat) => (
-            <button 
-              key={cat.id}
-              onClick={() => setActiveFilter(cat.id)} 
-              className={`btn interactive ${activeFilter === cat.id ? 'btn-primary' : 'btn-secondary'}`}
-              style={{ 
-                padding: '6px 12px', 
-                fontSize: '0.72rem', 
-                borderRadius: '8px',
-                borderColor: activeFilter === cat.id ? cat.color : 'rgba(255, 255, 255, 0.1)',
-                boxShadow: activeFilter === cat.id ? `0 0 10px ${cat.color}22` : 'none'
-              }}
-            >
-              {cat.label}
-            </button>
-          ))}
-        </div>
-      </div>
-
-      {/* Grid container (filling the whole screen with scrollable cards) */}
-      <div style={{ 
-        flexGrow: 1, 
-        overflowY: 'auto', 
+    <div 
+      style={{ 
         display: 'grid', 
-        gridTemplateColumns: 'repeat(auto-fill, minmax(210px, 1fr))', 
-        gap: '12px', 
-        minHeight: 0, 
-        paddingRight: '4px' 
-      }}>
-        {filteredIdeas.map((idea) => {
-          return (
-            <div 
-              key={idea.title}
-              onClick={() => setSelectedIdea(idea)}
-              className="glass-panel interactive"
-              style={{ 
-                padding: '12px 14px', 
-                cursor: 'pointer',
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'space-between',
-                borderLeft: `2.5px solid ${activeColor}`,
-                background: 'var(--color-surface)',
-                transition: 'var(--transition-fast)'
-              }}
-            >
-              <div>
-                <strong style={{ fontSize: '0.82rem', color: '#ffffff', fontFamily: 'var(--font-display)', display: 'block', marginBottom: '4px' }}>
-                  {idea.title}
-                </strong>
-                <span style={{ fontSize: '0.72rem', color: '#9ca3af', lineHeight: 1.3, display: 'block' }}>
-                  {idea.desc}
-                </span>
-              </div>
-            </div>
-          );
-        })}
-      </div>
-
-      {/* Modal Prompt Expansion Overlay */}
-      {selectedIdea && (
-        <div style={{
-          position: 'fixed',
-          inset: 0,
-          background: 'rgba(5, 6, 10, 0.85)',
-          backdropFilter: 'blur(4px)',
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          zIndex: 200,
-          padding: '20px'
-        }}>
-          <div className="glass-panel" style={{ 
-            maxWidth: '500px', 
-            width: '100%', 
-            borderColor: activeColor,
-            background: 'var(--color-surface)',
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '14px',
-            animation: 'modalScale 0.25s cubic-bezier(0.34, 1.56, 0.64, 1)'
-          }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <h4 style={{ fontSize: '1.1rem', fontFamily: 'var(--font-display)', color: 'white', margin: 0 }}>{selectedIdea.title}</h4>
-              <button 
-                onClick={() => setSelectedIdea(null)} 
-                className="interactive"
-                style={{ background: 'none', border: 'none', color: '#9ca3af', fontSize: '1.2rem', cursor: 'pointer', fontWeight: 700 }}
-              >
-                ✕
-              </button>
-            </div>
-            
-            <div>
-              <div style={{ fontSize: '0.72rem', color: '#9ca3af', fontFamily: 'var(--font-mono)', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
-                IDEATION PIPELINE PROMPT:
-              </div>
-              <div style={{ 
-                background: '#090a10', 
-                padding: '12px', 
-                borderRadius: '8px', 
-                border: '1px solid var(--color-border)',
-                fontFamily: 'var(--font-mono)',
-                fontSize: '0.78rem',
-                color: '#a7f3d0',
-                marginTop: '6px',
-                textAlign: 'left',
-                lineHeight: 1.4,
-                whiteSpace: 'pre-wrap'
-              }}>
-                {selectedIdea.prompt}
-              </div>
-            </div>
-
-            <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '4px' }}>
-              <button 
-                onClick={() => setSelectedIdea(null)} 
-                className="btn btn-secondary interactive" 
-                style={{ padding: '6px 14px', borderRadius: '6px', fontSize: '0.8rem' }}
-              >
-                Close
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-
+        gridTemplateColumns: '260px 1fr', 
+        gap: '30px', 
+        height: '100%', 
+        boxSizing: 'border-box',
+        perspective: '1200px',
+        overflow: 'hidden'
+      }}
+    >
+      {/* Styles for scanlines and flip animations */}
       <style>{`
-        @keyframes modalScale {
-          from { opacity: 0; transform: scale(0.92); }
-          to { opacity: 1; transform: scale(1); }
+        @keyframes sweep-prompt {
+          0% { top: -10%; }
+          100% { top: 110%; }
+        }
+        .matrix-scroll::-webkit-scrollbar {
+          width: 4px;
+        }
+        .matrix-scroll::-webkit-scrollbar-track {
+          background: rgba(0, 0, 0, 0.2);
+        }
+        .matrix-scroll::-webkit-scrollbar-thumb {
+          background: ${activeColor}44;
+          border-radius: 2px;
         }
       `}</style>
+
+      {/* LEFT COLUMN: 3D Category Rolodex */}
+      <div 
+        onWheel={handleCategoryWheel}
+        style={{
+          position: 'relative',
+          height: '100%',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center',
+          perspective: '1000px',
+          transformStyle: 'preserve-3d',
+          borderRight: '1px solid rgba(255, 255, 255, 0.04)',
+          paddingRight: '15px',
+          boxSizing: 'border-box'
+        }}
+      >
+        <div style={{ 
+          fontSize: '0.68rem', 
+          color: '#64748b', 
+          fontFamily: 'var(--font-mono)', 
+          textTransform: 'uppercase', 
+          letterSpacing: '0.5px',
+          marginBottom: '20px',
+          textAlign: 'center',
+          width: '100%'
+        }}>
+          💡 Category Helix Menu
+          <span style={{ display: 'block', fontSize: '0.55rem', color: '#475569', marginTop: '2px' }}>
+            SCROLL / DRAG WHEEL
+          </span>
+        </div>
+
+        {/* Projector Base Ring */}
+        <div style={{
+          position: 'absolute',
+          bottom: '40px',
+          width: '180px',
+          height: '40px',
+          borderRadius: '50%',
+          border: `1.5px solid ${activeColor}33`,
+          background: `radial-gradient(ellipse, ${activeColor}15 0%, transparent 70%)`,
+          transform: 'rotateX(75deg)',
+          pointerEvents: 'none',
+          boxShadow: `0 0 15px ${activeColor}11`,
+          transition: 'all 0.6s ease'
+        }} />
+
+        <div style={{
+          position: 'relative',
+          width: '100%',
+          height: '260px',
+          transformStyle: 'preserve-3d',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center'
+        }}>
+          {categories.map((cat, idx) => {
+            const diff = idx - activeIndex;
+            const angle = diff * 26;
+            const isActive = idx === activeIndex;
+            
+            const isVisible = Math.abs(diff) <= 4;
+            if (!isVisible) return null;
+
+            const rad = (angle * Math.PI) / 180;
+            const translateY = Math.sin(rad) * 110;
+            const translateZ = Math.cos(rad) * 110 - 110;
+            const rotateX = -angle;
+            const opacity = Math.max(0.12, Math.cos(rad));
+            const scale = 0.8 + 0.2 * Math.cos(rad);
+
+            return (
+              <button
+                key={cat.id}
+                onClick={() => {
+                  setActiveFilter(cat.id);
+                  setActiveIdeaIndex(0); // Reset active idea index
+                  setFlippedCards({}); // Reset flips on category change
+                }}
+                className="interactive"
+                style={{
+                  position: 'absolute',
+                  width: '180px',
+                  padding: '10px 12px',
+                  borderRadius: '10px',
+                  border: `1.5px solid ${isActive ? cat.color : 'rgba(255, 255, 255, 0.05)'}`,
+                  background: isActive ? `${cat.color}15` : 'rgba(10, 11, 18, 0.75)',
+                  color: isActive ? '#ffffff' : '#9ca3af',
+                  fontSize: '0.72rem',
+                  fontFamily: 'var(--font-display)',
+                  fontWeight: isActive ? 700 : 500,
+                  cursor: 'pointer',
+                  textAlign: 'center',
+                  boxShadow: isActive ? `0 0 15px ${cat.color}1c` : 'none',
+                  transform: `translateY(${translateY}px) translateZ(${translateZ}px) rotateX(${rotateX}deg) scale(${scale})`,
+                  opacity: opacity,
+                  transition: 'transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.6s ease, border-color 0.3s ease, background 0.3s ease',
+                  backfaceVisibility: 'hidden',
+                  zIndex: 10 - Math.abs(diff)
+                }}
+              >
+                {cat.label}
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* RIGHT COLUMN: 3D Idea Deck Arc */}
+      <div style={{ 
+        display: 'flex', 
+        flexDirection: 'column', 
+        height: '100%', 
+        minWidth: 0,
+        overflow: 'hidden'
+      }}>
+        {/* Active Title Indicator */}
+        <div style={{ 
+          display: 'flex', 
+          justifyContent: 'space-between', 
+          alignItems: 'center', 
+          borderBottom: '1px solid rgba(255, 255, 255, 0.04)', 
+          paddingBottom: '8px', 
+          marginBottom: '10px',
+          flexShrink: 0
+        }}>
+          <span style={{ fontSize: '0.8rem', fontWeight: 700, color: 'white', fontFamily: 'var(--font-display)' }}>
+            {categories.find(c => c.id === activeFilter)?.label} Pipeline
+          </span>
+          <span style={{ fontSize: '0.62rem', color: '#64748b', fontFamily: 'var(--font-mono)' }}>
+            CARD {activeIdeaIndex + 1} OF {filteredIdeas.length}
+          </span>
+        </div>
+
+        {/* 3D Curved Arc Carousel Container */}
+        <div style={{
+          flexGrow: 1,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          position: 'relative',
+          perspective: '1200px',
+          transformStyle: 'preserve-3d',
+          overflow: 'hidden',
+          minHeight: 0
+        }}>
+          {/* Navigation Controls Left */}
+          <button 
+            onClick={(e) => {
+              e.stopPropagation();
+              setActiveIdeaIndex(prev => Math.max(0, prev - 1));
+              setFlippedCards({});
+            }}
+            disabled={activeIdeaIndex === 0}
+            className="interactive"
+            style={{
+              position: 'absolute',
+              left: '15px',
+              zIndex: 60,
+              background: 'rgba(10, 11, 18, 0.75)',
+              border: `1.5px solid ${activeColor}`,
+              boxShadow: `0 0 10px ${activeColor}22`,
+              color: '#ffffff',
+              borderRadius: '50%',
+              width: '32px',
+              height: '32px',
+              cursor: activeIdeaIndex === 0 ? 'default' : 'pointer',
+              opacity: activeIdeaIndex === 0 ? 0.25 : 0.85,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              fontSize: '0.7rem',
+              transition: 'all 0.3s cubic-bezier(0.25, 1, 0.5, 1)'
+            }}
+          >
+            ◀
+          </button>
+          
+          {/* Navigation Controls Right */}
+          <button 
+            onClick={(e) => {
+              e.stopPropagation();
+              setActiveIdeaIndex(prev => Math.min(filteredIdeas.length - 1, prev + 1));
+              setFlippedCards({});
+            }}
+            disabled={activeIdeaIndex === filteredIdeas.length - 1}
+            className="interactive"
+            style={{
+              position: 'absolute',
+              right: '15px',
+              zIndex: 60,
+              background: 'rgba(10, 11, 18, 0.75)',
+              border: `1.5px solid ${activeColor}`,
+              boxShadow: `0 0 10px ${activeColor}22`,
+              color: '#ffffff',
+              borderRadius: '50%',
+              width: '32px',
+              height: '32px',
+              cursor: activeIdeaIndex === filteredIdeas.length - 1 ? 'default' : 'pointer',
+              opacity: activeIdeaIndex === filteredIdeas.length - 1 ? 0.25 : 0.85,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              fontSize: '0.7rem',
+              transition: 'all 0.3s cubic-bezier(0.25, 1, 0.5, 1)'
+            }}
+          >
+            ▶
+          </button>
+
+          {/* Cards Ring Deck */}
+          <div style={{
+            position: 'relative',
+            width: '280px',
+            height: '190px',
+            transformStyle: 'preserve-3d'
+          }}>
+            {filteredIdeas.map((idea, idx) => {
+              const offset = idx - activeIdeaIndex;
+              const isFlipped = flippedCards[idea.title] || false;
+              const isActive = offset === 0;
+
+              // Hide far cards to prevent clutter
+              if (Math.abs(offset) > 3) return null;
+
+              // 3D calculation
+              const rotateY = offset * -28;
+              const translateZ = Math.abs(offset) * -110;
+              const translateX = offset * 210;
+              const opacity = Math.max(0, 1 - Math.abs(offset) * 0.38);
+
+              return (
+                <div
+                  key={idea.title}
+                  onClick={() => {
+                    if (isActive) {
+                      toggleFlip(idea.title);
+                    } else {
+                      setActiveIdeaIndex(idx);
+                      setFlippedCards({});
+                    }
+                  }}
+                  style={{
+                    position: 'absolute',
+                    inset: 0,
+                    transformStyle: 'preserve-3d',
+                    transform: `translateX(${translateX}px) translateZ(${translateZ}px) rotateY(${rotateY}deg)`,
+                    transition: 'transform 0.7s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.7s ease',
+                    opacity: opacity,
+                    zIndex: 100 - Math.abs(offset),
+                    cursor: 'pointer'
+                  }}
+                >
+                  <div
+                    style={{
+                      position: 'relative',
+                      width: '100%',
+                      height: '100%',
+                      transformStyle: 'preserve-3d',
+                      transform: isFlipped ? 'rotateY(180deg)' : 'rotateY(0deg)',
+                      transition: 'transform 0.8s cubic-bezier(0.25, 1, 0.5, 1)'
+                    }}
+                  >
+                    {/* FRONT SIDE (HOLOGRAPHIC CARD FRONT) */}
+                    <div
+                      className="glass-panel"
+                      style={{
+                        position: 'absolute',
+                        inset: 0,
+                        backfaceVisibility: 'hidden',
+                        padding: '14px 16px',
+                        background: isActive ? 'var(--color-surface)' : 'rgba(10, 11, 18, 0.85)',
+                        borderLeft: `3px solid ${activeColor}`,
+                        borderTop: isActive ? '1px solid rgba(255,255,255,0.06)' : '1px solid rgba(255,255,255,0.02)',
+                        borderRight: isActive ? '1px solid rgba(255,255,255,0.06)' : '1px solid rgba(255,255,255,0.02)',
+                        borderBottom: isActive ? '1px solid rgba(255,255,255,0.06)' : '1px solid rgba(255,255,255,0.02)',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        justifyContent: 'space-between',
+                        boxSizing: 'border-box',
+                        boxShadow: isActive 
+                          ? `0 10px 25px rgba(0, 0, 0, 0.45), 0 0 15px ${activeColor}15`
+                          : '0 4px 10px rgba(0, 0, 0, 0.25)',
+                        transition: 'border-color 0.4s ease, box-shadow 0.4s ease, background 0.4s ease'
+                      }}
+                    >
+                      <div>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
+                          <strong style={{ fontSize: '0.85rem', color: '#ffffff', fontFamily: 'var(--font-display)', display: 'block' }}>
+                            {idea.title}
+                          </strong>
+                          {isActive && (
+                            <span style={{ fontSize: '0.55rem', color: activeColor, border: `1.5px solid ${activeColor}44`, background: `${activeColor}0f`, padding: '1px 5px', borderRadius: '4px', fontFamily: 'var(--font-mono)', fontWeight: 600 }}>
+                              SELECTED
+                            </span>
+                          )}
+                        </div>
+                        <span style={{ fontSize: '0.72rem', color: '#9ca3af', lineHeight: 1.4, display: 'block', textAlign: 'left' }}>
+                          {idea.desc}
+                        </span>
+                      </div>
+                      
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderTop: '1px solid rgba(255, 255, 255, 0.04)', paddingTop: '8px', marginTop: '4px' }}>
+                        <span style={{ fontSize: '0.6rem', color: '#64748b', fontFamily: 'var(--font-mono)', fontWeight: 600 }}>
+                          {isActive ? 'CLICK TO EXPAND PROMPT' : 'CLICK TO CENTER'}
+                        </span>
+                        <span style={{ color: activeColor, fontSize: '0.75rem', fontWeight: 'bold' }}>➔</span>
+                      </div>
+                    </div>
+
+                    {/* BACK SIDE (GLOWING MATRIX CONSOLE SCRIPT) */}
+                    <div
+                      className="glass-panel"
+                      style={{
+                        position: 'absolute',
+                        inset: 0,
+                        backfaceVisibility: 'hidden',
+                        transform: 'rotateY(180deg)',
+                        padding: '14px 16px',
+                        background: '#040508',
+                        border: `1.5px solid ${activeColor}`,
+                        boxShadow: `0 0 20px ${activeColor}22`,
+                        display: 'flex',
+                        flexDirection: 'column',
+                        justifyContent: 'space-between',
+                        boxSizing: 'border-box',
+                        overflow: 'hidden'
+                      }}
+                    >
+                      {/* Glowing sweep scanner */}
+                      {isFlipped && (
+                        <div style={{
+                          position: 'absolute',
+                          left: 0,
+                          right: 0,
+                          height: '1.5px',
+                          background: `linear-gradient(90deg, transparent, ${activeColor}, transparent)`,
+                          boxShadow: `0 0 10px ${activeColor}`,
+                          opacity: 0.85,
+                          animation: 'sweep-prompt 3s linear infinite',
+                          pointerEvents: 'none',
+                          zIndex: 2
+                        }} />
+                      )}
+                      
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', zIndex: 3 }}>
+                        <span style={{ fontSize: '0.62rem', color: activeColor, fontFamily: 'var(--font-mono)', fontWeight: 700 }}>
+                          CODELOG PROMPT SCHEMATIC
+                        </span>
+                        <span style={{ fontSize: '0.52rem', background: 'rgba(255,255,255,0.03)', color: '#64748b', padding: '1px 5px', borderRadius: '4px', fontFamily: 'var(--font-mono)' }}>
+                          SECURE
+                        </span>
+                      </div>
+
+                      <div 
+                        className="matrix-scroll"
+                        style={{
+                          flexGrow: 1,
+                          overflowY: 'auto',
+                          background: 'rgba(0, 0, 0, 0.65)',
+                          padding: '8px 10px',
+                          borderRadius: '6px',
+                          border: '1px solid rgba(255, 255, 255, 0.04)',
+                          fontFamily: 'var(--font-mono)',
+                          fontSize: '0.66rem',
+                          color: '#a7f3d0',
+                          lineHeight: 1.4,
+                          marginTop: '6px',
+                          zIndex: 3,
+                          textAlign: 'left'
+                        }}
+                        onClick={(e) => e.stopPropagation()} // Prevent flip back on scroll click
+                      >
+                        {idea.prompt}
+                      </div>
+
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderTop: '1px solid rgba(255, 255, 255, 0.04)', paddingTop: '6px', marginTop: '6px', zIndex: 3 }}>
+                        <span style={{ fontSize: '0.6rem', color: '#64748b', fontFamily: 'var(--font-mono)' }}>
+                          CLICK TO FLIP BACK
+                        </span>
+                        <span style={{ color: activeColor, fontSize: '0.7rem', fontWeight: 'bold' }}>✕</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
