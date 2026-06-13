@@ -142,6 +142,10 @@ export const AudienceList: React.FC = () => {
           80% { opacity: 0.8; }
           100% { left: 100%; opacity: 0; }
         }
+        @keyframes blueprint-spin {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
+        }
         .hud-panel {
           transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.6s ease, border-color 0.3s ease;
         }
@@ -311,6 +315,21 @@ export const AudienceList: React.FC = () => {
               transformStyle: 'preserve-3d'
             }}
           >
+            {/* Blueprint Grid Mesh (Behind Icon) */}
+            <div style={{
+              position: 'absolute',
+              width: '88px',
+              height: '88px',
+              borderRadius: '50%',
+              border: `1.2px dashed ${activeSeg.color}33`,
+              background: `repeating-linear-gradient(0deg, transparent, transparent 4px, ${activeSeg.color}08 4px, ${activeSeg.color}08 5px), repeating-linear-gradient(90deg, transparent, transparent 4px, ${activeSeg.color}08 4px, ${activeSeg.color}08 5px)`,
+              animation: 'blueprint-spin 20s linear infinite',
+              opacity: 0.85,
+              zIndex: 9,
+              pointerEvents: 'none',
+              transition: 'all 0.6s ease'
+            }} />
+
             {/* Suspended Avatar Icon */}
             <div 
               style={{
@@ -668,6 +687,9 @@ export const MonetizationGrid: React.FC = () => {
           50% { transform: translateY(-6px); }
           100% { transform: translateY(0px); }
         }
+        @keyframes dash-flow {
+          to { stroke-dashoffset: -20; }
+        }
         .reactor-slider::-webkit-slider-thumb {
           box-shadow: 0 0 8px var(--thumb-glow);
         }
@@ -799,6 +821,80 @@ export const MonetizationGrid: React.FC = () => {
           minWidth: 0
         }}
       >
+        {/* Glowing Conduits / Tubes Flow Overlay */}
+        <svg 
+          style={{
+            position: 'absolute',
+            inset: 0,
+            width: '100%',
+            height: '100%',
+            pointerEvents: 'none',
+            zIndex: 1
+          }}
+          viewBox="0 0 100 100"
+          preserveAspectRatio="none"
+        >
+          {/* Reach Tube (Left to Core) */}
+          <path 
+            d="M 0,28 C 20,28 35,50 50,50" 
+            fill="none" 
+            stroke="var(--color-cyan)" 
+            strokeWidth={1.5 + (subscribers / 80)} 
+            strokeOpacity={0.3 + (subscribers / 300) * 0.6}
+            strokeDasharray="4 6"
+            style={{
+              animation: `dash-flow ${Math.max(0.4, 2.5 - (subscribers / 120))}s linear infinite`,
+              filter: 'drop-shadow(0 0 3px var(--color-cyan))',
+              transition: 'stroke-width 0.3s ease, stroke-opacity 0.3s ease'
+            }}
+          />
+          
+          {/* Course Fee Tube (Left to Core) */}
+          <path 
+            d="M 0,50 C 20,50 35,50 50,50" 
+            fill="none" 
+            stroke="var(--color-magenta)" 
+            strokeWidth={1.5 + (coursePrice / 2000)} 
+            strokeOpacity={0.3 + (coursePrice / 8000) * 0.6}
+            strokeDasharray="4 6"
+            style={{
+              animation: `dash-flow ${Math.max(0.4, 2.5 - (coursePrice / 3200))}s linear infinite`,
+              filter: 'drop-shadow(0 0 3px var(--color-magenta))',
+              transition: 'stroke-width 0.3s ease, stroke-opacity 0.3s ease'
+            }}
+          />
+          
+          {/* Sponsors Tube (Left to Core) */}
+          <path 
+            d="M 0,72 C 20,72 35,50 50,50" 
+            fill="none" 
+            stroke="var(--color-indigo)" 
+            strokeWidth={1.5 + sponsorsCount * 1} 
+            strokeOpacity={0.3 + (sponsorsCount / 4) * 0.6}
+            strokeDasharray="4 6"
+            style={{
+              animation: `dash-flow ${Math.max(0.4, 2.5 - sponsorsCount * 0.5)}s linear infinite`,
+              filter: 'drop-shadow(0 0 3px var(--color-indigo))',
+              transition: 'stroke-width 0.3s ease, stroke-opacity 0.3s ease'
+            }}
+          />
+          
+          {/* Active Stream Tube (Right to Core) */}
+          <path 
+            d="M 100,20 C 80,20 65,50 50,50" 
+            fill="none" 
+            stroke={activeStream.color} 
+            strokeWidth={1.8 + (totalRev / 200000) * 3} 
+            strokeOpacity={0.4 + (totalRev / 300000) * 0.6}
+            strokeDasharray="4 6"
+            style={{
+              animation: `dash-flow ${Math.max(0.3, 2.0 - (totalRev / 150000))}s linear infinite`,
+              filter: `drop-shadow(0 0 4px ${activeStream.color})`,
+              transition: 'stroke, stroke-width 0.3s ease, stroke-opacity 0.3s ease'
+            }}
+          />
+        </svg>
+
         {/* Floating revenue total bubble */}
         <div style={{
           position: 'absolute',
