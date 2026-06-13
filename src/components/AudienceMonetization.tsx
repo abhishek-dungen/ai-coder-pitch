@@ -291,7 +291,7 @@ interface Stream {
 export const MonetizationGrid: React.FC = () => {
   const [activeStreamId, setActiveStreamId] = useState<number>(1);
   const [subscribers, setSubscribers] = useState<number>(50); // in thousands (10 to 300)
-  const [coursePrice, setCoursePrice] = useState<number>(99); // in dollars
+  const [coursePrice, setCoursePrice] = useState<number>(3999); // in rupees (1499 to 7999)
   const [sponsorsCount, setSponsorsCount] = useState<number>(2); // 1 to 4
 
   const streams: Stream[] = [
@@ -301,7 +301,7 @@ export const MonetizationGrid: React.FC = () => {
       desc: 'Launch structural cohorts teaching AI-assisted workspace building workflows.',
       strategy: 'Develop a 4-week cohort training program. Teach non-engineers to construct fully functional pages, scrapers, and dashboards.',
       color: 'var(--color-cyan)',
-      formulaLabel: '0.3% conversion of subscribers per year at selected cohort fee',
+      formulaLabel: '0.3% annual subscriber conversion at selected cohort fee',
       icon: BookOpen,
       deliverables: [
         'Draft 4-week syllabus: Cursor workflows, React builders, and server hosting.',
@@ -319,17 +319,17 @@ export const MonetizationGrid: React.FC = () => {
       desc: 'Paid placements from developer co-pilots and digital automators.',
       strategy: 'Showcase tools (like Cursor, Replit, or local database services) solving real-world bottlenecks in tutorials.',
       color: 'var(--color-indigo)',
-      formulaLabel: '$35 CPM on average video view volumes (est. 1.2x subscriber reach monthly)',
+      formulaLabel: '₹600 CPM on video views (est. 1.2x subscriber reach monthly per sponsor campaign)',
       icon: Handshake,
       deliverables: [
-        'Standardize sponsorship rate sheets with fixed $35 CPM tier packages.',
+        'Standardize sponsorship rate sheets with fixed ₹600 CPM tier packages.',
         'Create open resource index on GitHub citing partner products.',
         'Deliver 5-minute integration case studies in main video chapters.'
       ],
       complexity: 'Low',
       timeToLaunch: '1 Week',
       funnelChannel: 'LinkedIn & Newsletters',
-      calc: (subs, price, sponsors) => Math.round(subs * 1000 * 1.2 * sponsors * (35 / 1000)) + (price * 0)
+      calc: (subs, price, sponsors) => Math.round(subs * 1000 * 1.2 * sponsors * (600 / 1000)) + (price * 0)
     },
     {
       id: 3,
@@ -337,7 +337,7 @@ export const MonetizationGrid: React.FC = () => {
       desc: 'Advise business creators on internal automation pipelines.',
       strategy: 'Offer custom pipeline consulting audits to companies wanting to deploy agent-led scrapers and reports dashboards.',
       color: 'var(--color-magenta)',
-      formulaLabel: 'Est. 2 custom enterprise pipeline audits per month at standard rate scaling with channel scale',
+      formulaLabel: 'Est. 1 to 2 audit consultations per month at standard rate scaling with channel scale',
       icon: Briefcase,
       deliverables: [
         'Design operations audit questionnaire and pipeline checklist assets.',
@@ -347,7 +347,7 @@ export const MonetizationGrid: React.FC = () => {
       complexity: 'High',
       timeToLaunch: '1 Week',
       funnelChannel: 'Consulting Portals',
-      calc: (subs, price, sponsors) => Math.round(1500 + (subs * 10)) + (price * 0) + (sponsors * 0)
+      calc: (subs, price, sponsors) => Math.round(15000 + (subs * 100)) + (price * 0) + (sponsors * 0)
     },
     {
       id: 4,
@@ -355,7 +355,7 @@ export const MonetizationGrid: React.FC = () => {
       desc: 'Recommend premium AI subscriptions, compilers, and database APIs.',
       strategy: 'Earn recurring payouts on compiler subscriptions, Claude APIs, database backends, and cursor-copilots recommendations.',
       color: '#10b981', // Emerald
-      formulaLabel: '0.8% active subscriber base using affiliate links generating average $4/mo payout',
+      formulaLabel: '0.5% active subscriber base using affiliate links generating average ₹150/mo payout',
       icon: Percent,
       deliverables: [
         'Apply to top partner programs (Cursor, Replit, Vercel, Claude API).',
@@ -365,7 +365,7 @@ export const MonetizationGrid: React.FC = () => {
       complexity: 'Low',
       timeToLaunch: 'Immediate',
       funnelChannel: 'Github Stack Pages',
-      calc: (subs, price, sponsors) => Math.round(subs * 1000 * 0.008 * 4) + (price * 0) + (sponsors * 0)
+      calc: (subs, price, sponsors) => Math.round(subs * 1000 * 0.005 * 150) + (price * 0) + (sponsors * 0)
     },
     {
       id: 5,
@@ -373,7 +373,7 @@ export const MonetizationGrid: React.FC = () => {
       desc: 'Co-host ticketed hackathons or AI workshops.',
       strategy: 'Run monthly live training webinars teaching quick workflow creation and funneling traffic to courses.',
       color: '#f59e0b', // Gold
-      formulaLabel: 'Monthly attendance of 0.25% of subscriber reach at $19 ticket fee',
+      formulaLabel: 'Monthly attendance of 0.2% of subscriber reach at ₹499 ticket fee',
       icon: Presentation,
       deliverables: [
         'Build 90-minute live syllabus: "Deploy a full AI agent in one hour".',
@@ -383,7 +383,7 @@ export const MonetizationGrid: React.FC = () => {
       complexity: 'Medium',
       timeToLaunch: '2 Weeks',
       funnelChannel: 'Live Streams & Events',
-      calc: (subs, price, sponsors) => Math.round(subs * 1000 * 0.0025 * 19) + (price * 0) + (sponsors * 0)
+      calc: (subs, price, sponsors) => Math.round(subs * 1000 * 0.002 * 499) + (price * 0) + (sponsors * 0)
     },
     {
       id: 6,
@@ -391,7 +391,7 @@ export const MonetizationGrid: React.FC = () => {
       desc: 'Build and sell micro templates, logs, and dashboard widgets.',
       strategy: 'Launch standalone tools (like Zoom logs attendance checkers) as micro-SaaS subscriptions for the community.',
       color: '#8b5cf6', // Purple
-      formulaLabel: '0.15% subscriber base paying monthly $15 subscription fee for micro-utilities',
+      formulaLabel: '0.1% subscriber base paying monthly ₹499 subscription fee for micro-utilities',
       icon: Cpu,
       deliverables: [
         'Ideate micro-utilities (Zoom attendance parser, CSV formatter, etc.).',
@@ -401,7 +401,7 @@ export const MonetizationGrid: React.FC = () => {
       complexity: 'High',
       timeToLaunch: '4 Weeks',
       funnelChannel: 'Product Directories',
-      calc: (subs, price, sponsors) => Math.round(subs * 1000 * 0.0015 * 15) + (price * 0) + (sponsors * 0)
+      calc: (subs, price, sponsors) => Math.round(subs * 1000 * 0.001 * 499) + (price * 0) + (sponsors * 0)
     }
   ];
 
@@ -418,8 +418,8 @@ export const MonetizationGrid: React.FC = () => {
   else if (subscribers >= 50) channelTier = 'High-Authority Creator';
 
   let priceTier = 'Volume-Optimized Pricing';
-  if (coursePrice >= 200) priceTier = 'Premium Developer Cohort';
-  else if (coursePrice >= 100) priceTier = 'Balanced Value Tier';
+  if (coursePrice >= 6000) priceTier = 'Premium Developer Cohort';
+  else if (coursePrice >= 3000) priceTier = 'Balanced Value Tier';
 
   const ActiveIcon = activeStream.icon;
 
@@ -476,13 +476,13 @@ export const MonetizationGrid: React.FC = () => {
               <DollarSign size={12} style={{ color: 'var(--color-magenta)' }} />
               COHORT COURSE PRICE
             </span>
-            <span style={{ color: 'var(--color-magenta)', fontWeight: 'bold' }}>${coursePrice}</span>
+            <span style={{ color: 'var(--color-magenta)', fontWeight: 'bold' }}>₹{coursePrice.toLocaleString()}</span>
           </div>
           <input 
             type="range"
-            min="49"
-            max="299"
-            step="10"
+            min="1499"
+            max="7999"
+            step="500"
             value={coursePrice}
             onChange={(e) => setCoursePrice(Number(e.target.value))}
             className="custom-range interactive"
@@ -555,7 +555,7 @@ export const MonetizationGrid: React.FC = () => {
         }}>
           <span style={{ color: '#60a5fa', fontWeight: 'bold' }}>SYSTEM STATUS: SIMULATING</span>
           <span>&gt; Tier: <span style={{ color: 'white' }}>{channelTier}</span></span>
-          <span>&gt; CPM Payout: <span style={{ color: 'white' }}>$35 CPM</span></span>
+          <span>&gt; CPM Payout: <span style={{ color: 'white' }}>₹600 CPM (India)</span></span>
           <span>&gt; Class Tier: <span style={{ color: 'white' }}>{priceTier}</span></span>
           <span>&gt; Streams: <span style={{ color: '#fbbf24' }}>6 Connected</span></span>
         </div>
@@ -686,7 +686,7 @@ export const MonetizationGrid: React.FC = () => {
                     gap: '2px',
                     filter: `drop-shadow(0 0 8px ${activeStream.color}33)`
                   }}>
-                    ${activeStreamRev.toLocaleString()}
+                    ₹{activeStreamRev.toLocaleString()}
                   </span>
                 </div>
                 <span style={{ 
@@ -769,7 +769,7 @@ export const MonetizationGrid: React.FC = () => {
                 <span>🚀 <strong>Aggregated Projected Revenue:</strong></span>
               </span>
               <span style={{ fontSize: '0.9rem', color: 'var(--color-cyan)', fontWeight: 800 }}>
-                ${totalRev.toLocaleString()} / mo
+                ₹{totalRev.toLocaleString()} / mo
               </span>
             </div>
           </div>
