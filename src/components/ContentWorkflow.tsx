@@ -86,38 +86,95 @@ export const ContentWorkflow: React.FC = () => {
   // Default to null (all cards collapsed on initial load)
   const [activeStepId, setActiveStepId] = useState<number | null>(null);
 
-  // Isometric landing positions inside SVG
+  // Isometric landing positions inside SVG (scaled to fit inside 440px height)
   const landings = [
-    { id: 1, cx: 160, cy: 410 },
-    { id: 2, cx: 300, cy: 360 },
-    { id: 3, cx: 160, cy: 310 },
-    { id: 4, cx: 300, cy: 260 },
-    { id: 5, cx: 160, cy: 210 },
-    { id: 6, cx: 300, cy: 160 },
-    { id: 7, cx: 160, cy: 110 },
-    { id: 8, cx: 300, cy: 60 }
+    { id: 1, cx: 160, cy: 365 },
+    { id: 2, cx: 300, cy: 320 },
+    { id: 3, cx: 160, cy: 275 },
+    { id: 4, cx: 300, cy: 230 },
+    { id: 5, cx: 160, cy: 185 },
+    { id: 6, cx: 300, cy: 140 },
+    { id: 7, cx: 160, cy: 95 },
+    { id: 8, cx: 300, cy: 50 }
   ];
 
-  // Get expanded height for dynamic Y-coordinate clamping
+  // Get expanded height based on step content
   const getExpandedHeight = (id: number) => {
-    if (id === 3 || id === 5) return 210; // has code snippet
+    if (id === 3 || id === 5) return 215; // has code snippet
     return 130; // standard text details
   };
 
-  // Get card position (collapsed at baseY, or expanded with safety boundary checks)
-  const getCardY = (stepId: number) => {
-    const landing = landings[stepId - 1];
-    if (activeStepId !== stepId) {
-      return landing.cy;
+  // 1D Physics Relaxation Solver to resolve overlapping and screen cropping
+  const solvePositions = (sideSteps: Step[]) => {
+    const sorted = [...sideSteps].sort((a, b) => landings[a.id - 1].cy - landings[b.id - 1].cy);
+    const n = sorted.length;
+
+    // 1. Initialize centers at base cy
+    const Y = sorted.map(s => landings[s.id - 1].cy);
+    const H = sorted.map(s => s.id === activeStepId ? getExpandedHeight(s.id) : 28);
+
+    // 2. Clamp active card within container bounds first [16, 424]
+    if (activeStepId !== null) {
+      const activeIdx = sorted.findIndex(s => s.id === activeStepId);
+      if (activeIdx !== -1) {
+        const h = H[activeIdx];
+        const minY = h / 2 + 16;
+        const maxY = 440 - h / 2 - 16;
+        Y[activeIdx] = Math.max(minY, Math.min(maxY, Y[activeIdx]));
+      }
     }
-    const h = getExpandedHeight(stepId);
-    const minY = h / 2 + 16;
-    const maxY = 490 - h / 2 - 16;
-    return Math.max(minY, Math.min(maxY, landing.cy));
+
+    // 3. Relaxation Pass (Iteratively resolve collisions)
+    const gap = 12; // Safety spacing between card boundaries
+    for (let pass = 0; pass < 12; pass++) {
+      // Upward push
+      for (let i = n - 2; i >= 0; i--) {
+        const below = i + 1;
+        const overlap = (Y[i] + H[i]/2) - (Y[below] - H[below]/2 - gap);
+        if (overlap > 0) {
+          Y[i] -= overlap;
+        }
+      }
+      // Downward push
+      for (let i = 1; i < n; i++) {
+        const above = i - 1;
+        const overlap = (Y[above] + H[above]/2 + gap) - (Y[i] - H[i]/2);
+        if (overlap > 0) {
+          Y[i] += overlap;
+        }
+      }
+      // Re-clamp bounds
+      if (Y[0] - H[0]/2 < 16) {
+        const shift = 16 - (Y[0] - H[0]/2);
+        for (let i = 0; i < n; i++) Y[i] += shift;
+      }
+      if (Y[n-1] + H[n-1]/2 > 424) {
+        const shift = (Y[n-1] + H[n-1]/2) - 424;
+        for (let i = 0; i < n; i++) Y[i] -= shift;
+      }
+    }
+
+    // Map back to step.id
+    const resolved: Record<number, { top: number; height: number }> = {};
+    sorted.forEach((step, idx) => {
+      resolved[step.id] = {
+        top: Y[idx],
+        height: H[idx]
+      };
+    });
+
+    return resolved;
   };
 
   const oddSteps = steps.filter(s => s.id % 2 !== 0);
   const evenSteps = steps.filter(s => s.id % 2 === 0);
+
+  const leftPositions = solvePositions(oddSteps);
+  const rightPositions = solvePositions(evenSteps);
+
+  const handleCardClick = (stepId: number) => {
+    setActiveStepId(prev => prev === stepId ? null : stepId);
+  };
 
   return (
     <div style={{
@@ -131,31 +188,26 @@ export const ContentWorkflow: React.FC = () => {
       <div className="staircase-container" style={{
         position: 'relative',
         width: '880px',
-        height: '490px',
-        minHeight: '490px'
+        height: '440px',
+        minHeight: '440px'
       }}>
         
-        {/* LEFT COLUMN STEP ACCORDION (ODD STEPS) */}
+        {/* LEFT COLUMN STEP CARD ACCORDION (ODD STEPS) */}
         {oddSteps.map((step) => {
           const isActive = step.id === activeStepId;
-          const isAnyActive = activeStepId !== null;
-          const cardY = getCardY(step.id);
-
-          // Hide other steps if any step is active (solves overlapping)
-          const opacityVal = isActive ? 1 : isAnyActive ? 0 : 1;
-          const pointerEventsVal = isActive ? 'auto' : isAnyActive ? 'none' : 'auto';
+          const pos = leftPositions[step.id];
 
           return (
             <motion.div
               layout
               key={step.id}
-              onClick={() => setActiveStepId(step.id)}
-              className="interactive workflow-card"
+              onClick={() => handleCardClick(step.id)}
+              className={`interactive workflow-card ${isActive ? 'active-step-card' : ''}`}
               style={{
                 position: 'absolute',
-                top: `${cardY}px`,
+                top: `${pos.top}px`,
                 transform: 'translateY(-50%)',
-                right: '680px', // Anchor at X = 200px (right edge of left cards)
+                left: isActive ? '0px' : '80px', // Anchor to left: 0px when expanded, 80px when collapsed to grow inward
                 width: isActive ? '250px' : '120px',
                 borderRadius: isActive ? '12px' : '16px',
                 background: isActive 
@@ -163,7 +215,7 @@ export const ContentWorkflow: React.FC = () => {
                   : 'rgba(255, 255, 255, 0.02)',
                 border: `1.5px solid ${isActive ? step.color : 'rgba(255, 255, 255, 0.06)'}`,
                 padding: isActive ? '12px 14px' : '0 10px',
-                height: isActive ? 'auto' : '28px',
+                height: `${pos.height}px`,
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'center',
@@ -172,9 +224,7 @@ export const ContentWorkflow: React.FC = () => {
                 zIndex: isActive ? 10 : 2,
                 overflow: 'hidden',
                 textAlign: 'left',
-                opacity: opacityVal,
-                pointerEvents: pointerEventsVal,
-                transition: 'border-color 0.25s, background-color 0.25s, opacity 0.3s'
+                transition: 'border-color 0.25s, background-color 0.25s, box-shadow 0.25s'
               }}
             >
               <div style={{ display: 'flex', alignItems: 'center', gap: '6px', width: '100%', minHeight: '24px' }}>
@@ -195,7 +245,7 @@ export const ContentWorkflow: React.FC = () => {
                 }}>
                   {step.id}
                 </div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '4px', overflow: 'hidden' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '4px', overflow: 'hidden', flexGrow: 1 }}>
                   <span style={{ color: isActive ? '#ffffff' : '#9ca3af', display: 'flex', alignItems: 'center' }}>
                     {step.icon}
                   </span>
@@ -209,24 +259,44 @@ export const ContentWorkflow: React.FC = () => {
                     {step.label}
                   </span>
                 </div>
+                {isActive && (
+                  <button 
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setActiveStepId(null);
+                    }}
+                    style={{
+                      background: 'none',
+                      border: 'none',
+                      color: '#9ca3af',
+                      cursor: 'pointer',
+                      fontSize: '0.8rem',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      padding: '2px',
+                      marginLeft: 'auto'
+                    }}
+                  >
+                    ✕
+                  </button>
+                )}
               </div>
 
               {isActive && (
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ duration: 0.2 }}
-                  style={{ marginTop: '8px' }}
+                <div 
+                  onClick={(e) => e.stopPropagation()} // Stop propagation to allow text selection without closing card
+                  style={{ marginTop: '8px', overflow: 'hidden' }}
                 >
-                  <h5 style={{ fontSize: '0.85rem', fontWeight: 700, color: 'white', margin: '0 0 6px 0', fontFamily: 'var(--font-display)' }}>
+                  <h5 style={{ fontSize: '0.85rem', fontWeight: 700, color: 'white', margin: '0 0 4px 0', fontFamily: 'var(--font-display)' }}>
                     {step.title}
                   </h5>
-                  <p style={{ fontSize: '0.75rem', color: '#9ca3af', lineHeight: 1.4, margin: '0 0 6px 0' }}>
+                  <p style={{ fontSize: '0.75rem', color: '#9ca3af', lineHeight: 1.35, margin: '0 0 4px 0' }}>
                     {step.details}
                   </p>
                   {step.codeSnippet && (
                     <pre style={{
-                      margin: '6px 0 0 0',
+                      margin: '4px 0 0 0',
                       padding: '6px 8px',
                       background: '#040508',
                       border: '1px solid rgba(6, 182, 212, 0.15)',
@@ -239,28 +309,7 @@ export const ContentWorkflow: React.FC = () => {
                       {step.codeSnippet}
                     </pre>
                   )}
-                  {/* Close button inside expanded card */}
-                  <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '8px' }}>
-                    <button 
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setActiveStepId(null);
-                      }}
-                      className="interactive"
-                      style={{
-                        background: 'rgba(255,255,255,0.06)',
-                        border: 'none',
-                        borderRadius: '4px',
-                        color: 'white',
-                        padding: '2px 8px',
-                        fontSize: '0.65rem',
-                        cursor: 'pointer'
-                      }}
-                    >
-                      Close
-                    </button>
-                  </div>
-                </motion.div>
+                </div>
               )}
             </motion.div>
           );
@@ -272,13 +321,13 @@ export const ContentWorkflow: React.FC = () => {
           left: '210px',
           top: 0,
           width: '460px',
-          height: '490px',
+          height: '440px',
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center'
         }}>
           <svg 
-            viewBox="0 0 460 490" 
+            viewBox="0 0 460 440" 
             className="staircase-svg"
             style={{ 
               width: '100%', 
@@ -317,20 +366,19 @@ export const ContentWorkflow: React.FC = () => {
             {oddSteps.map(step => {
               const landing = landings[step.id - 1];
               const isActive = step.id === activeStepId;
-              const cardY = getCardY(step.id);
-              const isAnyActive = activeStepId !== null;
+              const cardY = leftPositions[step.id].top;
 
               return (
                 <line 
                   key={`line-${step.id}`}
-                  x1="10" 
+                  x1={isActive ? 40 : -10} 
                   y1={cardY} 
                   x2={landing.cx - 35} 
                   y2={landing.cy}
                   stroke={isActive ? step.color : 'rgba(255, 255, 255, 0.08)'}
                   strokeWidth={isActive ? 1.5 : 0.75}
                   strokeDasharray={isActive ? 'none' : '4, 4'}
-                  opacity={isActive ? 1 : isAnyActive ? 0 : 0.7}
+                  opacity={isActive ? 1 : 0.6}
                   style={{ transition: 'all 0.3s' }}
                 />
               );
@@ -340,20 +388,19 @@ export const ContentWorkflow: React.FC = () => {
             {evenSteps.map(step => {
               const landing = landings[step.id - 1];
               const isActive = step.id === activeStepId;
-              const cardY = getCardY(step.id);
-              const isAnyActive = activeStepId !== null;
+              const cardY = rightPositions[step.id].top;
 
               return (
                 <line 
                   key={`line-${step.id}`}
-                  x1="450" 
+                  x1={isActive ? 420 : 470} 
                   y1={cardY} 
                   x2={landing.cx + 35} 
                   y2={landing.cy}
                   stroke={isActive ? step.color : 'rgba(255, 255, 255, 0.08)'}
                   strokeWidth={isActive ? 1.5 : 0.75}
                   strokeDasharray={isActive ? 'none' : '4, 4'}
-                  opacity={isActive ? 1 : isAnyActive ? 0 : 0.7}
+                  opacity={isActive ? 1 : 0.6}
                   style={{ transition: 'all 0.3s' }}
                 />
               );
@@ -382,24 +429,19 @@ export const ContentWorkflow: React.FC = () => {
         {/* RIGHT COLUMN STEP ACCORDION (EVEN STEPS) */}
         {evenSteps.map((step) => {
           const isActive = step.id === activeStepId;
-          const isAnyActive = activeStepId !== null;
-          const cardY = getCardY(step.id);
-
-          // Hide other steps if any step is active (solves overlapping)
-          const opacityVal = isActive ? 1 : isAnyActive ? 0 : 1;
-          const pointerEventsVal = isActive ? 'auto' : isAnyActive ? 'none' : 'auto';
+          const pos = rightPositions[step.id];
 
           return (
             <motion.div
               layout
               key={step.id}
-              onClick={() => setActiveStepId(step.id)}
-              className="interactive workflow-card"
+              onClick={() => handleCardClick(step.id)}
+              className={`interactive workflow-card ${isActive ? 'active-step-card' : ''}`}
               style={{
                 position: 'absolute',
-                top: `${cardY}px`,
+                top: `${pos.top}px`,
                 transform: 'translateY(-50%)',
-                left: '680px', // Anchor at X = 680px (left edge of right cards)
+                left: isActive ? '630px' : '680px', // Anchor to left: 630px when expanded, 680px when collapsed to grow inward
                 width: isActive ? '250px' : '120px',
                 borderRadius: isActive ? '12px' : '16px',
                 background: isActive 
@@ -407,7 +449,7 @@ export const ContentWorkflow: React.FC = () => {
                   : 'rgba(255, 255, 255, 0.02)',
                 border: `1.5px solid ${isActive ? step.color : 'rgba(255, 255, 255, 0.06)'}`,
                 padding: isActive ? '12px 14px' : '0 10px',
-                height: isActive ? 'auto' : '28px',
+                height: `${pos.height}px`,
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'center',
@@ -416,9 +458,7 @@ export const ContentWorkflow: React.FC = () => {
                 zIndex: isActive ? 10 : 2,
                 overflow: 'hidden',
                 textAlign: 'left',
-                opacity: opacityVal,
-                pointerEvents: pointerEventsVal,
-                transition: 'border-color 0.25s, background-color 0.25s, opacity 0.3s'
+                transition: 'border-color 0.25s, background-color 0.25s, box-shadow 0.25s'
               }}
             >
               <div style={{ display: 'flex', alignItems: 'center', gap: '6px', width: '100%', minHeight: '24px' }}>
@@ -439,7 +479,7 @@ export const ContentWorkflow: React.FC = () => {
                 }}>
                   {step.id}
                 </div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '4px', overflow: 'hidden' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '4px', overflow: 'hidden', flexGrow: 1 }}>
                   <span style={{ color: isActive ? '#ffffff' : '#9ca3af', display: 'flex', alignItems: 'center' }}>
                     {step.icon}
                   </span>
@@ -453,24 +493,44 @@ export const ContentWorkflow: React.FC = () => {
                     {step.label}
                   </span>
                 </div>
+                {isActive && (
+                  <button 
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setActiveStepId(null);
+                    }}
+                    style={{
+                      background: 'none',
+                      border: 'none',
+                      color: '#9ca3af',
+                      cursor: 'pointer',
+                      fontSize: '0.8rem',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      padding: '2px',
+                      marginLeft: 'auto'
+                    }}
+                  >
+                    ✕
+                  </button>
+                )}
               </div>
 
               {isActive && (
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ duration: 0.2 }}
-                  style={{ marginTop: '8px' }}
+                <div 
+                  onClick={(e) => e.stopPropagation()} // Stop propagation to allow text selection without closing card
+                  style={{ marginTop: '8px', overflow: 'hidden' }}
                 >
-                  <h5 style={{ fontSize: '0.85rem', fontWeight: 700, color: 'white', margin: '0 0 6px 0', fontFamily: 'var(--font-display)' }}>
+                  <h5 style={{ fontSize: '0.85rem', fontWeight: 700, color: 'white', margin: '0 0 4px 0', fontFamily: 'var(--font-display)' }}>
                     {step.title}
                   </h5>
-                  <p style={{ fontSize: '0.75rem', color: '#9ca3af', lineHeight: 1.4, margin: '0 0 6px 0' }}>
+                  <p style={{ fontSize: '0.75rem', color: '#9ca3af', lineHeight: 1.35, margin: '0 0 4px 0' }}>
                     {step.details}
                   </p>
                   {step.codeSnippet && (
                     <pre style={{
-                      margin: '6px 0 0 0',
+                      margin: '4px 0 0 0',
                       padding: '6px 8px',
                       background: '#040508',
                       border: '1px solid rgba(6, 182, 212, 0.15)',
@@ -483,28 +543,7 @@ export const ContentWorkflow: React.FC = () => {
                       {step.codeSnippet}
                     </pre>
                   )}
-                  {/* Close button inside expanded card */}
-                  <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '8px' }}>
-                    <button 
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setActiveStepId(null);
-                      }}
-                      className="interactive"
-                      style={{
-                        background: 'rgba(255,255,255,0.06)',
-                        border: 'none',
-                        borderRadius: '4px',
-                        color: 'white',
-                        padding: '2px 8px',
-                        fontSize: '0.65rem',
-                        cursor: 'pointer'
-                      }}
-                    >
-                      Close
-                    </button>
-                  </div>
-                </motion.div>
+                </div>
               )}
             </motion.div>
           );
@@ -587,7 +626,6 @@ export const ContentWorkflow: React.FC = () => {
       <g 
         key={`landing-${step.id}`}
         onClick={() => {
-          // If already active, close it. Otherwise, open it.
           setActiveStepId(isActive ? null : step.id);
         }}
         style={{ cursor: 'pointer' }}
@@ -595,7 +633,7 @@ export const ContentWorkflow: React.FC = () => {
         {/* 3D TALL WHITE PEDESTAL COLUMN */}
         {/* Column Left Wall */}
         <polygon
-          points={`${cx - 36},${cy} ${cx},${cy + 16} ${cx},${cy + 80} ${cx - 36},${cy + 64}`}
+          points={`${cx - 36},${cy} ${cx},${cy + 16} ${cx},${cy + 70} ${cx - 36},${cy + 54}`}
           fill="url(#wall-left)"
           stroke={isActive ? `${step.color}44` : 'rgba(255,255,255,0.03)'}
           strokeWidth={isActive ? 1 : 0.5}
@@ -603,7 +641,7 @@ export const ContentWorkflow: React.FC = () => {
         />
         {/* Column Right Wall */}
         <polygon
-          points={`${cx},${cy + 16} ${cx + 36},${cy} ${cx + 36},${cy + 64} ${cx},${cy + 80}`}
+          points={`${cx},${cy + 16} ${cx + 36},${cy} ${cx + 36},${cy + 54} ${cx},${cy + 70}`}
           fill="url(#wall-right)"
           stroke={isActive ? `${step.color}44` : 'rgba(255,255,255,0.03)'}
           strokeWidth={isActive ? 1 : 0.5}
@@ -663,7 +701,7 @@ export const ContentWorkflow: React.FC = () => {
 const styleTag = (
   <style>{`
     .workflow-card {
-      transition: border-color 0.25s, background-color 0.25s, box-shadow 0.25s, opacity 0.3s;
+      transition: border-color 0.25s, background-color 0.25s, box-shadow 0.25s;
     }
     .workflow-card:hover {
       border-color: rgba(255, 255, 255, 0.20) !important;
@@ -698,8 +736,6 @@ const styleTag = (
         width: 100% !important;
         height: auto !important;
         margin-bottom: 8px !important;
-        opacity: 1 !important;
-        pointer-events: auto !important;
       }
       .staircase-svg {
         position: relative !important;
