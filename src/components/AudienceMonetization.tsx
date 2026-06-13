@@ -9,26 +9,38 @@ export const AudienceList: React.FC = () => {
     { title: 'AI Enthusiasts', focus: 'AI Workflows', power: 'High', desc: 'People wanting to push the boundaries of LLM generation models.' },
     { title: 'Tech Professionals', focus: 'Productivity', power: 'Very High', desc: 'Working managers & developers looking to optimize workflows.' },
     { title: 'Freelancers & Creators', focus: 'No-code Builders', power: 'Medium', desc: 'Solopreneurs building custom assets without engineering degrees.' },
-    { title: 'Startup-Minded / Students', focus: 'MVPs & Tiny Products', power: 'Medium', desc: 'Aspiring builders wanting to ship software quickly.' }
+    { title: 'Startup-Minded / Students', focus: 'MVPs & Tiny Products', power: 'Medium', desc: 'Aspiring builders wanting to ship software quickly.' },
+    { title: 'Non-Tech Solopreneurs', focus: 'Startup MVPs', power: 'High', desc: 'Founders building early MVPs to validate startup concepts without dev budgets.' },
+    { title: 'Operations & HR Managers', focus: 'Admin Automation', power: 'Very High', desc: 'Corporate staff automating repetitive spreadsheets, data sorting, and alert queues.' },
+    { title: 'Agency Owners & Consultants', focus: 'Bespoke Micro-tools', power: 'High', desc: 'Service firms building custom utility widgets to automate client audits and analytics.' },
+    { title: 'E-commerce & Local Retailers', focus: 'Inventory & CRM', power: 'High', desc: 'Small business owners deploying custom log sheets, stock indicators, and ledgers.' }
   ];
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', height: '100%', justifyContent: 'center' }}>
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', height: '100%', minHeight: 0 }}>
+      <div style={{ 
+        flexGrow: 1, 
+        overflowY: 'auto', 
+        display: 'grid', 
+        gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))', 
+        gap: '10px', 
+        minHeight: 0,
+        paddingRight: '4px'
+      }}>
         {segments.map((s) => (
           <div 
             key={s.title}
             className="glass-panel interactive"
             style={{ 
-              padding: '14px 18px', 
+              padding: '12px 16px', 
               background: 'var(--color-surface)',
               transition: 'var(--transition-fast)'
             }}
           >
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
-              <strong style={{ fontSize: '0.88rem', color: '#ffffff', fontFamily: 'var(--font-display)' }}>{s.title}</strong>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '4px' }}>
+              <strong style={{ fontSize: '0.85rem', color: '#ffffff', fontFamily: 'var(--font-display)' }}>{s.title}</strong>
               <span style={{ 
-                fontSize: '0.62rem', 
+                fontSize: '0.6rem', 
                 background: 'rgba(6, 182, 212, 0.1)', 
                 color: 'var(--color-cyan)', 
                 padding: '2px 6px', 
@@ -38,11 +50,11 @@ export const AudienceList: React.FC = () => {
                 Purchasing Power: {s.power}
               </span>
             </div>
-            <p style={{ fontSize: '0.78rem', color: '#9ca3af', lineHeight: 1.4 }}>{s.desc}</p>
+            <p style={{ fontSize: '0.72rem', color: '#9ca3af', lineHeight: 1.35, margin: 0 }}>{s.desc}</p>
           </div>
         ))}
       </div>
-      <div className="glass-panel" style={{ padding: '12px 16px', background: 'rgba(99, 102, 241, 0.05)', fontSize: '0.78rem', color: '#9ca3af', borderLeft: '3px solid var(--color-indigo)' }}>
+      <div className="glass-panel" style={{ padding: '10px 14px', background: 'rgba(99, 102, 241, 0.05)', fontSize: '0.72rem', color: '#9ca3af', borderLeft: '3px solid var(--color-indigo)', flexShrink: 0 }}>
         🎯 <strong>High-Quality English Audience:</strong> Since the niche focuses on AI workflows, digital automation, and code orchestration, it attracts audiences with high monetization potential.
       </div>
     </div>

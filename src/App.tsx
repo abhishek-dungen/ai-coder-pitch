@@ -352,25 +352,25 @@ export const App: React.FC = () => {
         </section>
 
         {/* SLIDE 8: TARGET AUDIENCE */}
-        <section className="slide">
+        <section className="slide" style={{ padding: '70px 40px 60px 40px' }}>
           <motion.div 
             initial={{ opacity: 0, x: 50 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: false, amount: 0.1 }}
             transition={{ duration: 0.6 }}
             className="slide-content-wrapper"
+            style={{ gridTemplateColumns: '1fr' }}
           >
-            <div className="slide-title-area">
-              <span className="tagline">This AI_CODING_WITH_ABHISHEK</span>
-              <h2 className="title-large">Target <span className="title-accent">Audience</span></h2>
-              <p className="slide-description">
-                AI enthusiasts, tech-curious professionals, freelancers, creators, and students.
-              </p>
-              <p style={{ fontSize: '0.9rem', color: '#9ca3af', lineHeight: 1.5 }}>
-                Because the content focuses on practical, visual web tools and code workflows, the channel attracts a high-quality audience base with strong retention and spending capacity.
-              </p>
+            <div style={{ display: 'flex', flexDirection: 'column', height: '100%', width: '100%', gap: '8px' }}>
+              <div style={{ textAlign: 'center' }}>
+                <h2 className="title-large" style={{ fontSize: '2rem', marginBottom: '4px' }}>
+                  Target <span className="title-accent">Audience</span>
+                </h2>
+              </div>
+              <div style={{ flexGrow: 1, minHeight: 0, display: 'flex', flexDirection: 'column', marginTop: '4px' }}>
+                <AudienceList />
+              </div>
             </div>
-            <AudienceList />
           </motion.div>
         </section>
 
