@@ -210,8 +210,9 @@ export const ContentWorkflow: React.FC = () => {
                 width: isActive ? '250px' : '120px',
                 borderRadius: isActive ? '12px' : '16px',
                 background: isActive 
-                  ? `linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, ${step.color}0a 100%)` 
+                  ? 'rgba(11, 15, 26, 0.98)' // Opaque background to prevent text overlays from showing through
                   : 'rgba(255, 255, 255, 0.02)',
+                backdropFilter: isActive ? 'blur(12px)' : 'none',
                 border: `1.5px solid ${isActive ? step.color : 'rgba(255, 255, 255, 0.06)'}`,
                 padding: isActive ? '10px 12px' : '0 10px',
                 height: `${pos.height}px`,
@@ -444,8 +445,9 @@ export const ContentWorkflow: React.FC = () => {
                 width: isActive ? '250px' : '120px',
                 borderRadius: isActive ? '12px' : '16px',
                 background: isActive 
-                  ? `linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, ${step.color}0a 100%)` 
+                  ? 'rgba(11, 15, 26, 0.98)' // Opaque background to prevent text overlays from showing through
                   : 'rgba(255, 255, 255, 0.02)',
+                backdropFilter: isActive ? 'blur(12px)' : 'none',
                 border: `1.5px solid ${isActive ? step.color : 'rgba(255, 255, 255, 0.06)'}`,
                 padding: isActive ? '12px 14px' : '0 10px',
                 height: `${pos.height}px`,
