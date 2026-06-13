@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { BookOpen, Handshake, Percent, Presentation, Code2 } from 'lucide-react';
 
 /* ==========================================================================
    1. AUDIENCE MODULE
@@ -269,140 +268,270 @@ export const AudienceList: React.FC = () => {
 };
 
 
-/* ==========================================================================
-   2. MONETIZATION CARD FLIPS
-   ========================================================================== */
-interface MonetizationItem {
+interface Stream {
   id: number;
   title: string;
-  icon: React.ReactNode;
-  frontDesc: string;
-  backAction: string;
+  desc: string;
+  strategy: string;
   color: string;
+  formulaLabel: string;
+  calc: (subs: number, coursePrice: number, sponsorsCount: number) => number;
 }
 
 export const MonetizationGrid: React.FC = () => {
-  const [flippedCardId, setFlippedCardId] = useState<number | null>(null);
+  const [activeStreamId, setActiveStreamId] = useState<number>(1);
+  const [subscribers, setSubscribers] = useState<number>(50); // in thousands (10 to 300)
+  const [coursePrice, setCoursePrice] = useState<number>(99); // in dollars
+  const [sponsorsCount, setSponsorsCount] = useState<number>(2); // 1 to 4
 
-  const channels: MonetizationItem[] = [
+  const streams: Stream[] = [
     {
       id: 1,
       title: 'Practical AI Course',
-      icon: <BookOpen size={20} />,
-      frontDesc: 'Launch structural program teaching AI-assisted building workflows.',
-      backAction: 'Teach non-engineers to construct fully-functional apps, dashboards, and automated scrapers.',
-      color: 'var(--color-cyan)'
+      desc: 'Launch structural cohorts teaching AI-assisted workspace building workflows.',
+      strategy: 'Develop a 4-week cohort training program. Teach non-engineers to construct fully functional pages, scrapers, and dashboards.',
+      color: 'var(--color-cyan)',
+      formulaLabel: '0.3% conversion of subscribers per year at selected cohort fee',
+      calc: (subs, price, sponsors) => Math.round((subs * 1000 * 0.003 * price) / 12) + (sponsors * 0)
     },
     {
       id: 2,
       title: 'SaaS Tool Sponsorships',
-      icon: <Handshake size={20} />,
-      frontDesc: 'Paid placements from developer co-pilots and digital automators.',
-      backAction: 'Showcase paid integrations (Cursor, SaaS APIs) seamlessly inside workflow solving videos.',
-      color: 'var(--color-indigo)'
+      desc: 'Paid placements from developer co-pilots and digital automators.',
+      strategy: 'Showcase tools (like Cursor, Replit, or local database services) solving real-world bottlenecks in tutorials.',
+      color: 'var(--color-indigo)',
+      formulaLabel: '$35 CPM on average video view volumes (est. 1.2x subscriber reach monthly)',
+      calc: (subs, price, sponsors) => Math.round(subs * 1000 * 1.2 * sponsors * (35 / 1000)) + (price * 0)
     },
     {
       id: 3,
       title: '1-on-1 Consulting',
-      icon: <Presentation size={20} />,
-      frontDesc: 'Advise business creators on internal automation pipelines.',
-      backAction: 'Help client organizations optimize administrative manual sheets and deploy custom trackers.',
-      color: 'var(--color-magenta)'
+      desc: 'Advise business creators on internal automation pipelines.',
+      strategy: 'Offer custom pipeline consulting audits to companies wanting to deploy agent-led scrapers and reports dashboards.',
+      color: 'var(--color-magenta)',
+      formulaLabel: 'Est. 2 custom enterprise pipeline audits per month at standard rate scaling with channel scale',
+      calc: (subs, price, sponsors) => Math.round(1500 + (subs * 10)) + (price * 0) + (sponsors * 0)
     },
     {
       id: 4,
       title: 'Affiliate Commissions',
-      icon: <Percent size={20} />,
-      frontDesc: 'Recommend premium AI subscriptions, compilers, and APIs.',
-      backAction: 'Earn payouts on cursor-copilot recommendations or database backend signups via track links.',
-      color: 'var(--color-cyan)'
+      desc: 'Recommend premium AI subscriptions, compilers, and database APIs.',
+      strategy: 'Earn recurring payouts on compiler subscriptions, Claude APIs, database backends, and cursor-copilots recommendations.',
+      color: '#10b981', // Emerald
+      formulaLabel: '0.8% active subscriber base using affiliate links generating average $4/mo payout',
+      calc: (subs, price, sponsors) => Math.round(subs * 1000 * 0.008 * 4) + (price * 0) + (sponsors * 0)
     },
     {
       id: 5,
       title: 'Webinar Collabs',
-      icon: <Presentation size={20} />,
-      frontDesc: 'Co-host ticketed hackathons or AI workshops.',
-      backAction: 'Host live training webinars teaching quick workflow creation and funnel traffic to courses.',
-      color: 'var(--color-indigo)'
+      desc: 'Co-host ticketed hackathons or AI workshops.',
+      strategy: 'Run monthly live training webinars teaching quick workflow creation and funneling traffic to courses.',
+      color: '#f59e0b', // Gold
+      formulaLabel: 'Monthly attendance of 0.25% of subscriber reach at $19 ticket fee',
+      calc: (subs, price, sponsors) => Math.round(subs * 1000 * 0.0025 * 19) + (price * 0) + (sponsors * 0)
     },
     {
       id: 6,
       title: 'Own AI Products',
-      icon: <Code2 size={20} />,
-      frontDesc: 'Build and sell micro templates, logs, and dashboard widgets.',
-      backAction: 'Launch standalone tools (like Zoom logs parsers) as micro-SaaS subscriptions for the community.',
-      color: 'var(--color-magenta)'
+      desc: 'Build and sell micro templates, logs, and dashboard widgets.',
+      strategy: 'Launch standalone tools (like Zoom logs attendance checkers) as micro-SaaS subscriptions for the community.',
+      color: '#8b5cf6', // Purple
+      formulaLabel: '0.15% subscriber base paying monthly $15 subscription fee for micro-utilities',
+      calc: (subs, price, sponsors) => Math.round(subs * 1000 * 0.0015 * 15) + (price * 0) + (sponsors * 0)
     }
   ];
 
-  const handleCardClick = (id: number) => {
-    setFlippedCardId(flippedCardId === id ? null : id);
-  };
+  const activeStream = streams.find(s => s.id === activeStreamId) || streams[0];
+
+  // Calculations
+  const activeStreamRev = activeStream.calc(subscribers, coursePrice, sponsorsCount);
+  const totalRev = streams.reduce((acc, curr) => acc + curr.calc(subscribers, coursePrice, sponsorsCount), 0);
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', height: '100%', justifyContent: 'center' }}>
-      <div style={{ fontSize: '0.8rem', color: '#9ca3af', fontFamily: 'var(--font-mono)' }}>
-        CLICK CARDS TO FLIP & VIEW DETAILS
-      </div>
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '12px', perspective: '1000px' }}>
-        {channels.map((c) => {
-          const isFlipped = flippedCardId === c.id;
-          return (
-            <div 
-              key={c.id}
-              onClick={() => handleCardClick(c.id)}
-              className="interactive"
-              style={{ 
-                height: '110px', 
-                cursor: 'pointer',
-                position: 'relative',
-                transformStyle: 'preserve-3d',
-                transform: isFlipped ? 'rotateY(180deg)' : 'none',
-                transition: 'transform 0.5s cubic-bezier(0.4, 0, 0.2, 1)'
-              }}
-            >
-              {/* Front Face */}
-              <div className="glass-panel" style={{
-                position: 'absolute',
-                inset: 0,
-                backfaceVisibility: 'hidden',
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'center',
-                padding: '12px',
-                borderLeft: `2.5px solid ${c.color}`,
-                background: 'var(--color-surface)',
-                boxShadow: '0 8px 16px rgba(0,0,0,0.15)'
-              }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'white', marginBottom: '4px' }}>
-                  <span style={{ color: c.color }}>{c.icon}</span>
-                  <strong style={{ fontSize: '0.8rem', fontFamily: 'var(--font-display)' }}>{c.title}</strong>
-                </div>
-                <p style={{ fontSize: '0.68rem', color: '#9ca3af', lineHeight: 1.3 }}>{c.frontDesc}</p>
-              </div>
+    <div style={{ display: 'flex', gap: '20px', width: '100%', height: '100%', minHeight: 0, boxSizing: 'border-box' }}>
+      {/* Left Column: Simulation Inputs */}
+      <div 
+        className="glass-panel"
+        style={{ 
+          width: '280px', 
+          flexShrink: 0, 
+          padding: '14px 18px', 
+          background: 'var(--color-surface)',
+          display: 'flex', 
+          flexDirection: 'column', 
+          gap: '12px',
+          borderRadius: '12px',
+          justifyContent: 'center',
+          borderColor: 'rgba(255, 255, 255, 0.06)'
+        }}
+      >
+        <div style={{ borderBottom: '1px solid rgba(255, 255, 255, 0.06)', paddingBottom: '6px' }}>
+          <strong style={{ fontSize: '0.78rem', color: '#ffffff', fontFamily: 'var(--font-mono)', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+            📊 REVENUE SIMULATOR
+          </strong>
+        </div>
 
-              {/* Back Face */}
-              <div className="glass-panel" style={{
-                position: 'absolute',
-                inset: 0,
-                backfaceVisibility: 'hidden',
-                transform: 'rotateY(180deg)',
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'center',
-                padding: '12px',
-                background: 'rgba(99, 102, 241, 0.12)',
-                borderColor: 'var(--color-indigo)',
-                boxShadow: '0 8px 16px rgba(99, 102, 241, 0.1)'
-              }}>
-                <strong style={{ fontSize: '0.72rem', color: 'var(--color-cyan)', fontFamily: 'var(--font-mono)', marginBottom: '4px' }}>
-                  Action Strategy:
-                </strong>
-                <p style={{ fontSize: '0.68rem', color: '#f3f4f6', lineHeight: 1.3 }}>{c.backAction}</p>
-              </div>
+        {/* Reach Slider */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.68rem', color: '#94a3b8', fontFamily: 'var(--font-mono)' }}>
+            <span>SUBSCRIBER REACH</span>
+            <span style={{ color: 'var(--color-cyan)', fontWeight: 'bold' }}>{subscribers}K</span>
+          </div>
+          <input 
+            type="range"
+            min="10"
+            max="300"
+            step="10"
+            value={subscribers}
+            onChange={(e) => setSubscribers(Number(e.target.value))}
+            className="custom-range interactive"
+            style={{ width: '100%' }}
+          />
+        </div>
+
+        {/* Course Price Slider */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.68rem', color: '#94a3b8', fontFamily: 'var(--font-mono)' }}>
+            <span>COHORT COURSE PRICE</span>
+            <span style={{ color: 'var(--color-magenta)', fontWeight: 'bold' }}>${coursePrice}</span>
+          </div>
+          <input 
+            type="range"
+            min="49"
+            max="299"
+            step="10"
+            value={coursePrice}
+            onChange={(e) => setCoursePrice(Number(e.target.value))}
+            className="custom-range interactive"
+            style={{ width: '100%' }}
+          />
+        </div>
+
+        {/* Sponsors Slider */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.68rem', color: '#94a3b8', fontFamily: 'var(--font-mono)' }}>
+            <span>SPONSORSHIPS / MONTH</span>
+            <span style={{ color: 'var(--color-indigo)', fontWeight: 'bold' }}>{sponsorsCount} campaigns</span>
+          </div>
+          <input 
+            type="range"
+            min="1"
+            max="4"
+            step="1"
+            value={sponsorsCount}
+            onChange={(e) => setSponsorsCount(Number(e.target.value))}
+            className="custom-range interactive"
+            style={{ width: '100%' }}
+          />
+        </div>
+      </div>
+
+      {/* Right Column: Dynamic Output */}
+      <div style={{ flexGrow: 1, minWidth: 0, display: 'flex', flexDirection: 'column', gap: '12px' }}>
+        {/* Streams Selector (3x2 grid) */}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '8px' }}>
+          {streams.map((s) => {
+            const isActive = s.id === activeStreamId;
+            return (
+              <button
+                key={s.id}
+                onClick={() => setActiveStreamId(s.id)}
+                className="interactive"
+                style={{
+                  padding: '6px 8px',
+                  borderRadius: '6px',
+                  background: isActive ? 'rgba(255, 255, 255, 0.04)' : 'rgba(255, 255, 255, 0.01)',
+                  border: `1.5px solid ${isActive ? s.color : 'rgba(255, 255, 255, 0.05)'}`,
+                  color: isActive ? '#ffffff' : '#9ca3af',
+                  fontSize: '0.72rem',
+                  fontFamily: 'var(--font-display)',
+                  fontWeight: isActive ? 700 : 500,
+                  cursor: 'pointer',
+                  textAlign: 'center',
+                  whiteSpace: 'nowrap',
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                  transition: 'all 0.2s ease',
+                  boxShadow: isActive ? `0 0 10px ${s.color}15` : 'none'
+                }}
+              >
+                {s.title}
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Selected Stream Details and Projections */}
+        <div 
+          className="glass-panel"
+          style={{
+            flexGrow: 1,
+            border: `1.5px solid ${activeStream.color}`,
+            background: 'linear-gradient(135deg, rgba(13, 17, 28, 0.7) 0%, rgba(255, 255, 255, 0.01) 100%)',
+            boxShadow: `0 0 25px ${activeStream.color}0a`,
+            padding: '14px 18px',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between',
+            borderRadius: '12px',
+            transition: 'border-color 0.3s ease, box-shadow 0.3s ease',
+            minHeight: 0
+          }}
+        >
+          {/* Strategy Details */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <strong style={{ fontSize: '0.85rem', color: '#ffffff', fontFamily: 'var(--font-display)' }}>
+                {activeStream.title} Strategy
+              </strong>
+              <span style={{ fontSize: '0.62rem', color: activeStream.color, fontFamily: 'var(--font-mono)' }}>
+                STREAM ACTIVE
+              </span>
             </div>
-          );
-        })}
+            <p style={{ fontSize: '0.72rem', color: '#cbd5e1', lineHeight: 1.35, margin: '2px 0 0 0' }}>
+              {activeStream.strategy}
+            </p>
+          </div>
+
+          {/* Formulas and Projections Grid */}
+          <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 0.8fr', gap: '16px', background: 'rgba(255,255,255,0.01)', border: '1px solid rgba(255,255,255,0.04)', borderRadius: '8px', padding: '8px 12px', margin: '4px 0' }}>
+            {/* Left: Projection Rule */}
+            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+              <span style={{ fontSize: '0.58rem', color: '#94a3b8', fontFamily: 'var(--font-mono)', textTransform: 'uppercase' }}>PROJECTION METRIC</span>
+              <span style={{ fontSize: '0.65rem', color: '#e2e8f0', marginTop: '2px', lineHeight: 1.25 }}>
+                {activeStream.formulaLabel}
+              </span>
+            </div>
+            {/* Right: Revenue stats */}
+            <div style={{ borderLeft: '1px solid rgba(255,255,255,0.06)', paddingLeft: '16px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+              <span style={{ fontSize: '0.58rem', color: '#94a3b8', fontFamily: 'var(--font-mono)' }}>EST. MONTHLY STREAM</span>
+              <span style={{ fontSize: '1rem', color: activeStream.color, fontWeight: 700, fontFamily: 'var(--font-display)', marginTop: '2px' }}>
+                ${activeStreamRev.toLocaleString()}
+              </span>
+            </div>
+          </div>
+
+          {/* Aggregate Footnote Dashboard */}
+          <div style={{
+            background: 'rgba(99, 102, 241, 0.05)',
+            borderLeft: '3px solid var(--color-indigo)',
+            padding: '8px 12px',
+            borderRadius: '4px',
+            fontSize: '0.75rem',
+            color: '#ffffff',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            flexShrink: 0,
+            marginTop: '2px',
+            fontFamily: 'var(--font-display)'
+          }}>
+            <span>🚀 <strong>Aggregated Projected Revenue:</strong></span>
+            <span style={{ fontSize: '0.9rem', color: 'var(--color-cyan)', fontWeight: 800 }}>
+              ${totalRev.toLocaleString()} / mo
+            </span>
+          </div>
+        </div>
       </div>
     </div>
   );
