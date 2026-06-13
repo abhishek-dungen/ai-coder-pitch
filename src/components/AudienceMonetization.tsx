@@ -20,7 +20,6 @@ interface AudienceSegment {
   solutions: string[];
   funnel: string;
   color: string;
-  icon: React.ComponentType<{ size?: number; style?: React.CSSProperties }>;
 }
 
 export const AudienceList: React.FC = () => {
@@ -38,8 +37,7 @@ export const AudienceList: React.FC = () => {
       painPoints: ['API rate limits and tokens usage', 'Integrating multiple agent steps', 'Creating responsive frontends for models'],
       solutions: ['Provide ready-to-run wrappers', 'Step-by-step LLM configurations', 'Zero-setup interactive sandboxes'],
       color: 'var(--color-cyan)',
-      funnel: 'YouTube Prompt Breakdown ➔ GitHub Templates ➔ Premium Discord Community',
-      icon: Cpu
+      funnel: 'YouTube Prompt Breakdown ➔ GitHub Templates ➔ Premium Discord Community'
     },
     {
       id: 2,
@@ -52,8 +50,7 @@ export const AudienceList: React.FC = () => {
       painPoints: ['Repetitive administrative boilerplate', 'Slow scripting setups', 'Difficulty learning new dev frameworks'],
       solutions: ['Vite + TypeScript boilerplate files', 'Optimized prompt configurations', 'SaaS database quickstart files'],
       color: 'var(--color-indigo)',
-      funnel: 'LinkedIn Case Study ➔ GitHub Gist Templates ➔ Professional Consulting Offers',
-      icon: Briefcase
+      funnel: 'LinkedIn Case Study ➔ GitHub Gist Templates ➔ Professional Consulting Offers'
     },
     {
       id: 3,
@@ -66,8 +63,7 @@ export const AudienceList: React.FC = () => {
       painPoints: ['Lack of traditional coding background', 'Expensive software subscriptions', 'SaaS maintenance worries'],
       solutions: ['Zero-code templates in sandbox', 'Automated scrapers and parsers', 'Free hosting on GitHub Pages/Vercel'],
       color: 'var(--color-magenta)',
-      funnel: 'Instagram Reel Hook ➔ Free Tool Template link ➔ Practical Cohort Classes',
-      icon: Sparkles
+      funnel: 'Instagram Reel Hook ➔ Free Tool Template link ➔ Practical Cohort Classes'
     },
     {
       id: 4,
@@ -80,8 +76,7 @@ export const AudienceList: React.FC = () => {
       painPoints: ['High costs of hiring developers', 'Slow cycles to launch validation', 'Uncertainty around product scaling'],
       solutions: ['MVP UI boilerplates', 'API connector prompt configs', 'Low-maintenance database guides'],
       color: '#10b981',
-      funnel: 'YouTube MVP Build Vlog ➔ GitHub Template link ➔ 1-on-1 Consulting Call',
-      icon: Presentation
+      funnel: 'YouTube MVP Build Vlog ➔ GitHub Template link ➔ 1-on-1 Consulting Call'
     },
     {
       id: 5,
@@ -94,8 +89,7 @@ export const AudienceList: React.FC = () => {
       painPoints: ['Manual report assembly tasks', 'Siloed data inside files', 'Lack of custom corporate tooling'],
       solutions: ['Zoom CSV attendance parsers', 'Expense ledger loggers', 'CRON auto-email schedules'],
       color: '#f59e0b',
-      funnel: 'LinkedIn Workflow Article ➔ Interactive Tool Simulator ➔ Custom Team Hackathons',
-      icon: Users
+      funnel: 'LinkedIn Workflow Article ➔ Interactive Tool Simulator ➔ Custom Team Hackathons'
     },
     {
       id: 6,
@@ -108,405 +102,169 @@ export const AudienceList: React.FC = () => {
       painPoints: ['Client report compilation time', 'Need to deliver custom value fast', 'Data scraping requirements'],
       solutions: ['PDF invoice generators', 'Social growth comparison checkers', 'Web scraper scripts'],
       color: '#8b5cf6',
-      funnel: 'YouTube Tutorial on Micro-SaaS ➔ Template repository ➔ Cohort/Enterprise Consulting',
-      icon: Handshake
+      funnel: 'YouTube Tutorial on Micro-SaaS ➔ Template repository ➔ Cohort/Enterprise Consulting'
     }
   ];
 
   const activeSeg = segments[activeIndex];
-  const ActiveIcon = activeSeg.icon;
 
   return (
-    <div 
-      style={{ 
-        display: 'grid', 
-        gridTemplateColumns: '270px 1fr', 
-        gap: '20px', 
-        width: '100%', 
-        height: '100%', 
-        minHeight: 0, 
-        boxSizing: 'border-box',
-        perspective: '1200px',
-        overflow: 'hidden'
-      }}
-    >
-      <style>{`
-        @keyframes avatar-pulse {
-          0% { transform: translateY(0px) scale(1); filter: drop-shadow(0 0 10px var(--color-glow)); }
-          50% { transform: translateY(-10px) scale(1.05); filter: drop-shadow(0 0 25px var(--color-glow)); }
-          100% { transform: translateY(0px) scale(1); filter: drop-shadow(0 0 10px var(--color-glow)); }
-        }
-        @keyframes line-glow {
-          0% { left: 0%; opacity: 0; }
-          20% { opacity: 0.8; }
-          80% { opacity: 0.8; }
-          100% { left: 100%; opacity: 0; }
-        }
-        @keyframes blueprint-spin {
-          from { transform: rotate(0deg); }
-          to { transform: rotate(360deg); }
-        }
-        .hud-panel {
-          transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.6s ease, border-color 0.3s ease;
-        }
-      `}</style>
-
-      {/* LEFT COLUMN: Semi-Circular Persona Ring */}
-      <div 
-        style={{ 
-          position: 'relative',
-          height: '100%', 
-          display: 'flex', 
-          flexDirection: 'column', 
-          justifyContent: 'center', 
-          alignItems: 'center',
-          perspective: '1000px',
-          transformStyle: 'preserve-3d',
-          borderRight: '1px solid rgba(255, 255, 255, 0.04)',
-          paddingRight: '10px',
-          boxSizing: 'border-box'
-        }}
-      >
-        <div style={{ 
-          position: 'relative',
-          width: '100%', 
-          height: '300px',
-          transformStyle: 'preserve-3d',
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
-          gap: '8px'
-        }}>
-          {segments.map((s, idx) => {
-            const diff = idx - activeIndex;
-            const angle = diff * 22; // subtle curvature
-            const isActive = idx === activeIndex;
-
-            const rad = (angle * Math.PI) / 180;
-            const translateY = diff * 44;
-            const translateZ = Math.cos(rad) * 50 - 50;
-            const rotateX = -angle;
-            const opacity = Math.max(0.2, Math.cos(rad));
-            const scale = isActive ? 1 : 0.85;
-
-            return (
-              <div 
-                key={s.id}
-                onClick={() => setActiveIndex(idx)}
-                className="interactive"
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '10px',
-                  padding: '8px 12px',
-                  borderRadius: '8px',
-                  background: isActive ? 'rgba(255, 255, 255, 0.04)' : 'rgba(10, 11, 18, 0.6)',
-                  border: `1.5px solid ${isActive ? s.color : 'rgba(255, 255, 255, 0.05)'}`,
-                  boxShadow: isActive ? `0 0 15px ${s.color}18` : 'none',
-                  cursor: 'pointer',
-                  transform: `translateY(${translateY}px) translateZ(${translateZ}px) rotateX(${rotateX}deg) scale(${scale})`,
-                  opacity: opacity,
-                  transition: 'transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.6s ease, border-color 0.3s ease',
-                  backfaceVisibility: 'hidden',
-                  zIndex: 10 - Math.abs(diff)
-                }}
-              >
-                {/* Number Badge */}
-                <div style={{
-                  width: '16px',
-                  height: '16px',
-                  borderRadius: '50%',
-                  border: `1.5px solid ${s.color}`,
-                  color: s.color,
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  fontSize: '0.6rem',
-                  fontWeight: 800,
-                  fontFamily: 'var(--font-mono)',
-                  background: isActive ? `${s.color}15` : 'transparent',
-                  flexShrink: 0
-                }}>
-                  {s.id}
-                </div>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '1px', overflow: 'hidden', textAlign: 'left' }}>
-                  <span style={{ 
-                    color: isActive ? '#ffffff' : '#9ca3af', 
-                    fontSize: '0.72rem', 
-                    fontWeight: isActive ? 700 : 500,
-                    fontFamily: 'var(--font-display)',
-                    whiteSpace: 'nowrap'
-                  }}>
-                    {s.title}
-                  </span>
-                  <span style={{ fontSize: '0.58rem', color: '#64748b', fontFamily: 'var(--font-mono)', whiteSpace: 'nowrap' }}>
-                    {s.focus}
-                  </span>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      </div>
-
-      {/* RIGHT COLUMN: 3D Pedestal Stage */}
-      <div 
-        style={{ 
-          display: 'grid', 
-          gridTemplateRows: '1fr auto', 
-          height: '100%', 
-          minWidth: 0,
-          boxSizing: 'border-box',
-          gap: '12px'
-        }}
-      >
-        {/* Upper Stage (HUDs + Pedestal Projection) */}
-        <div 
-          style={{ 
-            display: 'grid', 
-            gridTemplateColumns: '1.2fr 1fr 1.2fr', 
-            alignItems: 'center',
-            height: '100%', 
-            minHeight: 0,
-            transformStyle: 'preserve-3d',
-            gap: '14px'
-          }}
-        >
-          {/* LEFT: Core Pain Points HUD Panel */}
-          <div 
-            className="glass-panel hud-panel"
-            style={{
-              padding: '12px 14px',
-              height: '220px',
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'flex-start',
-              border: `1.5px solid rgba(244, 63, 94, 0.15)`,
-              background: 'linear-gradient(135deg, rgba(244, 63, 94, 0.02) 0%, rgba(5, 6, 10, 0.85) 100%)',
-              boxShadow: '0 8px 25px rgba(0, 0, 0, 0.35)',
-              transform: 'rotateY(16deg) translateZ(10px)',
-              transformStyle: 'preserve-3d',
-              borderRadius: '12px',
-              boxSizing: 'border-box'
-            }}
-          >
-            <strong style={{ fontSize: '0.68rem', color: '#f43f5e', fontFamily: 'var(--font-mono)', display: 'block', marginBottom: '8px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
-              ⚠️ Core Pain Points
-            </strong>
-            <div style={{ flexGrow: 1, overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: '8px', textAlign: 'left' }}>
-              {activeSeg.painPoints.map((p, i) => (
-                <div key={i} style={{ display: 'flex', gap: '6px', alignItems: 'flex-start', fontSize: '0.66rem', color: '#cbd5e1', lineHeight: 1.35 }}>
-                  <span style={{ color: '#f43f5e', marginTop: '1px' }}>▪</span>
-                  <span>{p}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* CENTER: Projector Pedestal + Hologram Avatar */}
-          <div 
-            style={{ 
-              position: 'relative',
-              height: '240px',
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'center',
-              alignItems: 'center',
-              transformStyle: 'preserve-3d'
-            }}
-          >
-            {/* Blueprint Grid Mesh (Behind Icon) */}
-            <div style={{
-              position: 'absolute',
-              width: '88px',
-              height: '88px',
-              borderRadius: '50%',
-              border: `1.2px dashed ${activeSeg.color}33`,
-              background: `repeating-linear-gradient(0deg, transparent, transparent 4px, ${activeSeg.color}08 4px, ${activeSeg.color}08 5px), repeating-linear-gradient(90deg, transparent, transparent 4px, ${activeSeg.color}08 4px, ${activeSeg.color}08 5px)`,
-              animation: 'blueprint-spin 20s linear infinite',
-              opacity: 0.85,
-              zIndex: 9,
-              pointerEvents: 'none',
-              transition: 'all 0.6s ease'
-            }} />
-
-            {/* Suspended Avatar Icon */}
+    <div style={{ display: 'flex', gap: '20px', width: '100%', height: '100%', minHeight: 0, boxSizing: 'border-box' }}>
+      {/* Left Tabs Stack */}
+      <div style={{ width: '270px', display: 'flex', flexDirection: 'column', gap: '6px', flexShrink: 0, justifyContent: 'center' }}>
+        {segments.map((s, idx) => {
+          const isActive = idx === activeIndex;
+          return (
             <div 
+              key={s.id}
+              onClick={() => setActiveIndex(idx)}
+              className="interactive"
               style={{
-                zIndex: 10,
+                display: 'flex',
+                alignItems: 'center',
+                gap: '10px',
+                padding: '10px 14px',
+                borderRadius: '8px',
+                background: isActive ? 'rgba(255, 255, 255, 0.04)' : 'rgba(255, 255, 255, 0.01)',
+                border: `1.5px solid ${isActive ? s.color : 'rgba(255, 255, 255, 0.05)'}`,
+                boxShadow: isActive ? `0 0 15px ${s.color}15` : 'none',
+                cursor: 'pointer',
+                transition: 'all 0.25s ease'
+              }}
+            >
+              {/* Number Badge */}
+              <div style={{
+                width: '18px',
+                height: '18px',
+                borderRadius: '50%',
+                border: `1.5px solid ${s.color}`,
+                color: s.color,
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                width: '74px',
-                height: '74px',
-                borderRadius: '50%',
-                background: `radial-gradient(circle, ${activeSeg.color}22 0%, rgba(5, 6, 10, 0.7) 70%)`,
-                border: `2px solid ${activeSeg.color}`,
-                boxShadow: `0 0 25px ${activeSeg.color}33`,
-                animation: 'avatar-pulse 4s ease-in-out infinite',
-                transition: 'border-color 0.6s ease, box-shadow 0.6s ease',
-                ...({
-                  '--color-glow': `${activeSeg.color}44`
-                } as React.CSSProperties)
-              }}
-            >
-              <ActiveIcon size={32} style={{ color: activeSeg.color, transition: 'color 0.6s ease' }} />
+                fontSize: '0.65rem',
+                fontWeight: 800,
+                fontFamily: 'var(--font-mono)',
+                background: isActive ? `${s.color}15` : 'transparent',
+                flexShrink: 0
+              }}>
+                {s.id}
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '2px', overflow: 'hidden' }}>
+                <span style={{ 
+                  color: isActive ? '#ffffff' : '#9ca3af', 
+                  fontSize: '0.78rem', 
+                  fontWeight: isActive ? 700 : 500,
+                  fontFamily: 'var(--font-display)',
+                  whiteSpace: 'nowrap'
+                }}>
+                  {s.title}
+                </span>
+                <span style={{ fontSize: '0.62rem', color: '#64748b', fontFamily: 'var(--font-mono)', whiteSpace: 'nowrap' }}>
+                  {s.focus}
+                </span>
+              </div>
             </div>
+          );
+        })}
+      </div>
 
-            {/* Pedestal Top projection cone overlay */}
-            <div style={{
-              position: 'absolute',
-              bottom: '10px',
-              width: '130px',
-              height: '140px',
-              background: `linear-gradient(to top, ${activeSeg.color}15 0%, ${activeSeg.color}01 80%, transparent 100%)`,
-              clipPath: 'polygon(15% 100%, 85% 100%, 100% 0%, 0% 0%)',
-              pointerEvents: 'none',
-              zIndex: 2,
-              transition: 'background 0.6s ease'
-            }} />
-
-            {/* Pedestal base ellipse */}
-            <div style={{
-              position: 'absolute',
-              bottom: '0px',
-              width: '120px',
-              height: '34px',
-              borderRadius: '50%',
-              border: `2.5px solid ${activeSeg.color}`,
-              background: `radial-gradient(ellipse, ${activeSeg.color}25 0%, transparent 70%)`,
-              boxShadow: `0 0 20px ${activeSeg.color}44, inset 0 0 10px ${activeSeg.color}22`,
-              transform: 'rotateX(70deg)',
-              pointerEvents: 'none',
-              zIndex: 1,
-              transition: 'border-color 0.6s ease, box-shadow 0.6s ease'
-            }} />
-          </div>
-
-          {/* RIGHT: Value Proposition HUD Panel */}
-          <div 
-            className="glass-panel hud-panel"
-            style={{
-              padding: '12px 14px',
-              height: '220px',
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'flex-start',
-              border: `1.5px solid rgba(16, 185, 129, 0.15)`,
-              background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.02) 0%, rgba(5, 6, 10, 0.85) 100%)',
-              boxShadow: '0 8px 25px rgba(0, 0, 0, 0.35)',
-              transform: 'rotateY(-16deg) translateZ(10px)',
-              transformStyle: 'preserve-3d',
-              borderRadius: '12px',
-              boxSizing: 'border-box'
-            }}
-          >
-            <strong style={{ fontSize: '0.68rem', color: '#10b981', fontFamily: 'var(--font-mono)', display: 'block', marginBottom: '8px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
-              💡 Value Proposition
-            </strong>
-            <div style={{ flexGrow: 1, overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: '8px', textAlign: 'left' }}>
-              {activeSeg.solutions.map((s, i) => (
-                <div key={i} style={{ display: 'flex', gap: '6px', alignItems: 'flex-start', fontSize: '0.66rem', color: '#cbd5e1', lineHeight: 1.35 }}>
-                  <span style={{ color: '#10b981', marginTop: '1px' }}>▪</span>
-                  <span>{s}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        {/* Lower Stage (Acquisition Funnel HUD Pipeline) */}
+      {/* Right Details Panel */}
+      <div style={{ flexGrow: 1, minWidth: 0, height: '100%' }}>
         <div 
           className="glass-panel"
           style={{
-            padding: '10px 16px',
-            background: 'var(--color-surface)',
-            border: '1px solid rgba(255, 255, 255, 0.04)',
-            borderRadius: '10px',
+            height: '100%',
+            boxSizing: 'border-box',
+            border: `1.5px solid ${activeSeg.color}`,
+            background: 'linear-gradient(135deg, rgba(13, 17, 28, 0.7) 0%, rgba(255, 255, 255, 0.01) 100%)',
+            boxShadow: `0 0 25px ${activeSeg.color}0a`,
+            padding: '16px 20px',
             display: 'flex',
             flexDirection: 'column',
-            gap: '6px',
-            boxSizing: 'border-box',
-            flexShrink: 0
+            justifyContent: 'space-between',
+            borderRadius: '12px',
+            transition: 'border-color 0.3s ease, box-shadow 0.3s ease'
           }}
         >
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <span style={{ fontSize: '0.58rem', color: '#64748b', fontFamily: 'var(--font-mono)', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
-              🎯 Channel Acquisition Pipeline
-            </span>
-            <span style={{ fontSize: '0.55rem', color: activeSeg.color, fontFamily: 'var(--font-mono)', fontWeight: 'bold' }}>
-              CONVERSION TUNNEL
+          {/* Header */}
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid rgba(255, 255, 255, 0.06)', paddingBottom: '8px', flexShrink: 0 }}>
+            <h3 style={{ fontSize: '1.05rem', color: 'white', fontWeight: 700, margin: 0, fontFamily: 'var(--font-display)' }}>
+              {activeSeg.title} Profile
+            </h3>
+            <span style={{ 
+              fontSize: '0.65rem', 
+              background: `${activeSeg.color}15`, 
+              color: activeSeg.color, 
+              padding: '2px 8px', 
+              borderRadius: '12px',
+              fontWeight: 600,
+              border: `1px solid ${activeSeg.color}33`,
+              fontFamily: 'var(--font-mono)'
+            }}>
+              {activeSeg.focus}
             </span>
           </div>
 
-          {/* Pipeline Nodes Map */}
-          <div style={{ 
-            position: 'relative', 
-            display: 'flex', 
-            justifyContent: 'space-between', 
-            alignItems: 'center', 
-            margin: '8px 0', 
-            padding: '0 20px'
-          }}>
-            {/* Connecting Pipe Line */}
-            <div style={{ 
-              position: 'absolute', 
-              left: '30px', 
-              right: '30px', 
-              top: '50%', 
-              transform: 'translateY(-50%)', 
-              height: '2px', 
-              background: 'rgba(255,255,255,0.05)',
-              overflow: 'hidden'
-            }}>
-              {/* Traveling light pulse */}
-              <div style={{
-                position: 'absolute',
-                top: 0,
-                width: '60px',
-                height: '100%',
-                background: `linear-gradient(90deg, transparent, ${activeSeg.color}, transparent)`,
-                animation: 'line-glow 2.5s linear infinite'
-              }} />
-            </div>
+          {/* Description */}
+          <p style={{ fontSize: '0.75rem', color: '#cbd5e1', lineHeight: 1.4, margin: '8px 0', flexShrink: 0 }}>
+            {activeSeg.desc}
+          </p>
 
-            {/* Split funnel stages */}
-            {activeSeg.funnel.split('➔').map((stage, idx) => {
-              return (
-                <div 
-                  key={idx} 
-                  style={{ 
-                    position: 'relative', 
-                    display: 'flex', 
-                    flexDirection: 'column', 
-                    alignItems: 'center',
-                    zIndex: 3
-                  }}
-                >
-                  {/* Node Connector */}
-                  <div style={{
-                    width: '12px',
-                    height: '12px',
-                    borderRadius: '50%',
-                    border: `1.5px solid ${activeSeg.color}`,
-                    background: '#090a0f',
-                    boxShadow: `0 0 10px ${activeSeg.color}44`,
-                    transition: 'border-color 0.6s ease, box-shadow 0.6s ease'
-                  }} />
-                  {/* Label */}
-                  <span style={{ 
-                    fontSize: '0.64rem', 
-                    color: '#cbd5e1', 
-                    fontWeight: 600, 
-                    marginTop: '4px',
-                    fontFamily: 'var(--font-display)',
-                    whiteSpace: 'nowrap'
-                  }}>
-                    {stage.trim()}
-                  </span>
-                </div>
-              );
-            })}
+          {/* Metrics Grid */}
+          <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 0.8fr', gap: '16px', background: 'rgba(255,255,255,0.01)', border: '1px solid rgba(255,255,255,0.04)', borderRadius: '8px', padding: '10px 14px', margin: '4px 0', flexShrink: 0 }}>
+            {/* Purchasing Power Bar */}
+            <div>
+              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.65rem', color: '#94a3b8', fontFamily: 'var(--font-mono)', marginBottom: '4px' }}>
+                <span>PURCHASING POWER</span>
+                <span style={{ color: activeSeg.color, fontWeight: 'bold' }}>{activeSeg.power}</span>
+              </div>
+              <div style={{ width: '100%', height: '6px', background: 'rgba(255,255,255,0.06)', borderRadius: '3px', overflow: 'hidden' }}>
+                <div style={{ width: `${activeSeg.powerPercent}%`, height: '100%', background: activeSeg.color, borderRadius: '3px', transition: 'width 0.5s ease-in-out' }} />
+              </div>
+            </div>
+            {/* Intent indicator */}
+            <div style={{ borderLeft: '1px solid rgba(255,255,255,0.06)', paddingLeft: '16px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+              <span style={{ fontSize: '0.6rem', color: '#94a3b8', fontFamily: 'var(--font-mono)' }}>ENGAGEMENT INTENT</span>
+              <span style={{ fontSize: '0.85rem', color: '#ffffff', fontWeight: 700, fontFamily: 'var(--font-display)', marginTop: '2px' }}>{activeSeg.intent}</span>
+            </div>
+          </div>
+
+          {/* Core Pain Points vs Solutions list */}
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px', flexGrow: 1, minHeight: 0, overflowY: 'auto', margin: '4px 0' }}>
+            <div>
+              <strong style={{ fontSize: '0.68rem', color: '#f43f5e', fontFamily: 'var(--font-mono)', display: 'block', marginBottom: '4px', textTransform: 'uppercase' }}>
+                ⚠️ Core Pain Points
+              </strong>
+              <ul style={{ paddingLeft: '12px', margin: 0, fontSize: '0.68rem', color: '#9ca3af', display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                {activeSeg.painPoints.map((p, i) => <li key={i} style={{ lineHeight: 1.3 }}>{p}</li>)}
+              </ul>
+            </div>
+            <div style={{ borderLeft: '1px solid rgba(255, 255, 255, 0.06)', paddingLeft: '12px' }}>
+              <strong style={{ fontSize: '0.68rem', color: '#10b981', fontFamily: 'var(--font-mono)', display: 'block', marginBottom: '4px', textTransform: 'uppercase' }}>
+                💡 Value Proposition
+              </strong>
+              <ul style={{ paddingLeft: '12px', margin: 0, fontSize: '0.68rem', color: '#9ca3af', display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                {activeSeg.solutions.map((s, i) => <li key={i} style={{ lineHeight: 1.3 }}>{s}</li>)}
+              </ul>
+            </div>
+          </div>
+
+          {/* Funnel Footnote */}
+          <div style={{
+            background: 'rgba(99, 102, 241, 0.05)',
+            borderLeft: '3px solid var(--color-indigo)',
+            padding: '8px 12px',
+            borderRadius: '4px',
+            fontSize: '0.68rem',
+            color: '#9ca3af',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '6px',
+            flexShrink: 0,
+            marginTop: '6px'
+          }}>
+            🎯 <strong style={{ color: 'white' }}>Acquisition Funnel:</strong> {activeSeg.funnel}
           </div>
         </div>
       </div>
@@ -653,76 +411,37 @@ export const MonetizationGrid: React.FC = () => {
 
   const ActiveIcon = activeStream.icon;
 
-  // Kinetic rotation calculation based on simulator values
-  const rotationSpeed = 2 + (subscribers / 40) + (coursePrice / 1500) + (sponsorsCount * 0.8);
-
   return (
-    <div 
-      style={{ 
-        display: 'grid', 
-        gridTemplateColumns: '240px 1fr 1.2fr', 
-        gap: '16px', 
-        width: '100%', 
-        height: '100%', 
-        minHeight: 0, 
-        boxSizing: 'border-box'
-      }}
-    >
-      <style>{`
-        @keyframes spin-clockwise {
-          0% { transform: rotate(0deg); }
-          100% { transform: rotate(360deg); }
-        }
-        @keyframes spin-counter {
-          0% { transform: rotate(0deg); }
-          100% { transform: rotate(-360deg); }
-        }
-        @keyframes core-pulse {
-          0% { filter: drop-shadow(0 0 15px var(--glow-color)); transform: scale(0.97); }
-          50% { filter: drop-shadow(0 0 30px var(--glow-color)); transform: scale(1.03); }
-          100% { filter: drop-shadow(0 0 15px var(--glow-color)); transform: scale(0.97); }
-        }
-        @keyframes text-float {
-          0% { transform: translateY(0px); }
-          50% { transform: translateY(-6px); }
-          100% { transform: translateY(0px); }
-        }
-        @keyframes dash-flow {
-          to { stroke-dashoffset: -20; }
-        }
-        .reactor-slider::-webkit-slider-thumb {
-          box-shadow: 0 0 8px var(--thumb-glow);
-        }
-      `}</style>
-
-      {/* LEFT COLUMN: Simulation Inputs */}
+    <div style={{ display: 'flex', gap: '20px', width: '100%', height: '100%', minHeight: 0, boxSizing: 'border-box' }}>
+      {/* Left Column: Simulation Inputs */}
       <div 
         className="glass-panel"
         style={{ 
-          padding: '12px 14px', 
+          width: '280px', 
+          flexShrink: 0, 
+          padding: '14px 18px', 
           background: 'var(--color-surface)',
           display: 'flex', 
           flexDirection: 'column', 
-          gap: '10px',
+          gap: '12px',
           borderRadius: '12px',
-          borderColor: 'rgba(255, 255, 255, 0.05)',
-          justifyContent: 'space-between',
-          minHeight: 0
+          justifyContent: 'flex-start',
+          borderColor: 'rgba(255, 255, 255, 0.06)'
         }}
       >
-        <div style={{ borderBottom: '1px solid rgba(255, 255, 255, 0.04)', paddingBottom: '6px', display: 'flex', alignItems: 'center', gap: '6px' }}>
-          <Sparkles size={13} style={{ color: 'var(--color-cyan)' }} />
-          <strong style={{ fontSize: '0.72rem', color: '#ffffff', fontFamily: 'var(--font-mono)', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+        <div style={{ borderBottom: '1px solid rgba(255, 255, 255, 0.06)', paddingBottom: '6px', display: 'flex', alignItems: 'center', gap: '6px' }}>
+          <Sparkles size={14} style={{ color: 'var(--color-cyan)' }} />
+          <strong style={{ fontSize: '0.78rem', color: '#ffffff', fontFamily: 'var(--font-mono)', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
             📊 REVENUE SIMULATOR
           </strong>
         </div>
 
         {/* Reach Slider */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '3px' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.64rem', color: '#94a3b8', fontFamily: 'var(--font-mono)' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.68rem', color: '#94a3b8', fontFamily: 'var(--font-mono)' }}>
             <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-              <Users size={11} style={{ color: 'var(--color-cyan)' }} />
-              REACH
+              <Users size={12} style={{ color: 'var(--color-cyan)' }} />
+              SUBSCRIBER REACH
             </span>
             <span style={{ color: 'var(--color-cyan)', fontWeight: 'bold' }}>{subscribers}K</span>
           </div>
@@ -739,11 +458,11 @@ export const MonetizationGrid: React.FC = () => {
         </div>
 
         {/* Course Price Slider */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '3px' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.64rem', color: '#94a3b8', fontFamily: 'var(--font-mono)' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.68rem', color: '#94a3b8', fontFamily: 'var(--font-mono)' }}>
             <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-              <DollarSign size={11} style={{ color: 'var(--color-magenta)' }} />
-              COURSE FEE
+              <DollarSign size={12} style={{ color: 'var(--color-magenta)' }} />
+              COHORT COURSE PRICE
             </span>
             <span style={{ color: 'var(--color-magenta)', fontWeight: 'bold' }}>₹{coursePrice.toLocaleString()}</span>
           </div>
@@ -760,13 +479,13 @@ export const MonetizationGrid: React.FC = () => {
         </div>
 
         {/* Sponsors Slider */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '3px' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.64rem', color: '#94a3b8', fontFamily: 'var(--font-mono)' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.68rem', color: '#94a3b8', fontFamily: 'var(--font-mono)' }}>
             <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-              <Megaphone size={11} style={{ color: 'var(--color-indigo)' }} />
-              SPONSORS
+              <Megaphone size={12} style={{ color: 'var(--color-indigo)' }} />
+              SPONSORSHIPS / MONTH
             </span>
-            <span style={{ color: 'var(--color-indigo)', fontWeight: 'bold' }}>{sponsorsCount} / mo</span>
+            <span style={{ color: 'var(--color-indigo)', fontWeight: 'bold' }}>{sponsorsCount} campaigns</span>
           </div>
           <input 
             type="range"
@@ -780,266 +499,39 @@ export const MonetizationGrid: React.FC = () => {
           />
         </div>
 
-        {/* Telemetry data box */}
+        {/* Rich Telemetry Sub-panel */}
         <div style={{
+          marginTop: '4px',
           background: 'rgba(255, 255, 255, 0.01)',
-          border: '1px solid rgba(255, 255, 255, 0.04)',
-          borderRadius: '6px',
-          padding: '8px',
+          border: '1px solid rgba(255, 255, 255, 0.05)',
+          borderRadius: '8px',
+          padding: '10px',
           display: 'flex',
           flexDirection: 'column',
-          gap: '4px'
+          gap: '6px'
         }}>
-          <span style={{ fontSize: '0.58rem', color: '#64748b', fontFamily: 'var(--font-mono)', textTransform: 'uppercase', borderBottom: '1px solid rgba(255, 255, 255, 0.03)', paddingBottom: '2px', display: 'flex', alignItems: 'center', gap: '4px' }}>
-            <TrendingUp size={9} style={{ color: 'var(--color-cyan)' }} />
-            Telemetry
+          <span style={{ fontSize: '0.62rem', color: '#64748b', fontFamily: 'var(--font-mono)', textTransform: 'uppercase', borderBottom: '1px solid rgba(255, 255, 255, 0.03)', paddingBottom: '3px', display: 'flex', alignItems: 'center', gap: '4px' }}>
+            <TrendingUp size={10} style={{ color: 'var(--color-cyan)' }} />
+            Simulation Telemetry
           </span>
-          <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 0.8fr', gap: '3px', fontSize: '0.6rem' }}>
-            <span style={{ color: '#94a3b8' }}>Annual Views:</span>
-            <span style={{ color: 'white', fontWeight: 600, fontFamily: 'var(--font-mono)', textAlign: 'right' }}>{(subscribers * 12000).toLocaleString()}</span>
+          <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 0.8fr', gap: '4px', fontSize: '0.65rem' }}>
+            <span style={{ color: '#94a3b8' }}>Est. Annual Views:</span>
+            <span style={{ color: 'white', fontWeight: 600, fontFamily: 'var(--font-mono)', textAlign: 'right' }}>{(subscribers * 1000 * 1.2 * 12).toLocaleString()}</span>
             
-            <span style={{ color: '#94a3b8' }}>Students/yr:</span>
-            <span style={{ color: 'white', fontWeight: 600, fontFamily: 'var(--font-mono)', textAlign: 'right' }}>{Math.round(subscribers * 3).toLocaleString()}</span>
+            <span style={{ color: '#94a3b8' }}>Cohort Students/yr:</span>
+            <span style={{ color: 'white', fontWeight: 600, fontFamily: 'var(--font-mono)', textAlign: 'right' }}>{Math.round(subscribers * 1000 * 0.003).toLocaleString()}</span>
             
-            <span style={{ color: '#94a3b8' }}>Intent Leads:</span>
-            <span style={{ color: 'white', fontWeight: 600, fontFamily: 'var(--font-mono)', textAlign: 'right' }}>{Math.round(subscribers * 50).toLocaleString()}</span>
+            <span style={{ color: '#94a3b8' }}>High-Intent Leads:</span>
+            <span style={{ color: 'white', fontWeight: 600, fontFamily: 'var(--font-mono)', textAlign: 'right' }}>{Math.round(subscribers * 1000 * 0.05).toLocaleString()}</span>
           </div>
         </div>
+
       </div>
 
-      {/* CENTER COLUMN: 3D Holographic Reactor Core */}
-      <div 
-        style={{
-          position: 'relative',
-          height: '100%',
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
-          alignItems: 'center',
-          perspective: '1000px',
-          transformStyle: 'preserve-3d',
-          minWidth: 0
-        }}
-      >
-        {/* Glowing Conduits / Tubes Flow Overlay */}
-        <svg 
-          style={{
-            position: 'absolute',
-            inset: 0,
-            width: '100%',
-            height: '100%',
-            pointerEvents: 'none',
-            zIndex: 1
-          }}
-          viewBox="0 0 100 100"
-          preserveAspectRatio="none"
-        >
-          {/* Reach Tube (Left to Core) */}
-          <path 
-            d="M 0,28 C 20,28 35,50 50,50" 
-            fill="none" 
-            stroke="var(--color-cyan)" 
-            strokeWidth={1.5 + (subscribers / 80)} 
-            strokeOpacity={0.3 + (subscribers / 300) * 0.6}
-            strokeDasharray="4 6"
-            style={{
-              animation: `dash-flow ${Math.max(0.4, 2.5 - (subscribers / 120))}s linear infinite`,
-              filter: 'drop-shadow(0 0 3px var(--color-cyan))',
-              transition: 'stroke-width 0.3s ease, stroke-opacity 0.3s ease'
-            }}
-          />
-          
-          {/* Course Fee Tube (Left to Core) */}
-          <path 
-            d="M 0,50 C 20,50 35,50 50,50" 
-            fill="none" 
-            stroke="var(--color-magenta)" 
-            strokeWidth={1.5 + (coursePrice / 2000)} 
-            strokeOpacity={0.3 + (coursePrice / 8000) * 0.6}
-            strokeDasharray="4 6"
-            style={{
-              animation: `dash-flow ${Math.max(0.4, 2.5 - (coursePrice / 3200))}s linear infinite`,
-              filter: 'drop-shadow(0 0 3px var(--color-magenta))',
-              transition: 'stroke-width 0.3s ease, stroke-opacity 0.3s ease'
-            }}
-          />
-          
-          {/* Sponsors Tube (Left to Core) */}
-          <path 
-            d="M 0,72 C 20,72 35,50 50,50" 
-            fill="none" 
-            stroke="var(--color-indigo)" 
-            strokeWidth={1.5 + sponsorsCount * 1} 
-            strokeOpacity={0.3 + (sponsorsCount / 4) * 0.6}
-            strokeDasharray="4 6"
-            style={{
-              animation: `dash-flow ${Math.max(0.4, 2.5 - sponsorsCount * 0.5)}s linear infinite`,
-              filter: 'drop-shadow(0 0 3px var(--color-indigo))',
-              transition: 'stroke-width 0.3s ease, stroke-opacity 0.3s ease'
-            }}
-          />
-          
-          {/* Active Stream Tube (Right to Core) */}
-          <path 
-            d="M 100,20 C 80,20 65,50 50,50" 
-            fill="none" 
-            stroke={activeStream.color} 
-            strokeWidth={1.8 + (totalRev / 200000) * 3} 
-            strokeOpacity={0.4 + (totalRev / 300000) * 0.6}
-            strokeDasharray="4 6"
-            style={{
-              animation: `dash-flow ${Math.max(0.3, 2.0 - (totalRev / 150000))}s linear infinite`,
-              filter: `drop-shadow(0 0 4px ${activeStream.color})`,
-              transition: 'stroke, stroke-width 0.3s ease, stroke-opacity 0.3s ease'
-            }}
-          />
-        </svg>
-
-        {/* Floating revenue total bubble */}
-        <div style={{
-          position: 'absolute',
-          top: '10px',
-          background: 'rgba(5, 6, 10, 0.85)',
-          border: `1.5px solid ${activeStream.color}`,
-          boxShadow: `0 0 15px ${activeStream.color}25, inset 0 0 10px ${activeStream.color}15`,
-          borderRadius: '30px',
-          padding: '6px 16px',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          gap: '2px',
-          animation: 'text-float 4s ease-in-out infinite',
-          zIndex: 10,
-          pointerEvents: 'none',
-          transition: 'all 0.6s ease'
-        }}>
-          <span style={{ fontSize: '0.55rem', color: '#94a3b8', fontFamily: 'var(--font-mono)', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
-            Aggregated Revenue
-          </span>
-          <span style={{ 
-            fontSize: '0.95rem', 
-            color: activeStream.color, 
-            fontWeight: 800, 
-            fontFamily: 'var(--font-display)',
-            transition: 'color 0.6s ease'
-          }}>
-            ₹{totalRev.toLocaleString()} / mo
-          </span>
-        </div>
-
-        {/* Floating Reactor Rings Stage */}
-        <div 
-          style={{
-            position: 'relative',
-            width: '130px',
-            height: '130px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            animation: 'core-pulse 3s ease-in-out infinite',
-            transform: 'translateY(15px) rotateX(10deg)',
-            transformStyle: 'preserve-3d',
-            transition: 'all 0.6s ease',
-            ...({
-              '--glow-color': `${activeStream.color}33`
-            } as React.CSSProperties)
-          }}
-        >
-          {/* Volumetric projection beam overlay (behind the core) */}
-          <div style={{
-            position: 'absolute',
-            bottom: '15px',
-            width: '180px',
-            height: '140px',
-            background: `linear-gradient(to top, ${activeStream.color}0d 0%, ${activeStream.color}01 60%, transparent 100%)`,
-            clipPath: 'polygon(20% 100%, 80% 100%, 100% 0%, 0% 0%)',
-            pointerEvents: 'none',
-            zIndex: 1,
-            transition: 'all 0.6s ease'
-          }} />
-
-          {/* Outer Segmented Ring */}
-          <svg 
-            style={{
-              position: 'absolute',
-              width: '100%',
-              height: '100%',
-              animation: `spin-clockwise ${18 / rotationSpeed}s linear infinite`,
-              zIndex: 3
-            }}
-            viewBox="0 0 100 100"
-          >
-            <circle 
-              cx="50" 
-              cy="50" 
-              r="44" 
-              fill="none" 
-              stroke={activeStream.color} 
-              strokeWidth="2" 
-              strokeDasharray="25 12 8 12"
-              opacity="0.85"
-              style={{ transition: 'stroke 0.6s ease' }}
-            />
-          </svg>
-
-          {/* Middle Inner Ring */}
-          <svg 
-            style={{
-              position: 'absolute',
-              width: '75%',
-              height: '75%',
-              animation: `spin-counter ${12 / rotationSpeed}s linear infinite`,
-              zIndex: 3
-            }}
-            viewBox="0 0 100 100"
-          >
-            <circle 
-              cx="50" 
-              cy="50" 
-              r="44" 
-              fill="none" 
-              stroke={activeStream.color} 
-              strokeWidth="3.5" 
-              strokeDasharray="50 20"
-              opacity="0.55"
-              style={{ transition: 'stroke 0.6s ease' }}
-            />
-          </svg>
-
-          {/* Core Orb Center */}
-          <div style={{
-            width: '36px',
-            height: '36px',
-            borderRadius: '50%',
-            background: `radial-gradient(circle, #ffffff 0%, ${activeStream.color} 70%, transparent 100%)`,
-            boxShadow: `0 0 20px ${activeStream.color}, inset 0 0 8px #ffffff`,
-            opacity: 0.9,
-            zIndex: 4,
-            transition: 'all 0.6s ease'
-          }} />
-        </div>
-
-        {/* Reactor Base pedistal */}
-        <div style={{
-          position: 'absolute',
-          bottom: '25px',
-          width: '160px',
-          height: '42px',
-          borderRadius: '50%',
-          border: `2px solid ${activeStream.color}`,
-          background: `radial-gradient(ellipse, ${activeStream.color}22 0%, transparent 70%)`,
-          boxShadow: `0 0 20px ${activeStream.color}33, inset 0 0 10px ${activeStream.color}15`,
-          transform: 'rotateX(75deg) translateY(20px)',
-          pointerEvents: 'none',
-          zIndex: 2,
-          transition: 'all 0.6s ease'
-        }} />
-      </div>
-
-      {/* RIGHT COLUMN: Strategy Orbit Details */}
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', minWidth: 0, height: '100%' }}>
-        {/* Stream grid menu */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '6px', flexShrink: 0 }}>
+      {/* Right Column: Dynamic Output */}
+      <div style={{ flexGrow: 1, minWidth: 0, display: 'flex', flexDirection: 'column', gap: '12px' }}>
+        {/* Streams Selector (3x2 grid) */}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '8px' }}>
           {streams.map((s) => {
             const isActive = s.id === activeStreamId;
             const StreamIcon = s.icon;
@@ -1049,65 +541,65 @@ export const MonetizationGrid: React.FC = () => {
                 onClick={() => setActiveStreamId(s.id)}
                 className="interactive"
                 style={{
-                  padding: '6px 8px',
+                  padding: '8px 10px',
                   borderRadius: '8px',
-                  background: isActive ? 'rgba(255, 255, 255, 0.04)' : 'rgba(10, 11, 18, 0.6)',
+                  background: isActive ? 'rgba(255, 255, 255, 0.04)' : 'rgba(255, 255, 255, 0.01)',
                   border: `1.5px solid ${isActive ? s.color : 'rgba(255, 255, 255, 0.05)'}`,
                   color: isActive ? '#ffffff' : '#9ca3af',
-                  fontSize: '0.66rem',
+                  fontSize: '0.72rem',
                   fontFamily: 'var(--font-display)',
                   fontWeight: isActive ? 700 : 500,
                   cursor: 'pointer',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  gap: '4px',
+                  gap: '6px',
                   whiteSpace: 'nowrap',
                   overflow: 'hidden',
                   textOverflow: 'ellipsis',
                   transition: 'all 0.2s ease',
-                  boxShadow: isActive ? `0 0 10px ${s.color}11` : 'none'
+                  boxShadow: isActive ? `0 0 10px ${s.color}15` : 'none'
                 }}
               >
-                <StreamIcon size={11} style={{ color: isActive ? s.color : '#64748b' }} />
-                {s.title.split(' ')[0]}
+                <StreamIcon size={12} style={{ color: isActive ? s.color : '#64748b' }} />
+                {s.title}
               </button>
             );
           })}
         </div>
 
-        {/* Selected strategy information panel */}
+        {/* Selected Stream Details and Projections */}
         <div 
           className="glass-panel"
           style={{
             flexGrow: 1,
             border: `1.5px solid ${activeStream.color}`,
-            background: 'linear-gradient(135deg, rgba(13, 17, 28, 0.8) 0%, rgba(255, 255, 255, 0.01) 100%)',
-            boxShadow: `0 0 20px ${activeStream.color}0a`,
-            padding: '12px 16px',
+            background: 'linear-gradient(135deg, rgba(13, 17, 28, 0.7) 0%, rgba(255, 255, 255, 0.01) 100%)',
+            boxShadow: `0 0 25px ${activeStream.color}0a`,
+            padding: '16px 20px',
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'space-between',
             borderRadius: '12px',
-            transition: 'all 0.6s ease',
+            transition: 'border-color 0.3s ease, box-shadow 0.3s ease',
             minHeight: 0
           }}
         >
-          {/* Strategy Title */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '3px' }}>
+          {/* Strategy Details */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                <ActiveIcon size={14} style={{ color: activeStream.color, flexShrink: 0 }} />
-                <strong style={{ fontSize: '0.8rem', color: '#ffffff', fontFamily: 'var(--font-display)' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <ActiveIcon size={16} style={{ color: activeStream.color }} />
+                <strong style={{ fontSize: '0.88rem', color: '#ffffff', fontFamily: 'var(--font-display)' }}>
                   {activeStream.title} Strategy
                 </strong>
               </div>
               <span style={{ 
-                fontSize: '0.55rem', 
+                fontSize: '0.62rem', 
                 background: `${activeStream.color}15`,
                 color: activeStream.color, 
-                padding: '1px 6px',
-                borderRadius: '8px',
+                padding: '2px 8px',
+                borderRadius: '10px',
                 border: `1px solid ${activeStream.color}33`,
                 fontWeight: 600,
                 fontFamily: 'var(--font-mono)' 
@@ -1115,79 +607,107 @@ export const MonetizationGrid: React.FC = () => {
                 STREAM ACTIVE
               </span>
             </div>
-            <p style={{ fontSize: '0.68rem', color: '#cbd5e1', lineHeight: 1.35, margin: '2px 0 0 0', textAlign: 'left' }}>
+            <p style={{ fontSize: '0.74rem', color: '#cbd5e1', lineHeight: 1.4, margin: '4px 0 0 0' }}>
               {activeStream.strategy}
             </p>
           </div>
 
-          {/* Outputs layout */}
+          {/* Formulas and Projections Grid: Two Column Detail Section */}
           <div style={{ 
             display: 'grid', 
-            gridTemplateColumns: '1.2fr 1fr', 
-            gap: '10px', 
-            margin: '4px 0',
+            gridTemplateColumns: '1.2fr 0.8fr', 
+            gap: '16px', 
+            margin: '8px 0',
             flexGrow: 1,
             minHeight: 0
           }}>
-            {/* Left Box: Metric calculation */}
+            {/* Left Box: Math & Revenue Output */}
             <div style={{ 
               background: 'rgba(255,255,255,0.01)', 
-              border: '1px solid rgba(255,255,255,0.03)', 
-              borderRadius: '6px', 
-              padding: '6px 8px',
+              border: '1px solid rgba(255,255,255,0.04)', 
+              borderRadius: '8px', 
+              padding: '10px 14px',
               display: 'flex',
               flexDirection: 'column',
-              justifyContent: 'space-between',
-              textAlign: 'left'
+              justifyContent: 'space-between'
             }}>
               <div>
-                <span style={{ fontSize: '0.52rem', color: '#94a3b8', fontFamily: 'var(--font-mono)', textTransform: 'uppercase', display: 'block' }}>
+                <span style={{ fontSize: '0.58rem', color: '#94a3b8', fontFamily: 'var(--font-mono)', textTransform: 'uppercase', display: 'block', marginBottom: '2px' }}>
                   Projection Metric
                 </span>
-                <span style={{ fontSize: '0.6rem', color: '#e2e8f0', lineHeight: 1.2, display: 'block', marginTop: '2px' }}>
+                <span style={{ fontSize: '0.66rem', color: '#e2e8f0', lineHeight: 1.25, display: 'block' }}>
                   {activeStream.formulaLabel}
                 </span>
               </div>
               
-              <div style={{ borderTop: '1px solid rgba(255,255,255,0.04)', paddingTop: '4px', display: 'flex', flexDirection: 'column' }}>
-                <span style={{ fontSize: '0.52rem', color: '#94a3b8', fontFamily: 'var(--font-mono)' }}>EST. MONTHLY STREAM</span>
-                <span style={{ 
-                  fontSize: '1.05rem', 
-                  color: activeStream.color, 
-                  fontWeight: 800, 
-                  fontFamily: 'var(--font-display)', 
-                  filter: `drop-shadow(0 0 6px ${activeStream.color}33)`,
-                  transition: 'color 0.6s ease'
-                }}>
-                  ₹{activeStreamRev.toLocaleString()}
-                </span>
+              <div style={{ borderTop: '1px solid rgba(255,255,255,0.04)', paddingTop: '6px', marginTop: '6px', display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between' }}>
+                <div>
+                  <span style={{ fontSize: '0.58rem', color: '#94a3b8', fontFamily: 'var(--font-mono)', display: 'block' }}>EST. MONTHLY STREAM</span>
+                  <span style={{ 
+                    fontSize: '1.25rem', 
+                    color: activeStream.color, 
+                    fontWeight: 800, 
+                    fontFamily: 'var(--font-display)', 
+                    display: 'flex', 
+                    alignItems: 'center',
+                    gap: '2px',
+                    filter: `drop-shadow(0 0 8px ${activeStream.color}33)`
+                  }}>
+                    ₹{activeStreamRev.toLocaleString()}
+                  </span>
+                </div>
               </div>
             </div>
 
             {/* Right Box: Key Launch Deliverables */}
             <div style={{ 
               background: 'rgba(255,255,255,0.01)', 
-              border: '1px solid rgba(255,255,255,0.03)', 
-              borderRadius: '6px', 
-              padding: '6px 8px',
+              border: '1px solid rgba(255,255,255,0.04)', 
+              borderRadius: '8px', 
+              padding: '10px 14px',
               display: 'flex',
               flexDirection: 'column',
               justifyContent: 'flex-start',
-              gap: '4px',
-              textAlign: 'left'
+              gap: '6px'
             }}>
-              <span style={{ fontSize: '0.54rem', color: '#64748b', fontFamily: 'var(--font-mono)', textTransform: 'uppercase', fontWeight: 700, borderBottom: '1px solid rgba(255,255,255,0.03)', paddingBottom: '2px', display: 'flex', alignItems: 'center', gap: '3px' }}>
-                <Sparkles size={8} style={{ color: activeStream.color }} />
-                Deliverables
+              <span style={{ fontSize: '0.6rem', color: '#64748b', fontFamily: 'var(--font-mono)', textTransform: 'uppercase', fontWeight: 700, borderBottom: '1px solid rgba(255,255,255,0.03)', paddingBottom: '3px', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                <Sparkles size={10} style={{ color: activeStream.color }} />
+                Key Launch Deliverables
               </span>
-              <ul style={{ paddingLeft: '0', margin: '2px 0 0 0', listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '4px' }}>
+              <ul style={{ paddingLeft: '0', margin: '2px 0 0 0', listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '6px' }}>
                 {activeStream.deliverables.map((item, idx) => (
-                  <li key={idx} style={{ display: 'flex', alignItems: 'flex-start', gap: '4px', fontSize: '0.58rem', color: '#cbd5e1', lineHeight: 1.25 }}>
-                    <span style={{ color: activeStream.color, fontSize: '0.6rem', marginTop: '1px' }}>✔</span>
+                  <li key={idx} style={{ display: 'flex', alignItems: 'flex-start', gap: '6px', fontSize: '0.64rem', color: '#cbd5e1', lineHeight: 1.25 }}>
+                    <span style={{ color: activeStream.color, fontSize: '0.65rem', marginTop: '1px' }}>✔</span>
                     <span>{item}</span>
                   </li>
                 ))}
               </ul>
+            </div>
+          </div>
+
+          {/* Bottom Row: Grand Total */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginTop: '2px' }}>
+            {/* Aggregate Footnote Dashboard */}
+            <div style={{
+              background: 'rgba(99, 102, 241, 0.05)',
+              borderLeft: '3px solid var(--color-indigo)',
+              padding: '8px 12px',
+              borderRadius: '4px',
+              fontSize: '0.75rem',
+              color: '#ffffff',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              flexShrink: 0,
+              fontFamily: 'var(--font-display)'
+            }}>
+              <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                <TrendingUp size={14} style={{ color: 'var(--color-cyan)' }} />
+                <span><strong>Aggregated Projected Revenue:</strong></span>
+              </span>
+              <span style={{ fontSize: '0.9rem', color: 'var(--color-cyan)', fontWeight: 800 }}>
+                ₹{totalRev.toLocaleString()} / mo
+              </span>
             </div>
           </div>
         </div>
