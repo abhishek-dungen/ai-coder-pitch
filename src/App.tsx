@@ -5,7 +5,6 @@ import { ParticleBackground } from './components/ParticleBackground';
 import { CustomCursor } from './components/CustomCursor';
 import { SocialMetrics } from './components/SocialMetrics';
 import { TimelineMe } from './components/TimelineMe';
-import { TerminalPrompt } from './components/TerminalPrompt';
 import { ToolSimulatorHorizontal } from './components/ToolSimulatorHorizontal';
 import { ContentWorkflow } from './components/ContentWorkflow';
 import { ContentPipeline } from './components/ContentPipeline';
@@ -17,7 +16,6 @@ const slidesData = [
   { id: 'why-me', title: 'My Journey in Content Creation', tagline: 'Slide 02' },
   { id: 'niche', title: 'My Chosen Niche: Building everyday AI tools I wish existed', tagline: 'Slide 03' },
   { id: 'stack', title: 'Why I chose this niche?', tagline: 'Slide 04' },
-  { id: 'stack-image', title: 'Why I chose this niche? (Visual Stack)', tagline: 'Slide 04B' },
   { id: 'proof-horizontal', title: 'Proof of Execution Tools I Already Built', tagline: 'Slide 05' },
   { id: 'workflow', title: 'Core Channel Content Idea', tagline: 'Slide 06' },
   { id: 'pipeline', title: 'The Content wont Dry out.....The ideas below are just the beginning', tagline: 'Slide 07' },
@@ -273,30 +271,7 @@ export const App: React.FC = () => {
           </motion.div>
         </section>
 
-        {/* SLIDE 4: WHY NICHE WORKS (STACK) */}
-        <section className="slide">
-          <motion.div 
-            initial={{ opacity: 0, x: 50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: false, amount: 0.1 }}
-            transition={{ duration: 0.6 }}
-            className="slide-content-wrapper"
-            style={{ gridTemplateColumns: '0.8fr 1.2fr' }}
-          >
-            <div className="slide-title-area">
-              <h2 className="title-large" style={{ fontSize: '2.3rem', lineHeight: 1.25 }}>
-                Why I chose <span className="title-accent">this niche?</span>
-              </h2>
-              <p className="slide-description" style={{ fontSize: '1.05rem', color: 'var(--color-cyan)', fontWeight: 600, marginTop: '14px', lineHeight: 1.4, fontStyle: 'italic' }}>
-                "I don’t just test AI tools. I push them to their absolute limits."
-              </p>
-              <p style={{ fontSize: '0.86rem', color: '#d1d5db', lineHeight: 1.6, marginTop: '14px' }}>
-                I am a power user of the entire developer ecosystem—from Claude Code, VS Code, Codex, Cursor, Replit, and Claude Cowork, to OpenClaw. I’ve stress-tested them all to build working apps, rogue automations, and bulletproof workflows. The sandbox phase is over—it's time to show the world how it’s actually done
-              </p>
-            </div>
-            <TerminalPrompt />
-          </motion.div>
-        </section>
+
 
         {/* SLIDE 4B: WHY NICHE WORKS (IMAGE VERSION) */}
         <section className="slide">

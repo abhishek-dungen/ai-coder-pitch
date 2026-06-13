@@ -37,7 +37,7 @@ const reelsDataset: ReelData[] = [
     comments: "428",
     saves: "5.2K",
     shares: "1.8K",
-    bgPos: "0% 61.1%",
+    bgPos: "0% 66.5%",
     instagramUrl: "https://www.instagram.com/reel/DYPP8eOD6WQ/?igsh=MTV6eGw0b293eG82cw=="
   },
   {
@@ -53,7 +53,7 @@ const reelsDataset: ReelData[] = [
     comments: "392",
     saves: "4.8K",
     shares: "1.2K",
-    bgPos: "50% 61.1%"
+    bgPos: "50% 66.5%"
   },
   {
     id: 3,
@@ -68,7 +68,7 @@ const reelsDataset: ReelData[] = [
     comments: "24",
     saves: "98",
     shares: "45",
-    bgPos: "100% 61.1%"
+    bgPos: "100% 66.5%"
   },
   {
     id: 4,
@@ -83,7 +83,7 @@ const reelsDataset: ReelData[] = [
     comments: "148",
     saves: "2.1K",
     shares: "710",
-    bgPos: "0% 85.8%"
+    bgPos: "0% 91.2%"
   },
   {
     id: 5,
@@ -98,7 +98,7 @@ const reelsDataset: ReelData[] = [
     comments: "215",
     saves: "1.8K",
     shares: "520",
-    bgPos: "50% 85.8%"
+    bgPos: "50% 91.2%"
   },
   {
     id: 6,
@@ -113,7 +113,7 @@ const reelsDataset: ReelData[] = [
     comments: "310",
     saves: "3.4K",
     shares: "920",
-    bgPos: "100% 85.8%"
+    bgPos: "100% 91.2%"
   }
 ];
 
