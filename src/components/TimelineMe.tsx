@@ -10,7 +10,7 @@ export const TimelineMe: React.FC = () => {
       {/* Title Header placed directly above the glass-panel block */}
       <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
         <h2 className="title-large" style={{ fontSize: '2.5rem' }}>
-          My Experience in <span className="title-accent">Content creation</span>
+          My Journey in <span className="title-accent">Content Creation</span>
         </h2>
         <p className="slide-description" style={{ fontSize: '1.1rem', color: '#9ca3af' }}>
           A creative background focused on learning design, scriptwriting, and high-retention video packaging.
@@ -40,24 +40,8 @@ export const TimelineMe: React.FC = () => {
         >
           {/* Role Header and Description */}
           <div>
-            <div style={{ 
-              border: '1px solid rgba(244,63,94,0.3)', 
-              background: 'rgba(244,63,94,0.06)', 
-              color: 'var(--color-magenta)', 
-              padding: '4px 10px', 
-              borderRadius: '20px', 
-              fontSize: '0.68rem', 
-              fontWeight: 600, 
-              width: 'fit-content', 
-              textTransform: 'uppercase', 
-              letterSpacing: '1px', 
-              fontFamily: 'var(--font-mono)' 
-            }}>
-              Role & Responsibilities
-            </div>
-            
-            <h3 style={{ fontSize: '1.45rem', color: '#ffffff', fontFamily: 'var(--font-display)', marginTop: '12px', fontWeight: 700 }}>
-              Vertical Content Head
+            <h3 style={{ fontSize: '1.45rem', color: '#ffffff', fontFamily: 'var(--font-display)', fontWeight: 700 }}>
+              Vertical Content Head (Non-STEM Subjects)
             </h3>
             
             <div style={{ fontSize: '0.88rem', color: 'var(--color-magenta)', fontFamily: 'var(--font-mono)', marginTop: '3px', fontWeight: 500 }}>

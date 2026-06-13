@@ -1,12 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, ArrowLeft, Sparkles, BrainCircuit, ExternalLink } from 'lucide-react';
+import { ArrowRight, ArrowLeft, BrainCircuit, ExternalLink } from 'lucide-react';
 import { ParticleBackground } from './components/ParticleBackground';
 import { CustomCursor } from './components/CustomCursor';
 import { SocialMetrics } from './components/SocialMetrics';
 import { TimelineMe } from './components/TimelineMe';
 import { TerminalPrompt } from './components/TerminalPrompt';
-import { ToolSimulator } from './components/ToolSimulator';
 import { ToolSimulatorHorizontal } from './components/ToolSimulatorHorizontal';
 import { ContentWorkflow } from './components/ContentWorkflow';
 import { ContentPipeline } from './components/ContentPipeline';
@@ -14,12 +13,11 @@ import { AudienceList, MonetizationGrid, MilestoneTimeline } from './components/
 
 const slidesData = [
   { id: 'welcome', title: 'Building Everyday AI Tools I Wish Existed', tagline: 'Pitch Deck Introduction' },
-  { id: 'context', title: 'Instagram? Been there, created that, got the engagement.', tagline: 'Slide 01' },
-  { id: 'why-me', title: 'My Experience in Content creation', tagline: 'Slide 02' },
-  { id: 'niche', title: 'My Chosen Niche: AI + ML', tagline: 'Slide 03' },
+  { id: 'context', title: 'Instagram? Been there, done that', tagline: 'Slide 01' },
+  { id: 'why-me', title: 'My Journey in Content Creation', tagline: 'Slide 02' },
+  { id: 'niche', title: 'My Chosen Niche: Building everyday AI tools I wish existed', tagline: 'Slide 03' },
   { id: 'stack', title: 'Why I chose this niche?', tagline: 'Slide 04' },
-  { id: 'proof', title: 'Proof of Execution & Built Tools', tagline: 'Slide 05' },
-  { id: 'proof-horizontal', title: 'Proof of Execution Tools I Already Built', tagline: 'Slide 05B' },
+  { id: 'proof-horizontal', title: 'Proof of Execution Tools I Already Built', tagline: 'Slide 05' },
   { id: 'workflow', title: 'Core Channel Content Idea', tagline: 'Slide 06' },
   { id: 'pipeline', title: 'The Content wont Dry out.....The ideas below are just the beginning', tagline: 'Slide 07' },
   { id: 'audience', title: 'Target Audience Profile', tagline: 'Slide 08' },
@@ -28,6 +26,7 @@ const slidesData = [
 ];
 
 export const App: React.FC = () => {
+  const base = import.meta.env.BASE_URL || '/';
   const [currentSlide, setCurrentSlide] = useState(0);
   const containerRef = useRef<HTMLDivElement | null>(null);
 
@@ -75,10 +74,7 @@ export const App: React.FC = () => {
       <header>
         <div className="logo interactive" onClick={() => jumpToSlide(0)}>
           <BrainCircuit size={22} style={{ color: 'var(--color-cyan)' }} />
-          <span>This AI_CODING_WITH_ABHISHEK</span>
-        </div>
-        <div style={{ display: 'flex', gap: '16px', fontSize: '0.8rem', color: '#9ca3af', fontFamily: 'var(--font-mono)' }}>
-          <span>SCROLL RIGHT ➔</span>
+          <span>AI_CODING_WITH_ABHISHEK</span>
         </div>
       </header>
 
@@ -96,40 +92,17 @@ export const App: React.FC = () => {
             viewport={{ once: false, amount: 0.1 }}
             transition={{ duration: 0.8 }}
             className="slide-content-wrapper"
+            style={{ gridTemplateColumns: '1fr', textAlign: 'center', maxWidth: '800px' }}
           >
-            <div className="slide-title-area">
-              <span className="tagline">
-                <Sparkles size={14} /> This AI_CODING_WITH_ABHISHEK
-              </span>
-              <h1 className="title-large">
+            <div className="slide-title-area" style={{ alignItems: 'center', display: 'flex', flexDirection: 'column' }}>
+              <h1 className="title-large" style={{ fontSize: '3rem', lineHeight: 1.2 }}>
                 Building Everyday <span className="title-accent">AI Tools</span> I Wish Existed
               </h1>
-              <div style={{ marginTop: '20px', display: 'flex', gap: '12px' }}>
+              <div style={{ marginTop: '24px', display: 'flex', gap: '12px' }}>
                 <button onClick={() => jumpToSlide(1)} className="btn btn-primary interactive">
-                  Explore Pitch <ArrowRight size={16} />
-                </button>
-                <button onClick={() => jumpToSlide(5)} className="btn btn-secondary interactive">
-                  View Built Proofs
+                  Swpie Right <ArrowRight size={16} />
                 </button>
               </div>
-            </div>
-
-            <div className="glass-panel" style={{ 
-              display: 'flex', 
-              flexDirection: 'column', 
-              justifyContent: 'center', 
-              alignItems: 'center',
-              minHeight: '300px',
-              border: '1px dashed var(--color-cyan)',
-              background: 'linear-gradient(135deg, rgba(13,17,28,0.7) 0%, rgba(6,182,212,0.05) 100%)'
-            }}>
-              <BrainCircuit size={70} className="animate-float" style={{ color: 'var(--color-cyan)', filter: 'drop-shadow(0 0 15px var(--color-cyan-glow))' }} />
-              <h2 style={{ fontSize: '1.4rem', color: 'white', marginTop: '24px', fontFamily: 'var(--font-display)', textAlign: 'center' }}>
-                AI + ML Development Channel
-              </h2>
-              <p style={{ fontSize: '0.8rem', color: '#9ca3af', textAlign: 'center', maxWidth: '320px', marginTop: '8px', lineHeight: 1.4 }}>
-                Bridging real-world execution bottlenecks with educational storytelling.
-              </p>
             </div>
           </motion.div>
         </section>
@@ -145,7 +118,7 @@ export const App: React.FC = () => {
           >
             <div className="slide-title-area">
               <h2 className="title-large" style={{ fontSize: '2rem', lineHeight: 1.25 }}>
-                Instagram? Been there, created that, got the <span className="title-accent">engagement.</span>
+                Instagram? Been there, <span className="title-accent">done that.</span>
               </h2>
               <p className="slide-description">
                 I’m a seasoned creator who speaks fluent 'Algorithm.' I don't test the waters; I dive right in.
@@ -212,20 +185,42 @@ export const App: React.FC = () => {
             viewport={{ once: false, amount: 0.1 }}
             transition={{ duration: 0.6 }}
             className="slide-content-wrapper"
-            style={{ gridTemplateColumns: '1fr', maxWidth: '800px', textAlign: 'center' }}
+            style={{ gridTemplateColumns: '1.1fr 0.9fr', gap: '40px' }}
           >
-            <div className="slide-title-area" style={{ alignItems: 'center' }}>
-              <h2 className="title-large" style={{ fontSize: '2.5rem', lineHeight: 1.2 }}>
+            <div className="slide-title-area">
+              <h2 className="title-large" style={{ fontSize: '2.2rem', lineHeight: 1.2 }}>
                 My Chosen Niche: <span className="title-accent">Building everyday AI tools I wish existed</span>
               </h2>
               
-              <h3 style={{ fontSize: '1.4rem', color: 'var(--color-cyan)', fontFamily: 'var(--font-display)', marginTop: '14px', fontWeight: 700 }}>
+              <h3 style={{ fontSize: '1.3rem', color: 'var(--color-cyan)', fontFamily: 'var(--font-display)', marginTop: '14px', fontWeight: 700 }}>
                 Zero code. 100% leverage.
               </h3>
               
-              <p className="slide-description" style={{ fontSize: '1rem', lineHeight: 1.6, marginTop: '8px', maxWidth: '600px' }}>
+              <p className="slide-description" style={{ fontSize: '0.9rem', lineHeight: 1.6, marginTop: '8px', color: '#d1d5db' }}>
                 I build builders. I show regular people with absolute zero coding knowledge how to forge customized apps that solve real-world problems. Pure execution. Instant impact.
               </p>
+            </div>
+            
+            <div 
+              className="glass-panel" 
+              style={{ 
+                borderRadius: '16px', 
+                overflow: 'hidden', 
+                border: '1px solid rgba(255, 255, 255, 0.08)',
+                boxShadow: '0 8px 24px rgba(0,0,0,0.5)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                height: '100%',
+                maxHeight: '400px',
+                background: 'rgba(13,17,28,0.7)'
+              }}
+            >
+              <img 
+                src={`${base}Images/image3.png`} 
+                alt="Niche Concept" 
+                style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+              />
             </div>
           </motion.div>
         </section>
@@ -238,46 +233,48 @@ export const App: React.FC = () => {
             viewport={{ once: false, amount: 0.1 }}
             transition={{ duration: 0.6 }}
             className="slide-content-wrapper"
-            style={{ gridTemplateColumns: '0.8fr 1.2fr' }}
+            style={{ gridTemplateColumns: '1fr 1.2fr', gap: '30px' }}
           >
-            <div className="slide-title-area">
-              <h2 className="title-large" style={{ fontSize: '2.3rem', lineHeight: 1.25 }}>
-                Why I chose <span className="title-accent">this niche?</span>
-              </h2>
-              <p className="slide-description" style={{ fontSize: '1.05rem', color: 'var(--color-cyan)', fontWeight: 600, marginTop: '14px', lineHeight: 1.4, fontStyle: 'italic', borderLeft: '3px solid var(--color-cyan)', paddingLeft: '12px' }}>
-                "I don’t just test AI tools. I push them to their absolute limits."
-              </p>
-              <p style={{ fontSize: '0.86rem', color: '#d1d5db', lineHeight: 1.6, marginTop: '14px' }}>
-                I am a power user of the entire developer ecosystem—from Cursor, Replit, and VS Code to Claude Code, Claude cowork, openclaw and Codex. I’ve stress-tested them all to build working apps, rogue automations, and bulletproof workflows. The sandbox phase is over—it's time to show the world how it’s actually done
-              </p>
+            <div className="slide-title-area" style={{ display: 'flex', flexDirection: 'column', height: '100%', justifyContent: 'space-between' }}>
+              <div>
+                <h2 className="title-large" style={{ fontSize: '2.2rem', lineHeight: 1.25 }}>
+                  Why I chose <span className="title-accent">this niche?</span>
+                </h2>
+                <p className="slide-description" style={{ fontSize: '1rem', color: 'var(--color-cyan)', fontWeight: 600, marginTop: '10px', lineHeight: 1.4, fontStyle: 'italic', borderLeft: '3px solid var(--color-cyan)', paddingLeft: '12px' }}>
+                  "I don’t just test AI tools. I push them to their absolute limits."
+                </p>
+                <p style={{ fontSize: '0.82rem', color: '#d1d5db', lineHeight: 1.5, marginTop: '10px' }}>
+                  (I am a power user of the entire developer ecosystem—from Claude Code, VS Code, Codex, Cursor, Replit, and Claude Cowork, to OpenClaw)
+                </p>
+              </div>
+              
+              <div 
+                className="glass-panel" 
+                style={{ 
+                  borderRadius: '12px', 
+                  overflow: 'hidden', 
+                  border: '1px solid rgba(255, 255, 255, 0.08)',
+                  boxShadow: '0 8px 24px rgba(0,0,0,0.5)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  marginTop: '16px',
+                  height: '180px',
+                  background: 'rgba(13,17,28,0.7)'
+                }}
+              >
+                <img 
+                  src={`${base}Images/image4.png`} 
+                  alt="Ecosystem Tools" 
+                  style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+                />
+              </div>
             </div>
             <TerminalPrompt />
           </motion.div>
         </section>
 
-        {/* SLIDE 5: BUILT PROOFS PORTFOLIO */}
-        <section className="slide">
-          <motion.div 
-            initial={{ opacity: 0, x: 50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: false, amount: 0.1 }}
-            transition={{ duration: 0.6 }}
-            className="slide-content-wrapper"
-            style={{ gridTemplateColumns: '0.8fr 1.2fr' }}
-          >
-            <div className="slide-title-area">
-              <span className="tagline">Slide 05 • Proof of Execution</span>
-              <h2 className="title-large">Tools Already <span className="title-accent">Built</span></h2>
-              <p className="slide-description">
-                I have developed multiple functional systems using AI-assisted coding. These serve as live case-study proofs in the pitch.
-              </p>
-              <p style={{ fontSize: '0.8rem', color: '#9ca3af' }}>
-                Select a tool in the interactive control deck to simulate its features, metrics tables, CSV parsers, or dashboard layouts.
-              </p>
-            </div>
-            <ToolSimulator />
-          </motion.div>
-        </section>
+
 
         {/* SLIDE 5B: BUILT PROOFS PORTFOLIO HORIZONTAL REDESIGN */}
         <section className="slide" style={{ padding: '70px 40px 60px 40px' }}>
