@@ -287,11 +287,11 @@ export const App: React.FC = () => {
               <h2 className="title-large" style={{ fontSize: '2.3rem', lineHeight: 1.25 }}>
                 Why I chose <span className="title-accent">this niche?</span>
               </h2>
-              <p className="slide-description" style={{ fontSize: '1.05rem', color: 'var(--color-cyan)', fontWeight: 600, marginTop: '14px', lineHeight: 1.4, fontStyle: 'italic', borderLeft: '3px solid var(--color-cyan)', paddingLeft: '12px' }}>
+              <p className="slide-description" style={{ fontSize: '1.05rem', color: 'var(--color-cyan)', fontWeight: 600, marginTop: '14px', lineHeight: 1.4, fontStyle: 'italic' }}>
                 "I don’t just test AI tools. I push them to their absolute limits."
               </p>
               <p style={{ fontSize: '0.86rem', color: '#d1d5db', lineHeight: 1.6, marginTop: '14px' }}>
-                (I am a power user of the entire developer ecosystem—from Claude Code, VS Code, Codex, Cursor, Replit, and Claude Cowork, to OpenClaw) I’ve stress-tested them all to build working apps, rogue automations, and bulletproof workflows. The sandbox phase is over—it's time to show the world how it’s actually done
+                I am a power user of the entire developer ecosystem—from Claude Code, VS Code, Codex, Cursor, Replit, and Claude Cowork, to OpenClaw. I’ve stress-tested them all to build working apps, rogue automations, and bulletproof workflows. The sandbox phase is over—it's time to show the world how it’s actually done
               </p>
             </div>
             <TerminalPrompt />
@@ -313,7 +313,7 @@ export const App: React.FC = () => {
                 Why I chose <span className="title-accent">this niche?</span>
               </h2>
               
-              <p className="slide-description" style={{ fontSize: '1.05rem', color: 'var(--color-cyan)', fontWeight: 600, margin: 0, fontStyle: 'italic', borderLeft: '3px solid var(--color-cyan)', paddingLeft: '12px' }}>
+              <p className="slide-description" style={{ fontSize: '1.05rem', color: 'var(--color-cyan)', fontWeight: 600, margin: 0, fontStyle: 'italic' }}>
                 "I don’t just test AI tools. I push them to their absolute limits."
               </p>
             </div>
@@ -342,7 +342,7 @@ export const App: React.FC = () => {
             </div>
 
             <p style={{ fontSize: '0.86rem', color: '#d1d5db', lineHeight: 1.6, maxWidth: '780px', margin: 0 }}>
-              (I am a power user of the entire developer ecosystem—from Claude Code, VS Code, Codex, Cursor, Replit, and Claude Cowork, to OpenClaw) I’ve stress-tested them all to build working apps, rogue automations, and bulletproof workflows. The sandbox phase is over—it's time to show the world how it’s actually done:
+              I am a power user of the entire developer ecosystem—from Claude Code, VS Code, Codex, Cursor, Replit, and Claude Cowork, to OpenClaw. I’ve stress-tested them all to build working apps, rogue automations, and bulletproof workflows. The sandbox phase is over—it's time to show the world how it’s actually done:
             </p>
           </motion.div>
         </section>

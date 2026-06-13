@@ -37,7 +37,7 @@ const reelsDataset: ReelData[] = [
     comments: "428",
     saves: "5.2K",
     shares: "1.8K",
-    bgPos: "0% 56.6%",
+    bgPos: "0% 61.1%",
     instagramUrl: "https://www.instagram.com/reel/DYPP8eOD6WQ/?igsh=MTV6eGw0b293eG82cw=="
   },
   {
@@ -53,7 +53,7 @@ const reelsDataset: ReelData[] = [
     comments: "392",
     saves: "4.8K",
     shares: "1.2K",
-    bgPos: "50% 56.6%"
+    bgPos: "50% 61.1%"
   },
   {
     id: 3,
@@ -68,7 +68,7 @@ const reelsDataset: ReelData[] = [
     comments: "24",
     saves: "98",
     shares: "45",
-    bgPos: "100% 56.6%"
+    bgPos: "100% 61.1%"
   },
   {
     id: 4,
@@ -83,7 +83,7 @@ const reelsDataset: ReelData[] = [
     comments: "148",
     saves: "2.1K",
     shares: "710",
-    bgPos: "0% 81.3%"
+    bgPos: "0% 85.8%"
   },
   {
     id: 5,
@@ -98,7 +98,7 @@ const reelsDataset: ReelData[] = [
     comments: "215",
     saves: "1.8K",
     shares: "520",
-    bgPos: "50% 81.3%"
+    bgPos: "50% 85.8%"
   },
   {
     id: 6,
@@ -113,7 +113,7 @@ const reelsDataset: ReelData[] = [
     comments: "310",
     saves: "3.4K",
     shares: "920",
-    bgPos: "100% 81.3%"
+    bgPos: "100% 85.8%"
   }
 ];
 
@@ -464,6 +464,36 @@ export const SocialMetrics: React.FC = () => {
                         <span style={{ textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap', maxWidth: '190px' }}>www.excelbhaiyaabhishek.com</span>
                         <ExternalLink size={9} />
                       </a>
+                    </div>
+                  </div>
+
+                  {/* Edit/Share Profile Buttons */}
+                  <div style={{ display: 'flex', gap: '8px', marginTop: '12px' }}>
+                    <div style={{ 
+                      flex: 1, 
+                      background: 'rgba(255,255,255,0.1)', 
+                      borderRadius: '8px', 
+                      padding: '6px 0', 
+                      fontSize: '0.75rem', 
+                      fontWeight: 600, 
+                      color: 'white', 
+                      textAlign: 'center',
+                      border: '1px solid rgba(255,255,255,0.05)'
+                    }}>
+                      Edit profile
+                    </div>
+                    <div style={{ 
+                      flex: 1, 
+                      background: 'rgba(255,255,255,0.1)', 
+                      borderRadius: '8px', 
+                      padding: '6px 0', 
+                      fontSize: '0.75rem', 
+                      fontWeight: 600, 
+                      color: 'white', 
+                      textAlign: 'center',
+                      border: '1px solid rgba(255,255,255,0.05)'
+                    }}>
+                      Share profile
                     </div>
                   </div>
 
